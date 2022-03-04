@@ -1,0 +1,36 @@
+.pagination{
+  font-size: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+  background: #257784;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 50px;
+  padding: 8px 0;
+  cursor: pointer;
+  &__prev, &__next{
+      padding: 4px 16px;
+      i{
+          margin: 0 4px;
+          font-size: 20px;
+      }
+      &:hover{
+          background-color: $primary;
+      }
+  }
+  &__prev{
+      border-radius: 30px 0 0 30px;
+  }
+  &__next{
+      border-radius: 0 30px 30px 0;
+  }
+  &__item{
+      padding: 4px 16px;
+      &:hover{
+          background-color: $primary;
+      }
+      &.active{
+          background-color: $primary;
+      }
+  }
+}

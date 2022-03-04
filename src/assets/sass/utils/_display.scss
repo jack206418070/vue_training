@@ -1,0 +1,111 @@
+/* dispay set */
+.d-block{
+    display: block;
+}
+
+.d-none{
+    display: none;
+}
+
+.d-inline-block{
+    display: inline-block;
+}
+
+@include pad{
+    .d-md-block{
+        display: block !important;
+    }
+    .d-md-none{
+        display: none !important;
+    }
+    .d-md-flex{
+        display: flex;
+    }
+}
+
+@include mobile{
+    .d-sm-block{
+        display: block !important;
+    }
+    .d-sm-none{
+        display: none !important;
+    }
+}
+
+
+.d-flex{
+    display: flex;
+    &.flex-wrap{
+        flex-wrap: wrap;
+    }
+}
+
+@each $key, $value in $helper-flex {
+    .jy-content-#{$key}{
+        justify-content: $value;
+    }
+    .align-items-#{$key}{
+        align-items: $value;
+    }
+    .align-self-#{$key}{
+        align-self: $value;
+    }
+}
+
+.flex-wrap{
+    flex-wrap: wrap;
+}
+
+.flex-set-40{
+    flex: 0 0 40% !important;
+}
+.flex-set-50{
+    flex: 0 0 50% !important;
+}
+
+
+.flex-d-rr{
+    flex-direction: row-reverse;
+}
+
+.flex-dir-col{
+    flex-direction: column;
+}
+
+.flex-md-col-reverse{
+    @include mobile{
+        flex-direction: column-reverse;
+    }
+}
+
+.order-1{
+    order: 1;
+}
+.order-2{
+    order: 2;
+}
+.order-3{
+    order: 3;
+}
+@include pad{
+    .order-md-1{
+        order: 1;
+    }
+    .order-md-2{
+        order: 2;
+    }
+    .order-md-3{
+        order: 3;
+    }
+}
+@include mobile{
+    .order-sm-1{
+        order: 1;
+    }
+    .order-sm-2{
+        order: 2;
+    }
+    .order-sm-3{
+        order: 3;
+    }
+}

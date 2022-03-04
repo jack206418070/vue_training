@@ -1,0 +1,68 @@
+/* text set */
+
+.text-{
+    &right{
+        text-align: right;
+    }
+    &center{
+        text-align: center;
+    }
+    &left{
+        text-align: left;
+    }
+}
+
+
+/* text set */
+
+.text-c-{
+    &primary{
+        color: $f-color-primary;
+    }
+    &secondary{
+        color: $f-color-secondary;
+    }
+    &white{
+        color: white;
+    }
+    &black{
+        color: black;
+    }
+    &danger{
+      color: $primary;
+    }
+    &secondary-dark{
+        color: darken($f-color-secondary, 10%);
+    }
+    &thirdary{
+        color: $thirdary;
+    }
+    &thirdary-dark{
+        color: darken($thirdary, 30%);
+    }
+    &forthary{
+        color: $secondary;
+    }
+}
+
+.text-ver-lr{
+    writing-mode: vertical-lr;
+}
+.text-ver-rl{
+    writing-mode: vertical-rl;
+}
+
+
+.text-medium{
+  font-weight: 500;
+  letter-spacing: 1.3px;
+}
+
+.text-title{
+  font-weight: bold;
+  font-size: 1.75rem;
+  letter-spacing: 1.3px;
+  &-sm{
+    font-size: 1.25rem;
+  }
+}

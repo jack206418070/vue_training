@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+
+/*pure  color */
+$white: #ffffff;
+
+
+
+/* web color */
+$primary: #A01800;
+$secondary: #C59854;
+$thirdary: #650300;
+
+
+
+/* font-family */
+$ff-microsoft:Microsoft JhengHei;
+$ff-english:'Roboto', sans-serif;
+$ff-chinese:'Noto Sans', sans-serif;
+
+ 
+/* font-color */
+$f-color-primary: #AA0601;
+$f-color-secondary: #650300;
+$f-color-thirdary: #000000;
+
+
+
+
+
+
+/* font-size set */
+$fs-base: 16px;
+$fs-xs: $fs-base * 1.25;
+$fs-s: $fs-base * 1.5;
+$fs-m: $fs-base * 2.25;
+$fs-l: $fs-base * 3;
+
+
+
+/* width set */
+$max-width: 1140px;
+
+
+
+$space: 4;
+
+
+
+/*helper var*/
+$helper-sizes:(
+    'xxs': 5px,
+    'xs': 10px,
+    's': 20px,
+    'm': 35px,
+    'l': 50px,
+    'xl': 100px
+);
+
+$helper-flex:(
+    'center':  center,
+    'between': space-between,
+    'around': space-around,
+    'start': flex-start,
+    'end': flex-end,
+    'stretch': stretch,
+    'baseline': baseline
+);

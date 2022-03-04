@@ -1,0 +1,147 @@
+/* circle write */
+
+@mixin circle($circle-size,$circle-text){
+    content: $circle-text;
+    width: $circle-size;
+    height: $circle-size;
+    border-radius: 50%;
+    border: 1px solid #000000;
+    color:#000000;
+    font-size: $circle-size / 3;
+    text-align: center;
+    line-height: $circle-size;
+    position: absolute;
+}
+
+
+/* 圖片取代文字 */
+@mixin imgReplaceText($img){
+    background-image: url($img);
+    background-repeat:no-repeat;
+    background-position: 50% 50%;
+    text-indent: 101%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* bg setting */
+@mixin bannerBgSet($img){
+    background-image: url($img);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+@mixin itemBgSet($size,$postionY,$postionX){
+    background-size: $size;
+    background-repeat: no-repeat;
+    background-position: $postionY $postionX;
+}
+
+@mixin absCenter {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+/* RWD mixin */
+
+@mixin pad {
+    @media screen and (max-width: 996px) {
+        @content
+    }
+};
+
+@mixin mobile {
+    @media screen and (max-width: 620px) {
+        @content
+    }
+};
+
+
+/* create m-* p-* and rwd */ 
+
+@mixin createSpace($type, $count, $typeName, $space) {
+    @for $i from 0 through $count{
+        .#{$type}t-#{$i}{
+            #{$typeName}-top: $i * $space + px;
+        }
+        .#{$type}b-#{$i}{
+            #{$typeName}-bottom: $i * $space + px;
+        }
+        .#{$type}r-#{$i}{
+            #{$typeName}-right: $i * $space + px;
+        }
+        .#{$type}l-#{$i}{
+            #{$typeName}-left: $i * $space + px;
+        }
+        .#{$type}y-#{$i}{
+            #{$typeName}-top: $i * $space + px;
+            #{$typeName}-bottom: $i * $space + px;
+        }
+        .#{$type}x-#{$i}{
+            #{$typeName}-left: $i * $space + px;
+            #{$typeName}-right: $i * $space + px;
+        }
+        .#{$type}-#{$i}{
+            #{$typeName}: $i * $space + px;
+        }
+    }
+
+    @for $i from 0 through $count{
+        @include pad{
+            .#{$type}t-md-#{$i}{
+                #{$typeName}-top: $i * $space + px;
+            }
+            .#{$type}b-md-#{$i}{
+                #{$typeName}-bottom: $i * $space + px;
+            }
+            .#{$type}r-md-#{$i}{
+                #{$typeName}-right: $i * $space + px;
+            }
+            .#{$type}l-md-#{$i}{
+                #{$typeName}-left: $i * $space + px;
+            }
+            .#{$type}y-md-#{$i}{
+                #{$typeName}-top: $i * $space + px;
+                #{$typeName}-bottom: $i * $space + px;
+            }
+            .#{$type}x-md-#{$i}{
+                #{$typeName}-left: $i * $space + px;
+                #{$typeName}-right: $i * $space + px;
+            }
+            .#{$type}-md-#{$i}{
+                #{$typeName}: $i * $space + px;
+            }
+        }
+    }
+
+    @for $i from 0 through $count{
+        @include mobile{
+            .#{$type}t-sm-#{$i}{
+                #{$typeName}-top: $i * $space + px;
+            }
+            .#{$type}b-sm-#{$i}{
+                #{$typeName}-bottom: $i * $space + px;
+            }
+            .#{$type}r-sm-#{$i}{
+                #{$typeName}-right: $i * $space + px;
+            }
+            .#{$type}l-sm-#{$i}{
+                #{$typeName}-left: $i * $space + px;
+            }
+            .#{$type}y-sm-#{$i}{
+                #{$typeName}-top: $i * $space + px;
+                #{$typeName}-bottom: $i * $space + px;
+            }
+            .#{$type}x-sm-#{$i}{
+                #{$typeName}-left: $i * $space + px;
+                #{$typeName}-right: $i * $space + px;
+            }
+            .#{$type}-sm-#{$i}{
+                #{$typeName}: $i * $space + px;
+            }
+        }
+    }
+}

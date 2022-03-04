@@ -1,0 +1,82 @@
+$grid-num: 12;
+$gutter-width: 30px;
+$break-points:(
+    "sm": 568px,
+    "md": 767px,
+    "lg": 1200px
+);
+
+
+.container{
+    padding-right: ( $gutter-width / 2 );
+    padding-left: ( $gutter-width / 2 );
+}
+
+.row{
+    display: flex;
+    margin-left: -( $gutter-width / 2 );
+    margin-right: -( $gutter-width / 2 );
+    flex-wrap: wrap;
+}
+
+
+%col{
+    position: relative;
+    min-height: 1px;
+    max-width: 100%;
+    padding: 0 ($gutter_width / 2);
+    flex: 0 0 100%;
+};
+
+@each $key, $value in $break-points{
+    @media (min-width: $value){
+        @for $i from 1 through $grid-num{
+            .col-#{$key}-#{$i}{
+                max-width: 100% * ( $i / $grid-num );
+                flex: 0 0 (100% * ( $i / $grid-num ));
+            }
+        }
+    }
+    @for $i from 1 through $grid-num{
+        .col-#{$key}-#{$i}{
+            @extend %col
+        }
+    }
+};
+
+
+@for $i from 1 through $grid-num{
+    .col-#{$i}{
+        max-width: 100% * ( $i / $grid-num );
+        flex: 0 0 (100% * ( $i / $grid-num ));
+        padding: 0 ($gutter_width / 2);
+    }
+};
+
+
+
+
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+  
+    > .col,
+    > [class*="col-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+}
+
+.md-no-gutters {
+    @include mobile{
+        margin-right: 0;
+        margin-left: 0;
+      
+        > .col,
+        > [class*="col-"] {
+          padding-right: 0;
+          padding-left: 0;
+        }
+    }
+  }

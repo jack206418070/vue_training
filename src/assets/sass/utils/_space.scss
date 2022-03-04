@@ -1,0 +1,67 @@
+/* margin set */
+.m-auto{
+    margin: auto;
+}
+.mx-auto{
+    margin-right: auto;
+    margin-left: auto;
+}
+.mr-auto{
+    margin-right: auto;
+}
+.mt-auto{
+    margin-top: auto;
+}
+@each $key, $value in $helper-sizes{
+    .mt-#{$key}{
+        margin-top: $value;
+    }
+    .mb-#{$key}{
+        margin-bottom: $value !important;
+    }
+    .mr-#{$key}{
+        margin-right: $value;
+    }
+    .ml-#{$key}{
+        margin-left: $value;
+    }
+    .my-#{$key}{
+        margin-top: $value !important;
+        margin-bottom: $value !important;
+    }
+    .mx-#{$key}{
+        margin-right: $value;
+        margin-left: $value;
+    }
+}
+@include createSpace("m",40, "margin",$space);
+
+
+
+/* padding set */
+@each $key, $value in $helper-sizes{
+    .pt-#{$key}{
+        padding-top: $value;
+    }
+    .pb-#{$key}{
+        padding-bottom: $value;
+    }
+    .pr-#{$key}{
+        padding-right: $value;
+    }
+    .pl-#{$key}{
+        padding-left: $value;
+    }
+    .py-#{$key}{
+        padding-top: $value;
+        padding-bottom: $value;
+    }
+    .px-#{$key}{
+        padding-left: $value;
+        padding-right: $value;
+    }
+    .p-#{$key}{
+        padding: $value;
+    }
+}
+@include createSpace("p",40,"padding",$space);

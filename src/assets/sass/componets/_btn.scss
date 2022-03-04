@@ -1,0 +1,25 @@
+.btn{
+  outline: none;
+  border: none;
+  display: block;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 1.3px;
+  &-gray{
+    background-color: #a8a8a8;
+    color: white;
+  }
+  &-danger{
+    background-color: red;
+    color: white;
+  }
+  &-thirdary{
+    background-color: #bd9154;
+    color: white;
+  }
+}
+
+.btn-group{
+  display: flex;
+  align-items: center;
+}
