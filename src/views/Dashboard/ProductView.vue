@@ -6,12 +6,12 @@
           <div class="search__btn" @click="filterProducts = 'search'">
             <i class="fas fa-search"></i>
           </div>
-          <input type="text" class="py-2 px-2 w-100">
+          <input @change=" filterProducts = 'search' " v-model.trim="searchText" type="text" class="py-2 px-2 w-100">
         </div>
       </div>
       <div class="total__product w-100 d-flex align-items-center jy-content-between">
-        <p>目前有 3 樣商品</p>
-        <a class="btn btn--success w-10" href="#">建立產品</a>
+        <p>目前有 {{ products.length }} 樣商品</p>
+        <a @click.prevent="modalControl.is_add = true;" class="btn btn--success w-10" href="#">建立產品</a>
       </div>
       <div class="product w-100 mb-3">
         <ul>
@@ -37,7 +37,7 @@
                 <li class="w-15">${{ item.price }}</li>
                 <li class="d-flex jy-content-center w-30 px-4">
                   <div @click="editTempProduct = item;
-                    editProduct(item.id)" class="toggle"
+                    editProduct()" class="toggle"
                       :class="{ 'active': item.is_enabled == 1 }">
                   </div>
                   <p :class="{ 'active': item.is_enabled == 1 }">
@@ -71,37 +71,95 @@
         </ul>
       </div>
     </div>
+    <ModalView
+      :modaltype="modalControl"
+      :product="editTempProduct"
+      :category="categoryArr"
+      @close-modal="closeModal"
+      @get-products="getProducts"
+      v-if="modalControl.is_add || modalControl.is_edit || modalControl.is_delete"
+    >
+    </ModalView>
     <PageView :pagination="pagination" @get-product="getProducts"></PageView>
   </div>
 </template>
 
 <script>
 import PageView from '@/components/PageNation.vue'
+import ModalView from '@/components/AdminModal.vue'
 
 export default {
   data () {
     return {
       products: [],
       tempProducts: null,
-      pagination: {}
+      pagination: {},
+      categoryArr: ['蔬菜', '海鮮', '肉品', '水果'],
+      searchText: '',
+      modalControl: {
+        is_add: false,
+        is_edit: false,
+        is_sideMenu: true,
+        is_delete: false
+      },
+      is_loading: false,
+      ascending: false,
+      sideToggle: true,
+      editTempProduct: {
+        imagesUrl: []
+      }
     }
   },
   components: {
-    PageView
+    PageView,
+    ModalView
   },
   methods: {
     getProducts (page = 1) {
       this.tempProducts = null
+      this.searchText = ''
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`)
         .then((res) => {
           this.products = res.data.products
           this.pagination = res.data.pagination
-          console.log(this.products)
         })
         .catch((err) => {
           console.dir(err)
         })
+    },
+    closeModal () {
+      this.modalControl.is_add = false
+      this.modalControl.is_edit = false
+      this.modalControl.is_delete = false
+    },
+    editProduct () {
+      this.editTempProduct.is_enabled = !this.editTempProduct.is_enabled
+      const data = { data: { ...this.editTempProduct } }
+      this.modalControl.is_add = false
+      this.$http
+        .put(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product/${this.editTempProduct.id}`, data)
+        .then((res) => {
+          if (res.data.success) {
+            this.getProducts()
+            this.editTempProduct = {}
+          }
+        })
+        .catch(err => {
+          console.dir(err)
+        })
+    },
+    searchHandler () {
+      if (this.searchText === '') {
+        this.getProducts()
+      }
+      const tempData = []
+      this.products.forEach(product => {
+        if (product.title.match(this.searchText)) {
+          tempData.push(product)
+        }
+      })
+      this.products = tempData
     }
   },
   computed: {

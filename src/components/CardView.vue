@@ -3,14 +3,14 @@
         <div class="card-title bg-primary">
             <h3 class="text-medium text-c-white">{{ title }}</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body" :style="{backgroundImage: `url(${product.imageUrl})`}">
         </div>
         <div class="card-footer">
-            <h4 class="text-medium text-left" :style="{'color': originColor}">嘎啦脆爆米花心滿意足12件組</h4>
-            <p class="text-c-primary text-left mb-2">12包 / 0.72 kg ±10%</p>
+            <h4 class="text-medium text-left" :style="{'color': originColor}">{{ product.title }}</h4>
+            <p class="text-c-primary text-left mb-2">{{ product.content }}</p>
             <div class="price d-flex align-items-center jy-content-between">
-              <p class="price-origin" :style="{'color': originColor}">$1290</p>
-              <p class="price-discount">$900</p>
+              <p class="price-origin" :style="{'color': originColor}">${{ product.origin_price }}</p>
+              <p class="price-discount">${{ product.price }}</p>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  props: ['titleColor', 'originColor'],
+  props: ['titleColor', 'originColor', 'product'],
   data () {
     return {
       title: '雙北隔日配',
@@ -39,7 +39,6 @@ export default {
         }
         &-body {
             padding-bottom: 100%;
-            background-image: url(https://www.funthingtrue.com.tw/upload/product/20220210113009_p1.jpg);
             background-position: center center;
             background-size: contain;
         }

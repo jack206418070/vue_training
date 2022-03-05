@@ -20,10 +20,10 @@
         <li class="menu-icon mr-4">
           <HeartIcon style="width:24px;"></HeartIcon>
         </li>
-        <li class="menu-icon mr-10">
+        <li class="menu-icon">
           <ShoppingCartIcon style="width:24px;"></ShoppingCartIcon>
         </li>
-        <li class="menu-item sign-in">
+        <li class="menu-item sign-in text-right">
           <router-link to="/login">登入</router-link>
         </li>
       </ul>
@@ -143,7 +143,7 @@ export default {
           top: 0;
           width: 3px;
           background-color: #ccc;
-          left: 50%;
+          left: 70%;
           height: 100%;
         }
     }

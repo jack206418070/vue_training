@@ -91,7 +91,7 @@ export default {
 <style lang="scss">
   .product{
     .side-menu{
-      padding: 12px 20px 12px 0;
+      padding: 12px 0 12px 0;
       input{
         width: 100%;
         border: 1px solid #8e8e8e;

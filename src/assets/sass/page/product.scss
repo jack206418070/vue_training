@@ -8,6 +8,10 @@ body{
   margin: 0;
 }
 
+.icon-star{
+  color: $primary;
+  cursor: pointer;
+}
 .toggle{
   width: 60px;
   background: lightgray;
@@ -398,6 +402,7 @@ section > .content{
     .eval{
         .icon-star{
           color: $primary;
+          cursor: pointer;
         }
     }
 }

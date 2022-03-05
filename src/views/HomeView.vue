@@ -40,10 +40,11 @@
           </div>
           <div class="content">
             <div class="d-flex">
-              <template v-for="item in 5" :key="item">
+              <template v-for="item in products" :key="item.id">
                 <CardView
                   :title-color="'white'"
                   :origin-color="'white'"
+                  :product="item"
                 ></CardView>
               </template>
             </div>
@@ -60,10 +61,25 @@ import CardView from '@/components/CardView.vue'
 import { ArrowCircleRightIcon } from '@heroicons/vue/solid'
 
 export default {
+  data () {
+    return {
+      products: []
+    }
+  },
   components: {
     BannerView,
     CardView,
     ArrowCircleRightIcon
+  },
+  mounted () {
+    this.$http
+      .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products`)
+      .then((res) => {
+        this.products = res.data.products
+      })
+      .catch((err) => {
+        console.dir(err)
+      })
   }
 }
 </script>
