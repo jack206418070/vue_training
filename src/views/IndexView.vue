@@ -204,4 +204,9 @@ export default {
       }
     }
   }
+  .price{
+    p{
+      padding: 0;
+    }
+  }
 </style>

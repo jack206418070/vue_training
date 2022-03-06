@@ -75,7 +75,11 @@ export default {
     this.$http
       .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products`)
       .then((res) => {
-        this.products = res.data.products
+        res.data.products.forEach((product, index) => {
+          if (index <= 8) {
+            this.products.push(product)
+          }
+        })
       })
       .catch((err) => {
         console.dir(err)
@@ -151,6 +155,7 @@ export default {
     }
     .content{
       padding: 50px 0;
+      overflow: auto;
     }
   }
   .card{

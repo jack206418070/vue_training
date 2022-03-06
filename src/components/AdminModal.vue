@@ -245,7 +245,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/sass/page/product.scss";
+  .bg--dark--secondary{
+    background-color: darken(#F7FFF7, 5%);
+  }
+  .btn{
+    display: block;
+    color:#fff;
+    padding: 5px 10px;
+    letter-spacing: 0.1rem;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: 0.3s;
+    text-align: center;
+    &:hover{
+        color: black;
+    }
+    &--success{
+        background-color: #1A535C;
+        &:hover{
+            background-color: lighten(#1A535C, 20%);
+        }
+    }
+    &--danger{
+        background-color: #FF6B6B;
+        &:hover{
+            background-color: darken(#FF6B6B, 10%);
+        }
+    }
+  }
   .me-2{
     margin-right: 8px;
   }

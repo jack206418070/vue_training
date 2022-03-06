@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="container d-flex jy-content-center">
+    <div class="admin-container d-flex jy-content-center">
       <div class="search w-100">
         <div class="search__input w-30">
           <div class="search__btn" @click="filterProducts = 'search'">
@@ -61,7 +61,7 @@
                       class="btn btn--success w-30 mx-2" href="#">
                     <i class="fas fa-edit"></i>
                   </a>
-                  <a @click.prevent="editTempProduct = {...item}; modalControl.is_delete= true"   class="btn btn--success w-30 mx-2" href="#">
+                  <a @click.prevent="editTempProduct = {...item}; modalControl.is_delete= true"   class="btn btn--danger w-30 mx-2" href="#">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </li>
@@ -189,7 +189,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import "@/assets/sass/page/product.scss";
-</style>

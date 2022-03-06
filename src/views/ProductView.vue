@@ -1,16 +1,16 @@
 <template>
   <BannerView></BannerView>
   <div class="container">
-    <div class="product mt-10">
+    <div class="user-product mt-10">
       <div class="row">
         <div class="col-lg-3">
-          <div class="side-menu">
+          <div class="user-side-menu">
             <div class="search">
               <h3 class="text-title mb-2">輸入關鍵字</h3>
               <input type="text my-2" placeholder="請輸入商品名稱" name="name">
-              <button class="btn btn-gray my-4 py-2" type="button">查詢</button>
+              <button class="user-btn user-btn-gray my-4 py-2" type="button">查詢</button>
             </div>
-            <ul class="menu">
+            <ul class="user-menu">
               <li class="menu-item mt-10">
                 <h3 class="text-medium text-c-thirdary f-size-xs">放心初精選</h3>
                 <ul class="mt-1">
@@ -89,8 +89,8 @@ export default {
 </script>
 
 <style lang="scss">
-  .product{
-    .side-menu{
+  .user-product{
+    .user-side-menu{
       padding: 12px 0 12px 0;
       input{
         width: 100%;
@@ -109,12 +109,12 @@ export default {
           color: #ccc;
         }
       }
-      .btn{
+      .user-btn{
         width: 100%;
         font-size: 18px;
       }
     }
-    .menu{
+    .user-menu{
       a{
         &:hover{
           color: $primary;

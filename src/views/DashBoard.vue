@@ -1,5 +1,5 @@
 <template>
-  <header class="d-flex jy-content-between align-items-center">
+  <header class="admin-header d-flex jy-content-between align-items-center">
     <div class="logo">
       <h1>LOGO</h1>
     </div>
@@ -41,28 +41,28 @@
       </div>
       <ul>
         <li>
-          <a href="#" class="jy-content-between">
+          <router-link to="/admin">
             <span class="icon small">
               <i class="fas fa-tachometer-alt"></i>
             </span>
             <span class="small">Dashboard</span>
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="./products.html">
+          <router-link to="/admin/product">
             <span class="icon small">
               <i class="fab fa-product-hunt"></i>
             </span>
             <span class="small">Products</span>
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="#">
+          <router-link to="/admin/order">
             <span class="icon small">
               <i class="fas fa-border-all"></i>
             </span>
             <span class="small">Orders</span>
-          </a>
+          </router-link>
         </li>
         <li>
           <a href="#">
@@ -148,7 +148,7 @@ export default {
         this.$http.post(`${process.env.VUE_APP_APIURL}/api/user/check`, { api_token: this.token })
           .then(() => {
             this.isCheck = true
-            this.$router.push('/admin/product')
+            this.$router.push('/admin')
           })
           .catch((err) => {
             console.dir(err)
@@ -177,6 +177,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/sass/page/product.scss";
 </style>

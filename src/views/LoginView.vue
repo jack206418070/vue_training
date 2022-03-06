@@ -23,9 +23,9 @@
               <ErrorMessage style="color:red" name="password" class="invalid-feeback"></ErrorMessage>
             </div>
             <div class="btn-group">
-              <button class="btn btn-gray py-3" type="button">加入會員</button>
-              <button class="btn btn-danger py-3" type="button">快速註冊</button>
-              <button class="btn btn-thirdary py-3" type="submit">登入</button>
+              <button class="user-btn user-btn-gray py-3" type="button">加入會員</button>
+              <button class="user-btn user-btn-danger py-3" type="button">快速註冊</button>
+              <button class="user-btn user-btn-thirdary py-3" type="submit">登入</button>
             </div>
           </FormView>
         </div>
@@ -48,7 +48,7 @@
               <p class="text-medium text-center">不定期紅利加倍送</p>
             </li>
           </ul>
-          <router-link to="/product" class="btn btn-thirdary py-3">現在就挑選新鮮水果！</router-link>
+          <router-link to="/product" class="user-btn user-btn-thirdary py-3">現在就挑選新鮮水果！</router-link>
         </div>
       </div>
     </div>
@@ -101,13 +101,13 @@ export default {
     }
     &-left{
       flex: 0 0 50%;
-      .btn{
+      .user-btn{
         flex: 0 0 33.3333%;
       }
     }
     &-right{
       flex: 0 0 50%;
-      .btn{
+      .user-btn{
         width: 60%;
         margin: 0 auto;
       }
@@ -126,7 +126,7 @@ export default {
         outline: none;
       }
     }
-    .btn{
+    .user-btn{
       font-size: 18px;
       transition: .7s;
       &:hover{

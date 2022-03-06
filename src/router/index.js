@@ -49,6 +49,11 @@ const routes = [
         path: 'product',
         name: '產品列表',
         component: () => import('../views/Dashboard/ProductView.vue')
+      },
+      {
+        path: 'order',
+        name: '訂購清單',
+        component: () => import('../views/Dashboard/OrderView.vue')
       }
     ]
   }

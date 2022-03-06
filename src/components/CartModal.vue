@@ -7,14 +7,14 @@
           <XIcon></XIcon>
         </a>
       </div>
-      <div class="content">
+      <div class="user-content">
         <ul>
-          <li class="content-title d-flex jy-content-between">
+          <li class="user-content-title d-flex jy-content-between">
             <p class="name text-c-white">商品名稱</p>
             <p class="price text-c-white">價錢</p>
             <p class="delete"></p>
           </li>
-          <li class="content-inner d-flex align-items-center jy-content-between">
+          <li class="user-content-inner d-flex align-items-center jy-content-between">
             <p class="name text-c-white">秋翠-綠無籽葡萄【五包】x1</p>
             <p class="price text-c-white">NT$ 1888</p>
             <a class="delete text-c-white" href="#">
@@ -69,7 +69,7 @@ export default {
         width: 24px;
         height: 24px;
       }
-      .content{
+      .user-content{
         &-title{
           padding: 5px 0;
           border-bottom: 2px solid #fff;
