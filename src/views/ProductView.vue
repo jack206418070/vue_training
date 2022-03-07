@@ -73,7 +73,7 @@
       </div>
     </div>
   </div>
-  <CartView></CartView>
+  <CartView :cart-data="cart" @get-cart="getCart"></CartView>
 </template>
 
 <script>
@@ -81,9 +81,30 @@ import BannerView from '@/components/BannerView.vue'
 import CartView from '@/components/CartModal.vue'
 
 export default {
+  data () {
+    return {
+      cart: []
+    }
+  },
   components: {
     BannerView,
     CartView
+  },
+  methods: {
+    getCart () {
+      this.$http
+        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`)
+        .then((res) => {
+          this.cart = res.data.data
+          console.log(this.cart)
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
+    }
+  },
+  mounted () {
+    this.getCart()
   }
 }
 </script>

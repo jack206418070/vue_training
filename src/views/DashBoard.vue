@@ -65,12 +65,12 @@
           </router-link>
         </li>
         <li>
-          <a href="#">
+          <router-link to="/admin/coupon">
             <span class="icon small">
               <i class="fas fa-ticket-alt"></i>
             </span>
             <span class="small">Coupon</span>
-          </a>
+          </router-link>
         </li>
       </ul>
       <div class="side-toggle">

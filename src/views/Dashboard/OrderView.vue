@@ -3,7 +3,7 @@
     <div class="admin-container d-flex jy-content-center">
       <div class="total__product w-100 d-flex align-items-center jy-content-between">
         <p>目前有 {{ orders.length }} 筆訂單</p>
-        <a class="btn btn--danger w-10" href="#">刪除全部訂單</a>
+        <a @click.prevent="deleteOrder('all')" class="btn btn--danger w-10" href="#">刪除全部訂單</a>
       </div>
       <div class="product w-100 mb-3">
         <ul>

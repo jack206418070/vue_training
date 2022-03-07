@@ -27,9 +27,13 @@ const routes = [
             component: () => import('../views/CategoryView.vue')
           },
           {
-            path: 'choose',
-            name: '精選商品',
-            component: () => import('../views/CategoryView.vue')
+            path: ':id',
+            component: () => import('../views/OneProductView.vue'),
+            props: (route) => {
+              return {
+                id: route.params.id
+              }
+            }
           }
         ]
       },
@@ -54,6 +58,11 @@ const routes = [
         path: 'order',
         name: '訂購清單',
         component: () => import('../views/Dashboard/OrderView.vue')
+      },
+      {
+        path: 'coupon',
+        name: '優惠卷頁面',
+        component: () => import('../views/Dashboard/CouponView.vue')
       }
     ]
   }

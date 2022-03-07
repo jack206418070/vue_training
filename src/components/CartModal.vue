@@ -11,13 +11,20 @@
         <ul>
           <li class="user-content-title d-flex jy-content-between">
             <p class="name text-c-white">商品名稱</p>
-            <p class="price text-c-white">價錢</p>
+            <p class="qty text-c-white">數量</p>
+            <p class="onePrice text-c-white">單價</p>
+            <p class="price text-c-white">總價</p>
             <p class="delete"></p>
           </li>
-          <li class="user-content-inner d-flex align-items-center jy-content-between">
-            <p class="name text-c-white">秋翠-綠無籽葡萄【五包】x1</p>
-            <p class="price text-c-white">NT$ 1888</p>
-            <a class="delete text-c-white" href="#">
+          <li v-for="item in cart.carts"
+              :key="item.id"
+              class="user-content-inner d-flex align-items-center jy-content-between"
+          >
+            <p class="name text-c-white">{{ item.product.title }}</p>
+            <p class="qty text-c-white">{{ item.qty }}</p>
+            <p class="onePrice text-c-white">${{ item.product.price }}</p>
+            <p class="price text-c-white">${{ item.total }}</p>
+            <a @click.prevent="delCartProducts(item.id)" class="delete text-c-white" href="#">
               <XIcon></XIcon>
             </a>
           </li>
@@ -25,7 +32,7 @@
       </div>
     </div>
     <div @click="controlModal" class="cart-modal-btn bg-secondary p-3">
-      <p class="text-c-white">已購 $199</p>
+      <p class="text-c-white">已購 ${{ cart.final_total }}</p>
     </div>
   </div>
 </template>
@@ -34,9 +41,12 @@
 import { XIcon } from '@heroicons/vue/solid'
 
 export default {
+  props: ['cartData'],
+  emits: ['getCart'],
   data () {
     return {
-      isShow: false
+      isShow: false,
+      cart: []
     }
   },
   components: {
@@ -45,7 +55,25 @@ export default {
   methods: {
     controlModal () {
       this.isShow = !this.isShow
+    },
+    delCartProducts (id) {
+      this.$http
+        .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart/${id}`)
+        .then(() => {
+          this.$emit('getCart')
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
     }
+  },
+  watch: {
+    cartData () {
+      this.cart = this.cartData
+    }
+  },
+  mounted () {
+    this.cart = this.cartData
   }
 }
 </script>
@@ -79,10 +107,18 @@ export default {
           border-bottom: 1px solid #fff;
         }
         .name{
-          width: 60%;
+          width: 30%;
+        }
+        .qty{
+          width: 20%;
+          text-align:center;
+        }
+        .onePrice{
+          width: 20%;
+          text-align:center;
         }
         .price{
-          width: 30%;
+          width: 20%;
           text-align: right;
         }
         .delete{
