@@ -3,7 +3,7 @@
   <div class="row product-content">
     <div class="col-lg-3 mb-4 p-relative hover-big" v-for="item in products" :key="item.id">
       <div class="addToCart">
-        <button class="user-btn user-btn-thirdary py-3">加入購物車</button>
+        <button @click="addCart(1, item.id)" type="button" class="user-btn user-btn-thirdary py-3">加入購物車</button>
       </div>
       <router-link :to="'/product/'+ item.id ">
         <CardView
@@ -21,7 +21,8 @@ export default {
   data () {
     return {
       products: [],
-      cart: []
+      cart: [],
+      tempCartProduct: {}
     }
   },
   components: {
@@ -33,6 +34,32 @@ export default {
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products`)
         .then((res) => {
           this.products = res.data.products
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
+    },
+    getCart () {
+      this.$http
+        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`)
+        .then((res) => {
+          this.$emitter.emit('updateCart', res.data.data)
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
+    },
+    addCart (qty, id) {
+      const data = {
+        data: {
+          product_id: id,
+          qty: qty
+        }
+      }
+      this.$http
+        .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`, data)
+        .then(() => {
+          this.getCart()
         })
         .catch((err) => {
           console.dir(err)

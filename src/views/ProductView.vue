@@ -96,7 +96,6 @@ export default {
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {
           this.cart = res.data.data
-          console.log(this.cart)
         })
         .catch((err) => {
           console.dir(err)
@@ -105,6 +104,9 @@ export default {
   },
   mounted () {
     this.getCart()
+    this.$emitter.on('updateCart', (data) => {
+      this.cart = data
+    })
   }
 }
 </script>

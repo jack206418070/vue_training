@@ -7,6 +7,7 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import mitt from 'mitt'
 
 defineRule('required', required)
 defineRule('email', email)
@@ -18,6 +19,7 @@ configure({
 setLocale('zh_TW')
 
 const app = createApp(App).use(router).use(VueAxios, axios)
+app.config.globalProperties.$emitter = mitt()
 app.component('FormView', Form)
 app.component('FieldView', Field)
 app.component('ErrorMessage', ErrorMessage)
