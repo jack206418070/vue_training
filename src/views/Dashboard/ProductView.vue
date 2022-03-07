@@ -86,7 +86,7 @@
 
 <script>
 import PageView from '@/components/PageNation.vue'
-import ModalView from '@/components/AdminModal.vue'
+import ModalView from '@/components/AdminPModal.vue'
 
 export default {
   data () {

@@ -8,7 +8,7 @@
         <div class="card-footer">
             <h4 class="text-medium text-left" :style="{'color': originColor}">{{ product.title }}</h4>
             <p class="text-c-primary text-left mb-2">{{ product.unit }} / {{ product.content }}</p>
-            <div class="price d-flex align-items-center jy-content-between">
+            <div class="user-price d-flex align-items-center jy-content-between">
               <p class="user-price-origin" :style="{'color': originColor}">${{ product.origin_price }}</p>
               <p class="user-price-discount">${{ product.price }}</p>
             </div>
@@ -43,7 +43,8 @@ export default {
             background-size: contain;
         }
         &-footer {
-            padding: 10px 0;
+          padding: 10px 0;
+          .user-price{
             .user-price-origin{
               color:#8e8e8e;
               text-decoration: line-through;
@@ -53,6 +54,7 @@ export default {
               font-size: 18px;
               color: $primary;
             }
+          }
         }
     }
 </style>

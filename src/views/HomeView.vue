@@ -161,5 +161,13 @@ export default {
   .card{
     flex: 0 0 19%;
     margin-right: 1.25%;
+    @include pad {
+      flex: 0 0 24%;
+      margin-right: 1%;
+    }
+    @include mobile {
+      flex: 0 0 32%;
+      margin-right: 1.33%;
+    }
   }
 </style>

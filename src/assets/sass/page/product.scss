@@ -7,7 +7,9 @@ body{
   padding: 0;
   margin: 0;
 }
-
+.pointer{
+  cursor: pointer;
+}
 .icon-star{
   color: $primary;
   cursor: pointer;

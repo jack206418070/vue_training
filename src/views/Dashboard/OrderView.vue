@@ -11,12 +11,12 @@
             <h3 class="text-c-white f-w-bold">訂購日期</h3>
             <div class="info__group w-90">
               <ul class="d-flex fw-bold">
-                <li class="w-10 f-w-bold">訂購人</li>
+                <li class="w-15 f-w-bold">訂購人</li>
                 <li class="w-35 f-w-bold">訂購內容</li>
-                <li class="w-20 f-w-bold">地址</li>
                 <li class="w-15 f-w-bold">電話</li>
                 <li class="w-10 f-w-bold">總金額</li>
-                <li class="w-10 f-w-bold">是否付款</li>
+                <li class="w-15 f-w-bold">是否付款</li>
+                <li class="w-10 f-w-bold">編輯</li>
               </ul>
             </div>
           </li>
@@ -24,7 +24,7 @@
             <h3>{{ item.create_at }}</h3>
             <div class="info__group w-90">
               <ul class="d-flex fw-bold align-items-center">
-                <li class="w-10">{{ item.user.name }}</li>
+                <li class="w-15">{{ item.user.name }}</li>
                 <li class="w-35">
                   <p v-for="product in item.products" :key="product.id" class="text-left w-100">
                     <span>{{ product.product.title }} -
@@ -33,13 +33,18 @@
                     </span>
                   </p>
                 </li>
-                <li class="w-20">{{ item.user.address }}</li>
                 <li class="w-15">{{ item.user.tel }}</li>
                 <li class="w-10">${{ item.total }}</li>
-                <li class="w-10 d-flex align-items-center jy-content-between">
+                <li class="w-15 d-flex jy-content-around align-items-center">
                   <span v-if="item.is_paid === false" class="text-left">未付款</span>
                   <span v-else class="text-left">已付款</span>
-                  <a @click.prevent="deleteOrder(item.id)" class="btn btn--danger" href="#">
+                  <button @click="updatePaid(item)" class="pointer" type="button">更新付款狀態</button>
+                </li>
+                <li class="w-10 d-flex align-items-center jy-content-center">
+                  <a @click.prevent="openModal(item)" class="btn btn--success mr-1" href="#">
+                    <i class="fa-regular fa-eye"></i>
+                  </a>
+                  <a @click.prevent="openDelModal('訂單',item)" class="btn btn--danger ml-1" href="#">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </li>
@@ -49,15 +54,25 @@
         </ul>
       </div>
     </div>
+    <DelModal :data="tempOrder" @del-data="deleteOrder" ref="delModal">
+    </DelModal>
+    <OrderModal :order="tempOrder" @update-paid="updatePaid" ref="orderModal"></OrderModal>
   </div>
 </template>
 
 <script>
+import DelModal from '@/components/AdminDelModal.vue'
+import OrderModal from '@/components/AdminOModal.vue'
 export default {
   data () {
     return {
-      orders: []
+      orders: [],
+      tempOrder: {}
     }
+  },
+  components: {
+    DelModal,
+    OrderModal
   },
   methods: {
     getOrders () {
@@ -75,10 +90,37 @@ export default {
         .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/order/${id}`)
         .then(() => {
           alert('刪除成功')
+          this.closeDelModal()
           this.getOrders()
         })
         .catch((err) => {
           console.log(err)
+        })
+    },
+    openDelModal (type, item) {
+      this.$refs.delModal.openModal(type)
+      this.tempOrder = item
+    },
+    openModal (item) {
+      this.$refs.orderModal.openModal()
+      this.tempOrder = item
+    },
+    updatePaid (item) {
+      const data = {
+        data: {
+          ...item,
+          is_paid: !item.is_paid
+        }
+      }
+      this.$http
+        .put(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`, data)
+        .then(() => {
+          const component = this.$refs.orderModal
+          component.closeModal()
+          this.getOrders()
+        })
+        .catch((err) => {
+          console.dir(err)
         })
     }
   },
