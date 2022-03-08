@@ -20,7 +20,8 @@
         <li class="menu-icon mr-4">
           <HeartIcon style="width:24px;"></HeartIcon>
         </li>
-        <li class="menu-icon">
+        <li class="menu-icon p-relative">
+          <div class="cart-amount">{{ cartLen }}</div>
           <ShoppingCartIcon style="width:24px;"></ShoppingCartIcon>
         </li>
         <li class="menu-item sign-in text-right">
@@ -90,11 +91,37 @@ import { HeartIcon, ShoppingCartIcon } from '@heroicons/vue/outline'
 export default {
   data () {
     return {
+      cart: []
     }
   },
   components: {
     HeartIcon,
     ShoppingCartIcon
+  },
+  methods: {
+    getCart () {
+      this.$http
+        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`)
+        .then((res) => {
+          this.cart = res.data.data.carts
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
+    }
+  },
+  computed: {
+    cartLen () {
+      const temp = 0
+      const len = this.cart.reduce((pre, current) => pre + current.qty, temp)
+      return len
+    }
+  },
+  mounted () {
+    this.getCart()
+    this.$emitter.on('updateCart', (data) => {
+      this.cart = data.carts
+    })
   }
 }
 </script>
@@ -103,6 +130,11 @@ export default {
   .header {
     padding: 10px 0;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top:0;
+    width: 100%;
+    z-index:1000;
+    background-color: white;
     .logo{
       position: relative;
       &-btn{
@@ -208,5 +240,18 @@ export default {
     p{
       padding: 0;
     }
+  }
+  .cart-amount{
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    font-size: 12px;
+    border-radius: 50%;
+    line-height: 18px;
+    text-align: center;
+    background-color: red;
+    color: white;
+    top: -30%;
+    right: -30%;
   }
 </style>

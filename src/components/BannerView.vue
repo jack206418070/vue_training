@@ -49,6 +49,7 @@ export default {
     letter-spacing: 0.125rem;
     background-color: #9F9086;
     color: white;
+    margin-top: 59px;
   }
   .swiper-pagination-bullet{
     background-color: #333;

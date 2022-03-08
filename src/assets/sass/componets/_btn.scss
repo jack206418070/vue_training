@@ -17,6 +17,10 @@
     background-color: #bd9154;
     color: white;
   }
+  &-primary{
+    background-color: $primary;
+    color: white;
+  }
 }
 
 .btn-group{

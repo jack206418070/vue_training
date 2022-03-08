@@ -66,7 +66,7 @@
           </div>
         </div>
         <div class="col-lg-9">
-          <div class="content py-3">
+          <div class="content pb-3">
             <router-view></router-view>
           </div>
         </div>
@@ -96,6 +96,7 @@ export default {
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {
           this.cart = res.data.data
+          this.$emitter.emit('updateCart', res.data.data)
         })
         .catch((err) => {
           console.dir(err)
@@ -114,7 +115,7 @@ export default {
 <style lang="scss">
   .user-product{
     .user-side-menu{
-      padding: 12px 0 12px 0;
+      padding-bottom: 12px;
       input{
         width: 100%;
         border: 1px solid #8e8e8e;

@@ -91,6 +91,7 @@ export default {
   .login {
     border: 1px solid #a8a8a8;
     position: relative;
+    margin-top: 59px;
     &::after{
       position: absolute;
       content: '';

@@ -13,7 +13,7 @@
             <p class="name text-c-white">商品名稱</p>
             <p class="qty text-c-white">數量</p>
             <p class="onePrice text-c-white">單價</p>
-            <p class="price text-c-white">總價</p>
+            <p class="totalprice text-c-white">總價</p>
             <p class="delete"></p>
           </li>
           <li v-for="item in cart.carts"
@@ -23,7 +23,7 @@
             <p class="name text-c-white">{{ item.product.title }}</p>
             <p class="qty text-c-white">{{ item.qty }}</p>
             <p class="onePrice text-c-white">${{ item.product.price }}</p>
-            <p class="price text-c-white">${{ item.total }}</p>
+            <p class="totalprice text-c-white">${{ item.total }}</p>
             <a @click.prevent="delCartProducts(item.id)" class="delete text-c-white" href="#">
               <XIcon></XIcon>
             </a>
@@ -93,6 +93,7 @@ export default {
       margin-bottom: 10px;
       height: 400px;
       background-color: $secondary;
+      overflow: auto;
       .close{
         width: 24px;
         height: 24px;
@@ -117,7 +118,7 @@ export default {
           width: 20%;
           text-align:center;
         }
-        .price{
+        .totalprice{
           width: 20%;
           text-align: right;
         }
