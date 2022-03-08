@@ -72,6 +72,14 @@
             <span class="small">Coupon</span>
           </router-link>
         </li>
+        <li>
+          <router-link to="/admin/article">
+            <span class="icon small">
+              <i class="fa-solid fa-newspaper"></i>
+            </span>
+            <span class="small">Article</span>
+          </router-link>
+        </li>
       </ul>
       <div class="side-toggle">
         <span class="icon">

@@ -63,6 +63,11 @@ const routes = [
         path: 'coupon',
         name: '優惠卷頁面',
         component: () => import('../views/Dashboard/CouponView.vue')
+      },
+      {
+        path: 'article',
+        name: '文章頁面',
+        component: () => import('../views/Dashboard/ArticleView.vue')
       }
     ]
   }
