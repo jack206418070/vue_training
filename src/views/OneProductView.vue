@@ -1,4 +1,5 @@
 <template>
+  <LoadingView :active="isLoading"></LoadingView>
   <div class="oneProduct">
     <div class="row">
       <div class="col-lg-6">
@@ -31,7 +32,17 @@
             <input :value="qty" type="number" name="amount" min="1" max="20" step="1" readonly>
             <div @click="decQty" class="dec">-</div>
           </div>
-          <button @click="addCart" class="user-btn user-btn-primary text-center py-2" type="button">加入購物車</button>
+          <button
+            @click="addCart"
+            class="user-btn user-btn-primary text-center py-2"
+            type="button"
+            :disabled="isBtnLoading"
+            >
+            <span v-if="isBtnLoading">
+              <i class="fas fa-pulse fa-spinner"></i>
+            </span>
+            <span v-else>加入購物車</span>
+          </button>
         </div>
       </div>
       <div class="col-lg-12 mb-5">
@@ -70,7 +81,9 @@ export default {
     return {
       product: {},
       products: [],
-      qty: 1
+      qty: 1,
+      isLoading: false,
+      isBtnLoading: false
     }
   },
   components: {
@@ -94,6 +107,7 @@ export default {
         })
     },
     addCart () {
+      this.isBtnLoading = true
       const data = {
         data: {
           product_id: this.product.id,
@@ -105,6 +119,7 @@ export default {
         .then(() => {
           this.getCart()
           this.qty = 1
+          this.isBtnLoading = false
         })
         .catch((err) => {
           console.dir(err)
@@ -112,10 +127,12 @@ export default {
     }
   },
   mounted () {
+    this.isLoading = true
     this.$http
       .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/product/${this.id}`)
       .then((res) => {
         this.product = res.data.product
+        this.isLoading = false
       })
       .catch((err) => {
         console.dir(err)

@@ -1,5 +1,6 @@
 <template>
   <div class="cart-modal bg-secondary">
+    <LoadingView :active="isLoading"></LoadingView>
     <div v-show="isShow" class="cart-modal-content p-3">
       <div class="title d-flex jy-content-between align-items-center">
         <h4 class="text-medium text-c-white f-size-xs">已選購清單</h4>
@@ -46,7 +47,8 @@ export default {
   data () {
     return {
       isShow: false,
-      cart: []
+      cart: [],
+      isLoading: false
     }
   },
   components: {
@@ -57,10 +59,12 @@ export default {
       this.isShow = !this.isShow
     },
     delCartProducts (id) {
+      this.isLoading = true
       this.$http
         .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart/${id}`)
         .then(() => {
           this.$emit('getCart')
+          this.isLoading = false
         })
         .catch((err) => {
           console.dir(err)

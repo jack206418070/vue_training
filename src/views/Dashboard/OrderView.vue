@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container d-flex jy-content-center">
       <div class="total__product w-100 d-flex align-items-center jy-content-between">
         <p>目前有 {{ orders.length }} 筆訂單</p>
@@ -67,7 +68,8 @@ export default {
   data () {
     return {
       orders: [],
-      tempOrder: {}
+      tempOrder: {},
+      isLoading: false
     }
   },
   components: {
@@ -76,10 +78,12 @@ export default {
   },
   methods: {
     getOrders () {
+      this.isLoading = true
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/orders`)
         .then((res) => {
           this.orders = res.data.orders
+          this.isLoading = false
         })
         .catch((err) => {
           console.log(err)

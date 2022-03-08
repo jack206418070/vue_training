@@ -19,6 +19,7 @@
     "vee-validate": "^4.5.8",
     "vue": "^3.2.13",
     "vue-axios": "^3.4.1",
+    "vue-loading-overlay": "^5.0.3",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {

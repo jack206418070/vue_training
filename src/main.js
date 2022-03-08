@@ -8,6 +8,10 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import mitt from 'mitt'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 defineRule('required', required)
 defineRule('email', email)
@@ -20,6 +24,7 @@ setLocale('zh_TW')
 
 const app = createApp(App).use(router).use(VueAxios, axios)
 app.config.globalProperties.$emitter = mitt()
+app.component('LoadingView', Loading)
 app.component('FormView', Form)
 app.component('FieldView', Field)
 app.component('ErrorMessage', ErrorMessage)

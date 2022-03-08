@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container d-flex jy-content-center">
       <div class="search w-100">
         <div class="search__input w-30">
@@ -107,7 +108,7 @@ export default {
         is_sideMenu: true,
         is_delete: false
       },
-      is_loading: false,
+      isLoading: false,
       ascending: false,
       sideToggle: true,
       editTempProduct: {
@@ -121,6 +122,7 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
+      this.isLoading = true
       this.tempProducts = null
       this.searchText = ''
       this.$http
@@ -128,6 +130,7 @@ export default {
         .then((res) => {
           this.products = res.data.products
           this.pagination = res.data.pagination
+          this.isLoading = false
         })
         .catch((err) => {
           console.dir(err)
