@@ -1,21 +1,30 @@
 <template>
-  <ul class="pagination d-flex align-items-center jy-content-center">
-    <li v-show="pagination.has_pre" class="pagination__prev" @click="$emit('getProduct',pagination.current_page - 1)"><span><i class="fas fa-chevron-left"></i>Prev</span></li>
+  <ul class="pagination d-flex align-items-center jy-content-center" :style="{backgroundColor: style.bg}">
+    <li v-show="pagination.has_pre" :style="styleObject" class="pagination__prev" @click="$emit('getProduct',pagination.current_page - 1)"><span><i class="fas fa-chevron-left"></i>Prev</span></li>
     <li class="pagination__item"
       v-for="page in pagination.total_pages"
       :key="page"
       :class="{'active': page === pagination.current_page}"
+      :style="styleObject"
       @click="$emit('getProduct',page)">
       <span>{{ page }}</span>
     </li>
-    <li v-show="pagination.has_next" class="pagination__next" @click="$emit('getProduct',pagination.current_page + 1)"> <span>Next<i class="fas fa-chevron-right"></i></span></li>
+    <li v-show="pagination.has_next"  :style="styleObject" class="pagination__next" @click="$emit('getProduct',pagination.current_page + 1)"> <span>Next<i class="fas fa-chevron-right"></i></span></li>
   </ul>
 </template>
 
 <script>
 export default {
-  props: ['pagination'],
-  emits: ['getProduct']
+  props: ['pagination', 'style'],
+  emits: ['getProduct'],
+  computed: {
+    styleObject () {
+      return {
+        '--background': this.style.bg,
+        '--background-hover': this.style.hoverBg
+      }
+    }
+  }
 }
 </script>
 
@@ -24,7 +33,6 @@ export default {
     font-size: 20px;
     max-width: 300px;
     margin: 0 auto;
-    background: #257784;
     color: #fff;
     font-weight: bold;
     border-radius: 50px;
@@ -37,7 +45,7 @@ export default {
             font-size: 20px;
         }
         &:hover{
-            background-color: $primary;
+          background-color: var(--background-hover);
         }
     }
     &__prev{
@@ -48,11 +56,11 @@ export default {
     }
     &__item{
         padding: 4px 16px;
-        &:hover{
-            background-color: #1A535C;
-        }
         &.active{
-            background-color: #1A535C;
+            background-color: var(--background-hover);
+        }
+        &:hover{
+          background-color: var(--background-hover);
         }
     }
   }

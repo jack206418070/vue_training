@@ -13,27 +13,41 @@
       </router-link>
     </div>
   </div>
+  <PageView
+      :pagination="pagination"
+      :style="style"
+      @get-product="getProducts"
+  >
+  </PageView>
 </template>
 
 <script>
 import CardView from '@/components/CardView.vue'
+import PageView from '@/components/PageNation.vue'
 export default {
   data () {
     return {
       products: [],
       cart: [],
-      tempCartProduct: {}
+      tempCartProduct: {},
+      pagination: {},
+      style: {
+        bg: '#C59854',
+        hoverBg: '#A01800'
+      }
     }
   },
   components: {
-    CardView
+    CardView,
+    PageView
   },
   methods: {
-    getProducts () {
+    getProducts (page = 1) {
       this.$http
-        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products`)
+        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`)
         .then((res) => {
           this.products = res.data.products
+          this.pagination = res.data.pagination
         })
         .catch((err) => {
           console.dir(err)

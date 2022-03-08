@@ -80,7 +80,12 @@
       v-if="modalControl.is_add || modalControl.is_edit || modalControl.is_delete"
     >
     </ModalView>
-    <PageView :pagination="pagination" @get-product="getProducts"></PageView>
+    <PageView
+      :pagination="pagination"
+      @get-product="getProducts"
+      :style="{bg: '#1A535C', hoverBg: '#FF6B6B'}"
+    >
+    </PageView>
   </div>
 </template>
 

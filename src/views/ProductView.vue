@@ -1,7 +1,7 @@
 <template>
   <BannerView></BannerView>
   <div class="container">
-    <div class="user-product mt-10">
+    <div class="user-product mt-10 mb-10">
       <div class="row">
         <div class="col-lg-3">
           <div class="user-side-menu">
