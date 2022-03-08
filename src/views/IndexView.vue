@@ -79,7 +79,7 @@
     </div>
     <div class="copyright bg-container py-2">
         <p class="text-c-white text-center">
-            好初水果有限公司｜台灣本地 X 進口當季水果宅配 © Copyright funthingtrue 2020
+            好初水果有限公司｜台灣本地 X 進口當季水果宅配 © 僅供學習用無任何商業用途
         </p>
     </div>
   </footer>
