@@ -26,7 +26,12 @@
                 <li class="w-30 f-w-bold">{{ item.title }}</li>
                 <li class="w-30 f-w-bold">{{ item.percent }}</li>
                 <li class="w-15 f-w-bold d-flex jy-content-center px-4">
-                  <div class="toggle" :class="{'active': item.is_enabled === 1}">
+                  <div  class="toggle"
+                        :class="{'active': item.is_enabled === 1}"
+                        @click="item.is_enabled === 1 ? item.is_enabled = 0 : item.is_enabled = 1;
+                        isNew = false;
+                        updateCoupon(item);"
+                  >
                   </div>
                   <p v-if="item.is_enabled === 1" class="active">
                     啟用
@@ -47,10 +52,15 @@
         </ul>
       </div>
     </div>
+    <PageView
+      :pagination="pagination"
+      @get-product="getCoupon"
+      :style="{bg: '#1A535C', hoverBg: '#FF6B6B'}"
+    ></PageView>
     <ModalView
       :coupon="tempCoupon"
       :is-new="isNew"
-      @update-coupon="updateConpon"
+      @update-coupon="updateCoupon"
       ref="couponModal"
     ></ModalView>
     <DelModal
@@ -65,48 +75,49 @@
 <script>
 import ModalView from '@/components/AdminCModal.vue'
 import DelModal from '@/components/AdminDelModal.vue'
+import PageView from '@/components/PageNation.vue'
 export default {
   data () {
     return {
       isLoading: false,
       isNew: false,
       coupons: [],
-      tempCoupon: {}
+      tempCoupon: {},
+      pagination: {}
     }
   },
   components: {
     ModalView,
-    DelModal
+    DelModal,
+    PageView
   },
   methods: {
-    updateConpon (tempCoupon) {
+    updateCoupon (tempCoupon, type = '') {
       this.$refs.couponModal.closeModal()
       this.isLoading = true
       let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupon`
       let httpMethods = 'post'
-      let data = tempCoupon
+      this.tempCoupon = tempCoupon
 
       if (!this.isNew) {
-        url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
         httpMethods = 'put'
-        data = this.tempCoupon
+        url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
       }
-
-      this.$http[httpMethods](url, { data })
-        .then((res) => {
-          this.isLoading = false
+      this.$http[httpMethods](url, { data: this.tempCoupon })
+        .then(() => {
           this.getCoupon()
         })
         .catch((err) => {
           console.dir(err)
         })
     },
-    getCoupon () {
+    getCoupon (page = 1) {
       this.isLoading = true
       this.$http
-        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupons`)
+        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`)
         .then((res) => {
           this.coupons = res.data.coupons
+          this.pagination = res.data.pagination
           this.isLoading = false
         })
         .catch((err) => {

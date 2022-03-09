@@ -55,6 +55,11 @@
         </ul>
       </div>
     </div>
+    <PageView
+      :pagination="pagination"
+      @get-product="getOrders"
+      :style="{bg: '#1A535C', hoverBg: '#FF6B6B'}"
+    ></PageView>
     <DelModal :data="tempOrder" @del-data="deleteOrder" ref="delModal">
     </DelModal>
     <OrderModal :order="tempOrder" @update-paid="updatePaid" ref="orderModal"></OrderModal>
@@ -64,25 +69,29 @@
 <script>
 import DelModal from '@/components/AdminDelModal.vue'
 import OrderModal from '@/components/AdminOModal.vue'
+import PageView from '@/components/PageNation.vue'
 export default {
   data () {
     return {
       orders: [],
       tempOrder: {},
-      isLoading: false
+      isLoading: false,
+      pagination: {}
     }
   },
   components: {
     DelModal,
-    OrderModal
+    OrderModal,
+    PageView
   },
   methods: {
-    getOrders () {
+    getOrders (page = 1) {
       this.isLoading = true
       this.$http
-        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/orders`)
+        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`)
         .then((res) => {
           this.orders = res.data.orders
+          this.pagination = res.data.pagination
           this.isLoading = false
         })
         .catch((err) => {
@@ -110,6 +119,7 @@ export default {
       this.tempOrder = item
     },
     updatePaid (item) {
+      this.isLoading = true
       const data = {
         data: {
           ...item,

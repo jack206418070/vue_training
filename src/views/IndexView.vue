@@ -21,8 +21,10 @@
           <HeartIcon style="width:24px;"></HeartIcon>
         </li>
         <li class="menu-icon p-relative">
-          <div class="cart-amount">{{ cartLen }}</div>
-          <ShoppingCartIcon style="width:24px;"></ShoppingCartIcon>
+          <router-link to="/cart">
+            <div class="cart-amount">{{ cartLen }}</div>
+            <ShoppingCartIcon style="width:24px;"></ShoppingCartIcon>
+          </router-link>
         </li>
         <li class="menu-item sign-in text-right">
           <router-link to="/login">登入</router-link>

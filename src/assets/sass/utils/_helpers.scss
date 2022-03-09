@@ -18,6 +18,9 @@
     &dark{
         background-color: $f-color-secondary;
     }
+    &gray{
+        background-color: #C1C1C1;
+    }
 }
 
 .bg-none{
@@ -52,6 +55,9 @@
 }
 .border-r{
     border-right: 1px solid $thirdary;
+}
+.border-b-1{
+  border-bottom: 1px solid #c1c1c1;
 }
 
 .border-b{
