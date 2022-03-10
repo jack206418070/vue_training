@@ -116,7 +116,7 @@
             </div>
             <div class="col-lg-12">
               <button
-                class="user-btn user-btn-primary w-100 py-3 mb-0 mt-auto"
+                class="user-btn user-btn-primary w-100 py-4 mb-0 mt-auto f-size-xs"
                 type="submit"
               >
                 下一步：完成付款
@@ -182,6 +182,9 @@ export default {
       const phoneNumber = /^(09)[0-9]{8}$/
       return phoneNumber.test(value) ? true : '需要正確的電話號碼'
     }
+  },
+  mounted () {
+    this.$emitter.emit('changeBar', 2)
   }
 }
 </script>

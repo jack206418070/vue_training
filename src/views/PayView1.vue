@@ -195,6 +195,7 @@ export default {
   },
   mounted () {
     this.getCarts()
+    this.$emitter.emit('changeBar', 1)
   }
 }
 </script>

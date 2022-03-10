@@ -9,6 +9,9 @@ export default {
     return {
       isLoading: false
     }
+  },
+  mounted () {
+    this.$emitter.emit('changeBar', 3)
   }
 }
 </script>

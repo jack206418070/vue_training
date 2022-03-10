@@ -10,30 +10,30 @@
     <div class="col-lg-6">
       <div class="row">
         <div class="col-lg-4">
-          <div class="step-item active">
+          <div class="step-item" :class="{'active': step > 0}">
             <h3 class="text-medium">
-              <span class="active">1</span>
+              <span :class="{'active': step > 0}">1</span>
               明細消費
             </h3>
-            <div class="hide-bar active"></div>
+            <div class="hide-bar" :class="{'active': step > 0}"></div>
           </div>
         </div>
         <div class="col-lg-4">
-          <div class="step-item">
+          <div class="step-item" :class="{'active': step > 1}">
             <h3 class="text-medium">
-              <span>2</span>
+              <span :class="{'active': step > 1}">2</span>
               填寫資料
             </h3>
-            <div class="hide-bar"></div>
+            <div class="hide-bar" :class="{'active': step > 1}"></div>
           </div>
         </div>
         <div class="col-lg-4">
-          <div class="step-item">
+          <div class="step-item" :class="{'active': step > 2}">
             <h3 class="text-medium">
-              <span>3</span>
+              <span :class="{'active': step > 2}">3</span>
               購買完成
             </h3>
-            <div class="hide-bar"></div>
+            <div class="hide-bar" :class="{'active': step > 2}"></div>
           </div>
         </div>
       </div>
@@ -42,7 +42,18 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      step: 1
+    }
+  },
+  mounted () {
+    this.$emitter.on('changeBar', (data) => {
+      this.step = data
+    })
+  }
+}
 </script>
 
 <style lang="scss">
