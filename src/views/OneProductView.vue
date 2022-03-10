@@ -58,14 +58,14 @@
         <div class="oneProduct-desc">
           <h4 class="text-title mb-2">別人也逛過</h4>
           <div class="row">
-            <div class="col-lg-3" v-for="item in products" :key="item.id">
-              <router-link :to="'/product/'+ item.id ">
-                <CardView
-                :title-color="'white'"
-                :product="item"
-                ></CardView>
-              </router-link>
-            </div>
+            <template v-for="item in products" :key="item.id">
+              <div class="col-lg-3 transition-s hover-scale pointer" @click="routerTo('/product/' + item.id)">
+                  <CardView
+                  :title-color="'white'"
+                  :product="item"
+                  ></CardView>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -124,19 +124,30 @@ export default {
         .catch((err) => {
           console.dir(err)
         })
+    },
+    getProduct () {
+      this.isLoading = true
+      this.$http
+        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/product/${this.id}`)
+        .then((res) => {
+          this.product = res.data.product
+          this.isLoading = false
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
+    },
+    routerTo (link) {
+      this.$router.push(link)
+    }
+  },
+  watch: {
+    id () {
+      this.getProduct()
     }
   },
   mounted () {
-    this.isLoading = true
-    this.$http
-      .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/product/${this.id}`)
-      .then((res) => {
-        this.product = res.data.product
-        this.isLoading = false
-      })
-      .catch((err) => {
-        console.dir(err)
-      })
+    this.getProduct()
     this.$http
       .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products`)
       .then((res) => {

@@ -165,6 +165,9 @@
     font-size: $fs-l;
 }
 
+.f-size-xl{
+  font-size: $fs-l * 1.25;
+}
 
 
 /* font-style */
@@ -198,4 +201,21 @@
 
 .w-60{
   width: 60%;
+}
+
+.lh-2{
+  line-height: 2;
+}
+
+.hover-scale{
+  &:hover{
+    transform: scale(1.05)
+  }
+}
+
+.pointer{
+  cursor: pointer;
+}
+.transition-s{
+  transition: .5s;
 }
