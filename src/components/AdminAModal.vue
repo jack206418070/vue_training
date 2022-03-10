@@ -138,7 +138,6 @@ export default {
       this.is_show = false
     },
     upload () {
-      console.log(1)
       const fileInput = document.querySelector('#file')
       const file = fileInput.files[0]
       const formData = new FormData()
@@ -147,7 +146,6 @@ export default {
       this.$http
         .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/upload`, formData)
         .then((res) => {
-          console.log(res)
           this.tempArticle.imageUrl = res.data.imageUrl
         })
         .catch(err => {

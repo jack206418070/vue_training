@@ -21,7 +21,7 @@
             </div>
           </li>
           <li v-for="item in articles" :key="item.id" class="product__item d-flex jy-content-between">
-            <h3 class="f-w-bold text-center w-10">{{ item.create_at }}</h3>
+            <h3 class="f-w-bold text-center w-10">{{ $filters.date(item.create_at) }}</h3>
             <div class="info__group w-90">
               <ul class="d-flex fw-bold align-items-center">
                 <li class="w-15 f-w-bold">{{ item.title }}</li>

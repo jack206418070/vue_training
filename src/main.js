@@ -13,6 +13,7 @@ import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
+import { date, thColon } from './utils/filters'
 
 defineRule('required', required)
 defineRule('email', email)
@@ -25,6 +26,10 @@ setLocale('zh_TW')
 
 const app = createApp(App).use(router).use(VueAxios, axios)
 app.use(CKEditor)
+app.config.globalProperties.$filters = {
+  date,
+  thColon
+}
 app.config.globalProperties.$emitter = mitt()
 app.component('LoadingView', Loading)
 app.component('FormView', Form)

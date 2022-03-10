@@ -169,7 +169,6 @@ export default {
       this.$http
         .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/pay/${orderId}`)
         .then((res) => {
-          console.log(res)
           this.isLoading = false
           this.$router.push('/cart/payment3')
           this.$emitter.emit('updateCart', false)

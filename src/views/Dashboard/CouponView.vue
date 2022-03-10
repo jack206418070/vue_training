@@ -20,7 +20,7 @@
             </div>
           </li>
           <li v-for="item in coupons" :key="item.id" class="product__item d-flex jy-content-between">
-            <h3>{{ item.due_date }}</h3>
+            <h3>{{ $filters.date(item.due_date) }}</h3>
             <div class="info__group w-90">
               <ul class="d-flex fw-bold align-items-center">
                 <li class="w-30 f-w-bold">{{ item.title }}</li>

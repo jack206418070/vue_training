@@ -22,7 +22,7 @@
             </div>
           </li>
           <li v-for="item in orders" :key="item.id" class="product__item d-flex jy-content-between">
-            <h3>{{ item.create_at }}</h3>
+            <h3>{{ $filters.date(item.create_at) }}</h3>
             <div class="info__group w-90">
               <ul class="d-flex fw-bold align-items-center">
                 <li class="w-15">{{ item.user.name }}</li>
@@ -30,7 +30,7 @@
                   <p v-for="product in item.products" :key="product.id" class="text-left w-100">
                     <span>{{ product.product.title }} -
                           {{ product.qty }}份 x {{ product.product.price }}元 =
-                          {{ product.total }}元
+                          {{ $filters.thColon(product.total) }}元
                     </span>
                   </p>
                 </li>
@@ -91,7 +91,6 @@ export default {
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`)
         .then((res) => {
-          console.log(res.data.orders)
           res.data.orders.forEach((order) => {
             if (Object.prototype.hasOwnProperty.call(order, 'create_at')) {
               this.orders.push(order)
@@ -101,7 +100,6 @@ export default {
           })
           this.pagination = res.data.pagination
           this.isLoading = false
-          console.log(this.orders)
         })
         .catch((err) => {
           console.log(err)
