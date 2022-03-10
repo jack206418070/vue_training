@@ -10,4 +10,17 @@ a{
 .container{
   max-width: 1200px;
   margin: 0 auto;
+  @include pad{
+    max-width: 767px;
+  }
+  @include pad{
+    max-width: 578px;
+  }
+}
+input, select, textarea{
+  border: 1px solid #ccc;
+  border-radius: none;
+  &:focus{
+    outline: none;
+  }
 }

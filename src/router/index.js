@@ -19,7 +19,24 @@ const routes = [
       {
         path: '/cart',
         name: 'cart',
-        component: () => import('../views/CartView.vue')
+        component: () => import('../views/CartView.vue'),
+        children: [
+          {
+            path: '',
+            name: '品項確認頁面',
+            component: () => import('../views/PayView1.vue')
+          },
+          {
+            path: 'payment2',
+            name: '資料輸入頁面',
+            component: () => import('../views/PayView2.vue')
+          },
+          {
+            path: 'payment3',
+            name: '完成結帳頁面',
+            component: () => import('../views/PayView3.vue')
+          }
+        ]
       },
       {
         path: '/product',
@@ -46,6 +63,12 @@ const routes = [
         path: '/login',
         name: '登入頁面',
         component: () => import('../views/LoginView.vue')
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        redirect: {
+          name: 'home'
+        }
       }
     ]
   },
@@ -80,7 +103,22 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  linkActiveClass: 'active',
+  scrollBehavior (to, from, savePosition) {
+    if (to.fullPath.match('cart') || to.fullPath.match('about')) {
+      return {
+        top: 0
+      }
+    } else if (to.fullPath.match('product')) {
+      return {
+        top: 455
+      }
+    }
+    return {
+      top: 0
+    }
+  }
 })
 
 export default router

@@ -7,10 +7,10 @@
       </div>
       <ul class="menu d-flex">
         <li class="menu-item pr-8">
-          <router-link to="/product" class="text-c-primary">全台宅配</router-link>
+          <router-link to="/product">全台宅配</router-link>
         </li>
         <li class="menu-item pr-8">
-          <router-link to="/product" class="text-c-secondary">雙北隔日配</router-link>
+          <router-link to="/product">雙北隔日配</router-link>
         </li>
         <li class="menu-item pr-8">
           <router-link to="/about">關於我們</router-link>
@@ -122,7 +122,11 @@ export default {
   mounted () {
     this.getCart()
     this.$emitter.on('updateCart', (data) => {
-      this.cart = data.carts
+      if (data === false) {
+        this.getCart()
+      } else {
+        this.cart = data.carts
+      }
     })
   }
 }
@@ -166,6 +170,9 @@ export default {
         font-weight: 500;
         font-size: 18px;
         &:hover{
+          color: $primary;
+        }
+        &.active{
           color: $primary;
         }
       }

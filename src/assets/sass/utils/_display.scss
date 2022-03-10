@@ -78,6 +78,10 @@
     }
 }
 
+.flex-auto{
+  flex: 1 1 auto;
+}
+
 .order-1{
     order: 1;
 }
@@ -108,4 +112,12 @@
     .order-sm-3{
         order: 3;
     }
+}
+
+.mb{
+  margin-bottom: 0;
+}
+
+.mt-auto{
+  margin-top:auto;
 }

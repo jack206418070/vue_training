@@ -33,7 +33,7 @@
       </div>
     </div>
     <div @click="controlModal" class="cart-modal-btn bg-secondary p-3">
-      <p class="text-c-white">已購 ${{ cart.final_total }}</p>
+      <p class="text-c-white">已購 ${{ cart.total }}</p>
     </div>
   </div>
 </template>

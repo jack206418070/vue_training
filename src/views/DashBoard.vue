@@ -153,7 +153,7 @@ export default {
         this.$http.post(`${process.env.VUE_APP_APIURL}/api/user/check`, { api_token: this.token })
           .then(() => {
             this.isCheck = true
-            this.$router.push('/admin')
+            this.$router.push('/admin/product')
           })
           .catch((err) => {
             console.dir(err)

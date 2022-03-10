@@ -48,13 +48,13 @@
 /* RWD mixin */
 
 @mixin pad {
-    @media screen and (max-width: 996px) {
+    @media screen and (max-width: 767px) {
         @content
     }
 };
 
 @mixin mobile {
-    @media screen and (max-width: 620px) {
+    @media screen and (max-width: 578px) {
         @content
     }
 };
