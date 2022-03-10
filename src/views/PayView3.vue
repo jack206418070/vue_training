@@ -1,6 +1,6 @@
 <template>
   <LoadingView :active="isLoading"></LoadingView>
-  <div class="complete mb-10">
+  <div v-show="is_show" class="complete mb-10">
     <div class="row jy-content-center">
       <div class="col-lg-5">
         <p class="text-c-primary f-size-xl text-center">
@@ -30,17 +30,25 @@
 
 <script>
 export default {
+  props: ['show_complete'],
   data () {
     return {
-      isLoading: false
+      isLoading: false,
+      is_show: false
     }
-  },
-  mounted () {
-    this.$emitter.emit('changeBar', 3)
   },
   methods: {
     routerTo (link) {
       this.$router.push(link)
+    }
+  },
+  mounted () {
+    console.log(this.show_complete)
+    if (this.show_complete) {
+      this.is_show = true
+      this.$emitter.emit('changeBar', 3)
+    } else {
+      this.$router.push('/cart')
     }
   }
 }

@@ -29,12 +29,22 @@ const routes = [
           {
             path: 'payment2',
             name: '資料輸入頁面',
-            component: () => import('../views/PayView2.vue')
+            component: () => import('../views/PayView2.vue'),
+            props: (route) => {
+              return {
+                show: route.params.show
+              }
+            }
           },
           {
             path: 'payment3',
             name: '完成結帳頁面',
-            component: () => import('../views/PayView3.vue')
+            component: () => import('../views/PayView3.vue'),
+            props: (route) => {
+              return {
+                show_complete: route.params.show_complete
+              }
+            }
           }
         ]
       },

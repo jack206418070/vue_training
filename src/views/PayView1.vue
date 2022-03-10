@@ -1,6 +1,6 @@
 <template>
   <LoadingView :active="isLoading"></LoadingView>
-  <ul class="mb-10">
+  <ul v-if="carts?.carts?.length" class="mb-10">
     <li class="row py-4 bg-secondary">
       <div class="col-lg-4">
         <p class="text-center text-c-white">商品</p>
@@ -115,14 +115,19 @@
             NT$ {{ Math.round(carts.final_total) }}
           </span>
         </p>
-        <router-link to="/cart/payment2">
-          <button
-            class="user-btn user-btn-primary w-100 py-3 f-size-xs" type="button"
-          >下一步：填寫資料</button>
-        </router-link>
+        <button
+          class="user-btn user-btn-primary w-100 py-3 f-size-xs" type="button"
+          @click="routerTo"
+        >下一步：填寫資料</button>
       </div>
     </li>
   </ul>
+  <div v-show="carts?.carts?.length === 0" class="empty-cart mb-20">
+    <h3 class="text-title text-c-forthary text-center mb-4">購物車是空的</h3>
+    <router-link to="/product">
+      <button class="user-btn user-btn-primary mx-auto py-4 px-10 f-size-s">前往選購商品</button>
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -142,7 +147,13 @@ export default {
         .then((res) => {
           this.isLoading = false
           this.carts = res.data.data
+          if (this.carts.carts.length === 0) {
+            this.$emitter.emit('changeBar', 0)
+            this.$emitter.emit('updateCart', res.data.data)
+            return
+          }
           this.$emitter.emit('updateCart', res.data.data)
+          this.$emitter.emit('changeBar', 1)
         })
         .catch((err) => {
           console.log(err)
@@ -191,11 +202,13 @@ export default {
         .catch((err) => {
           console.dir(err)
         })
+    },
+    routerTo () {
+      this.$router.push({ name: '資料輸入頁面', params: { show: true } })
     }
   },
   mounted () {
     this.getCarts()
-    this.$emitter.emit('changeBar', 1)
   }
 }
 </script>

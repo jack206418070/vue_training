@@ -1,6 +1,6 @@
 <template>
   <LoadingView :active="isLoading"></LoadingView>
-  <div class="userInfo mb-10">
+  <div v-show="is_show" class="userInfo mb-10">
     <h3 class="text-medium py-4 px-5 mb-10">訂購資料</h3>
     <FormView v-slot="{ errors }" @submit="onSubmit" class="px-5">
       <div class="row">
@@ -132,10 +132,12 @@
 <script>
 import { CreditCardIcon, CashIcon } from '@heroicons/vue/outline'
 export default {
+  props: ['show'],
   data () {
     return {
       is_credit: false,
       isLoading: false,
+      is_show: false,
       form: {
         user: {}
       }
@@ -158,7 +160,7 @@ export default {
           }
           this.isLoading = false
           this.$emitter.emit('updateCart', false)
-          this.$router.push('/cart/payment3')
+          this.$router.push({ name: '完成結帳頁面', params: { show_complete: true } })
         })
         .catch((err) => {
           console.dir(err)
@@ -182,8 +184,16 @@ export default {
       return phoneNumber.test(value) ? true : '需要正確的電話號碼'
     }
   },
+  beforeCreate () {
+  },
   mounted () {
-    this.$emitter.emit('changeBar', 2)
+    console.log(this.show)
+    if (this.show) {
+      this.is_show = true
+      this.$emitter.emit('changeBar', 2)
+    } else {
+      this.$router.push('/cart')
+    }
   }
 }
 </script>
