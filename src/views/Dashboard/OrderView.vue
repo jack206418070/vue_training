@@ -29,7 +29,7 @@
                 <li class="w-35">
                   <p v-for="product in item.products" :key="product.id" class="text-left w-100">
                     <span>{{ product.product.title }} -
-                          {{ product.qty }}{{ product.product.unit }} x {{ product.product.price }}元 =
+                          {{ product.qty }}份 x {{ product.product.price }}元 =
                           {{ product.total }}元
                     </span>
                   </p>
@@ -87,24 +87,33 @@ export default {
   methods: {
     getOrders (page = 1) {
       this.isLoading = true
+      this.orders = []
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`)
         .then((res) => {
-          this.orders = res.data.orders
+          console.log(res.data.orders)
+          res.data.orders.forEach((order) => {
+            if (Object.prototype.hasOwnProperty.call(order, 'create_at')) {
+              this.orders.push(order)
+            } else {
+              console.log(1)
+            }
+          })
           this.pagination = res.data.pagination
           this.isLoading = false
+          console.log(this.orders)
         })
         .catch((err) => {
           console.log(err)
         })
     },
     deleteOrder (id) {
+      this.isLoading = true
       this.$http
         .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/order/${id}`)
         .then(() => {
-          alert('刪除成功')
-          this.closeDelModal()
-          this.getOrders()
+          this.$refs.delModal.closeModal()
+          this.getOrders(this.pagination.current_page)
         })
         .catch((err) => {
           console.log(err)

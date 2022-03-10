@@ -165,9 +165,9 @@ export default {
           alert('結帳失敗, 請確認資料正確性')
         })
     },
-    payOrder (order) {
+    payOrder (orderId) {
       this.$http
-        .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/pay/${order.id}`)
+        .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/pay/${orderId}`)
         .then((res) => {
           console.log(res)
           this.isLoading = false
