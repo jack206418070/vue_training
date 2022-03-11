@@ -1,4 +1,5 @@
 <template>
+  <LoadingView :active="isLoading"></LoadingView>
   <header class="admin-header d-flex jy-content-between align-items-center">
     <div class="logo">
       <h1>LOGO</h1>
@@ -40,14 +41,6 @@
         </div>
       </div>
       <ul>
-        <li>
-          <router-link to="/admin">
-            <span class="icon small">
-              <i class="fas fa-tachometer-alt"></i>
-            </span>
-            <span class="small">Dashboard</span>
-          </router-link>
-        </li>
         <li>
           <router-link to="/admin/product">
             <span class="icon small">
@@ -142,18 +135,21 @@ export default {
   name: 'DashBoard',
   data () {
     return {
-      isCheck: false
+      isCheck: false,
+      isLoading: false
     }
   },
   methods: {
     checkLogin () {
+      this.isLoading = true
       const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1')
       if (token) {
         this.$http.defaults.headers.common.Authorization = token
         this.$http.post(`${process.env.VUE_APP_APIURL}/api/user/check`, { api_token: this.token })
           .then(() => {
             this.isCheck = true
-            this.$router.push('/admin/product')
+            this.isLoading = false
+            // this.$router.go(0)
           })
           .catch((err) => {
             console.dir(err)

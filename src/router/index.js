@@ -88,6 +88,11 @@ const routes = [
     component: () => import('../views/DashBoard.vue'),
     children: [
       {
+        path: '',
+        name: '首頁預設產品頁',
+        component: () => import('../views/Dashboard/ProductView.vue')
+      },
+      {
         path: 'product',
         name: '產品列表',
         component: () => import('../views/Dashboard/ProductView.vue')

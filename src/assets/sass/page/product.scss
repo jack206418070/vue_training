@@ -80,7 +80,7 @@ body{
   }
   &--success{
       background-color: #1A535C;
-      &:hover{
+      &:hover, &.active{
           background-color: lighten(#1A535C, 20%);
       }
   }
@@ -271,7 +271,7 @@ h1{
             display: flex;
             align-items: center;
             transition: 0.3s;
-            &:hover{
+            &:hover, &.active{
                 background-color: $primary;
                 color:white;
             }
