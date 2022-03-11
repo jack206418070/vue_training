@@ -104,7 +104,7 @@
       </div>
     </FormView>
     <div class="btn-group bg--secondary jy-content-between">
-      <a class="btn btn--danger py-2 w-15 pointer" herf="#" @click.prevent="closeModal()">取消</a>
+      <a class="btn btn--danger py-2 w-15 pointer" herf="#" @click.prevent="$emit('closeBack')">取消</a>
       <a class="btn btn--success py-2 w-15 pointer" herf="#" @click.prevent="$emit('updateArticle',tempArticle)">送出</a>
     </div>
   </div>
@@ -115,7 +115,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 export default {
   props: ['isNew', 'article'],
-  emits: ['updateArticle'],
+  emits: ['updateArticle', 'closeBack'],
   data () {
     return {
       is_show: false,
@@ -125,7 +125,7 @@ export default {
       },
       editor: ClassicEditor,
       editorConfig: {
-        toolbar: ['heading', 'typing', 'bold', 'italic', '|', 'link']
+        toolbar: ['heading', 'bold', 'italic', '|', 'link']
       },
       create_at: ''
     }
@@ -156,9 +156,7 @@ export default {
   watch: {
     article () {
       this.tempArticle = {
-        ...this.article,
-        tag: this.article.tag || [],
-        isPublic: this.article.isPublic || false
+        ...this.article
       }
       this.create_at = new Date(this.tempArticle.create_at * 1000).toISOString().split('T')[0]
     },
@@ -175,6 +173,7 @@ export default {
     @include absCenter();
     border: 1px solid #000;
     width: 80%;
+    z-index: 100;
     .btn{
       border-radius: 0;
       padding: 4px 8px;

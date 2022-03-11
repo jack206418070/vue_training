@@ -1,4 +1,5 @@
 <template>
+  <div v-if="back_show" class="back-lock" @click="closeAllModal()"></div>
   <div class="content">
     <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container d-flex jy-content-center">
@@ -62,11 +63,13 @@
       :is-new="isNew"
       @update-coupon="updateCoupon"
       ref="couponModal"
+      @close-back="closeAllModal"
     ></ModalView>
     <DelModal
       :data="tempCoupon"
       @del-data="delCoupon"
       ref="delModal"
+      @close-back="closeAllModal"
     >
     </DelModal>
   </div>
@@ -83,7 +86,8 @@ export default {
       isNew: false,
       coupons: [],
       tempCoupon: {},
-      pagination: {}
+      pagination: {},
+      back_show: false
     }
   },
   components: {
@@ -93,7 +97,6 @@ export default {
   },
   methods: {
     updateCoupon (tempCoupon, type = '') {
-      this.$refs.couponModal.closeModal()
       this.isLoading = true
       let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupon`
       let httpMethods = 'post'
@@ -105,7 +108,9 @@ export default {
       }
       this.$http[httpMethods](url, { data: this.tempCoupon })
         .then(() => {
-          this.getCoupon()
+          this.$refs.couponModal.closeModal()
+          this.getCoupon(this.pagination.current_page)
+          this.back_show = false
         })
         .catch((err) => {
           console.dir(err)
@@ -126,21 +131,24 @@ export default {
     },
     delCoupon (id) {
       this.isLoading = true
-      this.$refs.delModal.closeModal()
       this.$http
         .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupon/${id}`)
         .then((res) => {
-          this.getCoupon()
+          this.$refs.delModal.closeModal()
+          this.getCoupon(this.pagination.current_page)
+          this.back_show = false
         })
         .catch((err) => {
           console.dir(err)
         })
     },
     openDelModal (type, item) {
+      this.back_show = true
       this.tempCoupon = { ...item }
       this.$refs.delModal.openModal(type)
     },
     openCouponModal (isNew, item) {
+      this.back_show = true
       this.isNew = isNew
       if (this.isNew) {
         this.tempCoupon = {
@@ -150,6 +158,11 @@ export default {
         this.tempCoupon = { ...item }
       }
       this.$refs.couponModal.openModal()
+    },
+    closeAllModal () {
+      this.$refs.couponModal.closeModal()
+      this.$refs.delModal.closeModal()
+      this.back_show = false
     }
   },
   mounted () {
@@ -157,7 +170,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

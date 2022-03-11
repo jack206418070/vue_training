@@ -1,4 +1,5 @@
 <template>
+  <div v-if="back_show" class="back-lock" @click="closeAllModal()"></div>
   <div class="content">
     <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container d-flex jy-content-center">
@@ -12,7 +13,7 @@
       </div>
       <div class="total__product w-100 d-flex align-items-center jy-content-between">
         <p>目前有 {{ products.length }} 樣商品</p>
-        <a @click.prevent="modalControl.is_add = true;" class="btn btn--success w-10" href="#">建立產品</a>
+        <a @click.prevent="openProductModal(true)" class="btn btn--success w-10" href="#">建立產品</a>
       </div>
       <div class="product w-100 mb-3">
         <ul>
@@ -34,12 +35,15 @@
             <h3>{{ item.title }}</h3>
             <div class="info__group w-80">
               <ul class="d-flex fw-bold align-items-center">
-                <li class="w-15 d-sm-none">${{ item.origin_price }}</li>
-                <li class="w-15">${{ item.price }}</li>
+                <li class="w-15 d-sm-none">${{ $filters.thColon(item.origin_price) }}</li>
+                <li class="w-15">${{ $filters.thColon(item.price) }}</li>
                 <li class="d-flex jy-content-center w-30 px-4">
-                  <div @click="editTempProduct = item;
-                    editProduct()" class="toggle"
-                      :class="{ 'active': item.is_enabled == 1 }">
+                  <div
+                    @click="item.is_enabled === 1 ? item.is_enabled = 0 : item.is_enabled = 1;
+                    isNew = false; updateProduct(item)"
+                    class="toggle"
+                    :class="{ 'active': item.is_enabled == 1 }"
+                  >
                   </div>
                   <p :class="{ 'active': item.is_enabled == 1 }">
                     {{ item.is_enabled == 1 ?'啟用' : '未啟用' }}
@@ -58,11 +62,11 @@
                   </ul>
                 </li>
                 <li class="w-20 d-flex jy-content-center flex-wrap">
-                  <a @click.prevent="editTempProduct = {...item}; modalControl.is_edit= true;"
+                  <a @click.prevent="openProductModal(false, item)"
                       class="btn btn--success w-30 mx-2" href="#">
                     <i class="fas fa-edit"></i>
                   </a>
-                  <a @click.prevent="editTempProduct = {...item}; modalControl.is_delete= true"   class="btn btn--danger w-30 mx-2" href="#">
+                  <a @click.prevent="openDelModal('商品', item)" class="btn btn--danger w-30 mx-2" href="#">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </li>
@@ -73,14 +77,19 @@
       </div>
     </div>
     <ModalView
-      :modaltype="modalControl"
-      :product="editTempProduct"
-      :category="categoryArr"
-      @close-modal="closeModal"
-      @get-products="getProducts"
-      v-if="modalControl.is_add || modalControl.is_edit || modalControl.is_delete"
-    >
-    </ModalView>
+      ref="productModal"
+      :is-new="isNew"
+      :product="tempProduct"
+      @update-product="updateProduct"
+      @close-back="closeAllModal"
+    ></ModalView>
+    <DelModal
+      ref="delModal"
+      @del-data="delProduct"
+      :data="tempProduct"
+      :back="back_show"
+      @close-back="closeAllModal"
+    ></DelModal>
     <PageView
       :pagination="pagination"
       @get-product="getProducts"
@@ -93,34 +102,45 @@
 <script>
 import PageView from '@/components/PageNation.vue'
 import ModalView from '@/components/AdminPModal.vue'
-
+import DelModal from '@/components/AdminDelModal.vue'
 export default {
   data () {
     return {
       products: [],
       tempProducts: null,
       pagination: {},
-      categoryArr: ['蔬菜', '海鮮', '肉品', '水果'],
       searchText: '',
-      modalControl: {
-        is_add: false,
-        is_edit: false,
-        is_sideMenu: true,
-        is_delete: false
-      },
+      tempProduct: {},
       isLoading: false,
       ascending: false,
       sideToggle: true,
-      editTempProduct: {
-        imagesUrl: []
-      }
+      isNew: false,
+      back_show: false
     }
   },
   components: {
     PageView,
-    ModalView
+    ModalView,
+    DelModal
   },
   methods: {
+    openProductModal (isNew, item) {
+      this.back_show = true
+      if (isNew) {
+        this.tempProduct = {
+          is_enabled: 0,
+          eval: 1,
+          category: '',
+          imagesUrl: [],
+          imageUrl: ''
+        }
+        this.isNew = true
+      } else {
+        this.tempProduct = { ...item }
+        this.isNew = false
+      }
+      this.$refs.productModal.openModal()
+    },
     getProducts (page = 1) {
       this.isLoading = true
       this.tempProducts = null
@@ -136,24 +156,26 @@ export default {
           console.dir(err)
         })
     },
-    closeModal () {
-      this.modalControl.is_add = false
-      this.modalControl.is_edit = false
-      this.modalControl.is_delete = false
-    },
-    editProduct () {
-      this.editTempProduct.is_enabled = !this.editTempProduct.is_enabled
-      const data = { data: { ...this.editTempProduct } }
-      this.modalControl.is_add = false
-      this.$http
-        .put(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product/${this.editTempProduct.id}`, data)
+    updateProduct (item) {
+      this.isLoading = true
+      this.tempProduct = item
+      let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product`
+      let httpMethods = 'post'
+      if (!this.isNew) {
+        url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
+        httpMethods = 'put'
+      }
+      this.$http[httpMethods](url, { data: this.tempProduct })
         .then((res) => {
           if (res.data.success) {
-            this.getProducts()
-            this.editTempProduct = {}
+            this.isLoading = false
+            this.back_show = false
+            this.$refs.productModal.closeModal()
+            this.getProducts(this.pagination.current_page)
           }
         })
         .catch(err => {
+          this.isLoading = false
           console.dir(err)
         })
     },
@@ -168,6 +190,29 @@ export default {
         }
       })
       this.products = tempData
+    },
+    openDelModal (type, item) {
+      this.back_show = true
+      this.tempProduct = { ...item }
+      this.$refs.delModal.openModal(type)
+    },
+    delProduct (id) {
+      this.isLoading = true
+      this.$http
+        .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`)
+        .then((res) => {
+          this.getProducts(this.pagination.current_page)
+          this.$refs.delModal.closeModal()
+          this.back_show = false
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
+    },
+    closeAllModal () {
+      this.$refs.productModal.closeModal()
+      this.$refs.delModal.closeModal()
+      this.back_show = false
     }
   },
   computed: {

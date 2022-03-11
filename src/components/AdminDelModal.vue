@@ -3,10 +3,12 @@
     <h2>刪除{{ type }}</h2>
     <div class="delete__content">
       <p v-if="type === '訂單'">確定要刪除 {{ data.user.name }} {{ data.create_at }} 的訂單嗎？</p>
-      <p v-else-if="type === '優惠卷'">確定要刪除 {{ data.title }} 的優惠卷嗎？</p>
+      <p v-else-if="type === '優惠卷'">確定要刪除 {{ data.title }} 這個優惠卷嗎？</p>
+      <p v-else-if="type ===  '商品'">確定要刪除 {{ data.title }} 這個商品嗎？</p>
+      <p v-else-if="type ===  '文章'">確定要刪除 {{ data.title }} 的文章嗎？</p>
     </div>
     <div class="d-flex jy-content-between bg--dark--secondary py-1">
-      <a @click.prevent="closeModal()"  class="btn btn--danger mx-3" href="#">取消</a>
+      <a @click.prevent="$emit('closeBack')"  class="btn btn--danger mx-3" href="#">取消</a>
       <a @click.prevent="$emit('delData', data.id)"  class="btn btn--success mx-3" href="#">
         刪除{{ type }}
       </a>
@@ -17,7 +19,7 @@
 <script>
 export default {
   props: ['data'],
-  emits: ['delData'],
+  emits: ['delData', 'closeBack'],
   data () {
     return {
       isShow: false,

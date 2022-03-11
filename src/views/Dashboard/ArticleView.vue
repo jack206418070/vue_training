@@ -1,4 +1,5 @@
 <template>
+  <div v-if="back_show" class="back-lock" @click="closeAllModal()"></div>
   <div class="content">
     <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container">
@@ -44,7 +45,7 @@
                   <a
                     class="btn btn--danger w-30 mx-2"
                     href="#"
-                    @click.prevent=""
+                    @click.prevent="openDelModal('文章', item)"
                   >
                     <i class="fas fa-trash-alt"></i>
                   </a>
@@ -66,10 +67,14 @@
     :article="tempArticle"
     ref="articleModal"
     @update-article="updateArticle"
+    @close-back="closeAllModal"
   >
   </ArticleModal>
   <DelModal
     ref="delModal"
+    @close-back="closeAllModal"
+    :data="tempArticle"
+    @del-data="delArticle"
   >
   </DelModal>
 </template>
@@ -85,7 +90,8 @@ export default {
       isNew: false,
       isLoading: false,
       articles: [],
-      pagination: {}
+      pagination: {},
+      back_show: false
     }
   },
   components: {
@@ -95,6 +101,7 @@ export default {
   },
   methods: {
     openArtModal (isNew, item) {
+      this.back_show = true
       if (isNew) {
         this.tempArticle = {
           isPublic: false,
@@ -109,6 +116,7 @@ export default {
       this.$refs.articleModal.openModal()
     },
     openDelModal (type, item) {
+      this.back_show = true
       this.tempArticle = { ...item }
       this.$refs.delModal.openModal(type)
     },
@@ -136,6 +144,7 @@ export default {
       }
       this.$http[httpMethods](url, { data: this.tempArticle })
         .then((res) => {
+          this.back_show = false
           this.getArticles(this.pagination.current_page)
           this.$refs.articleModal.closeModal()
         })
@@ -150,6 +159,25 @@ export default {
         .then((res) => {
           this.openArtModal(false, res.data.article)
           this.isLoading = false
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
+    },
+    closeAllModal () {
+      this.$refs.articleModal.closeModal()
+      this.$refs.delModal.closeModal()
+      this.back_show = false
+    },
+    delArticle (id) {
+      this.isLoading = true
+      this.$http
+        .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/article/${id}`)
+        .then((res) => {
+          this.back_show = false
+          this.$refs.delModal.closeModal()
+          this.isLoading = false
+          this.getArticles(this.pagination.current_page)
         })
         .catch((err) => {
           console.dir(err)

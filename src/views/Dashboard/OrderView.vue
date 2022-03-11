@@ -1,4 +1,5 @@
 <template>
+  <div v-if="back_show" class="back-lock" @click="closeAllModal()"></div>
   <div class="content">
     <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container d-flex jy-content-center">
@@ -29,13 +30,13 @@
                 <li class="w-35">
                   <p v-for="product in item.products" :key="product.id" class="text-left w-100">
                     <span>{{ product.product.title }} -
-                          {{ product.qty }}份 x {{ product.product.price }}元 =
+                          {{ product.qty }}份 x {{ $filters.thColon(product.product.price) }}元 =
                           {{ $filters.thColon(product.total) }}元
                     </span>
                   </p>
                 </li>
                 <li class="w-15">{{ item.user.tel }}</li>
-                <li class="w-10">${{ item.total }}</li>
+                <li class="w-10">${{ $filters.thColon(item.total) }}</li>
                 <li class="w-15 d-flex jy-content-around align-items-center">
                   <span v-if="item.is_paid === false" class="text-left">未付款</span>
                   <span v-else class="text-left">已付款</span>
@@ -60,9 +61,13 @@
       @get-product="getOrders"
       :style="{bg: '#1A535C', hoverBg: '#FF6B6B'}"
     ></PageView>
-    <DelModal :data="tempOrder" @del-data="deleteOrder" ref="delModal">
+    <DelModal :data="tempOrder" @del-data="deleteOrder" ref="delModal" @close-back="closeAllModal">
     </DelModal>
-    <OrderModal :order="tempOrder" @update-paid="updatePaid" ref="orderModal"></OrderModal>
+    <OrderModal
+      :order="tempOrder"
+      @update-paid="updatePaid"
+      ref="orderModal"
+    ></OrderModal>
   </div>
 </template>
 
@@ -76,7 +81,8 @@ export default {
       orders: [],
       tempOrder: {},
       isLoading: false,
-      pagination: {}
+      pagination: {},
+      back_show: false
     }
   },
   components: {
@@ -94,8 +100,6 @@ export default {
           res.data.orders.forEach((order) => {
             if (Object.prototype.hasOwnProperty.call(order, 'create_at')) {
               this.orders.push(order)
-            } else {
-              console.log(1)
             }
           })
           this.pagination = res.data.pagination
@@ -111,6 +115,7 @@ export default {
         .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/order/${id}`)
         .then(() => {
           this.$refs.delModal.closeModal()
+          this.back_show = false
           this.getOrders(this.pagination.current_page)
         })
         .catch((err) => {
@@ -118,6 +123,7 @@ export default {
         })
     },
     openDelModal (type, item) {
+      this.back_show = true
       this.$refs.delModal.openModal(type)
       this.tempOrder = item
     },
@@ -138,11 +144,16 @@ export default {
         .then(() => {
           const component = this.$refs.orderModal
           component.closeModal()
-          this.getOrders()
+          this.getOrders(this.pagination.current_page)
         })
         .catch((err) => {
           console.dir(err)
         })
+    },
+    closeAllModal () {
+      this.$refs.orderModal.closeModal()
+      this.$refs.delModal.closeModal()
+      this.back_show = false
     }
   },
   mounted () {

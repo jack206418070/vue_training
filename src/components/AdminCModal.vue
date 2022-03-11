@@ -49,7 +49,7 @@
       </div>
     </FormView>
     <div class="btn-group bg--secondary jy-content-between">
-      <a class="btn btn--danger py-2 w-30 pointer" herf="#" @click.prevent="closeModal()">取消</a>
+      <a class="btn btn--danger py-2 w-30 pointer" herf="#" @click.prevent="$emit('closeBack')">取消</a>
       <a class="btn btn--success py-2 w-30 pointer" herf="#" @click.prevent="$emit('updateCoupon', tempCoupon)">送出</a>
     </div>
   </div>
@@ -58,7 +58,7 @@
 <script>
 export default {
   props: ['coupon', 'isNew'],
-  emits: ['updateCoupon'],
+  emits: ['updateCoupon', 'closeBack'],
   data () {
     return {
       tempCoupon: {
@@ -100,6 +100,7 @@ export default {
   .coupon-modal{
     position: absolute;
     @include absCenter();
+    z-index: 100;
     width: 30%;
     border: 1px solid #000;
     form{

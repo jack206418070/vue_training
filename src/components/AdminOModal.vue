@@ -19,11 +19,11 @@
         <li class="mb-2" style="padding: 0">訂購內容:</li>
         <li v-for="product in order.products" :key="product.id">
           {{ product.product.title }} -
-          {{ product.qty }}{{ product.product.unit }} x {{ product.product.price }}元 =
-          {{ product.total }}元
+          {{ product.qty }}{{ product.product.unit }} x {{ $filters.thColon(product.product.price) }}元 =
+          {{ $filters.thColon(product.total) }}元
         </li>
       </ul>
-      <p>總金額: <span>${{ order.total }}</span></p>
+      <p>總金額: <span>${{ $filters.thColon(order.total) }}</span></p>
     </div>
   </div>
 </template>

@@ -1,10 +1,10 @@
 <template>
-  <div class="productModal">
-    <h2>{{ modalTitle }}</h2>
-    <div v-if=" modaltype.is_delete === true " class="delete__content">
-      <p>確定要刪除 {{ tempProduct.title }} 嗎？</p>
-    </div>
-    <form v-else action="#">
+  <div v-if="isShow" class="productModal">
+    <h2>
+      <span v-if="isNew">新增商品</span>
+      <span v-else>編輯商品</span>
+    </h2>
+    <form action="#">
       <div class="form-group">
         <div class="form-control w-50">
           <label for="title">產品名稱</label>
@@ -55,7 +55,7 @@
         <h3 class="mb-1">產品評價</h3>
         <ul class="d-flex">
           <li class="me-1">
-            <a herf="#">
+            <a herf="#" @click.prevent="tempProduct.eval = 1">
               <span class="icon-star" v-if="tempProduct.eval >= 1">
                 <i class="fa-solid fa-star"></i>
               </span>
@@ -128,25 +128,25 @@
       </div>
     </form>
     <div class="btn-group bg--dark--secondary">
-      <a @click.prevent="$emit('close-modal')"  class="btn btn--danger" href="#">取消</a>
-      <a v-if="modalTitle === '新增產品'" @click.prevent="addProduct"  class="btn btn--success" href="#">新增產品</a>
-      <a v-else-if="modalTitle === '編輯產品'" @click.prevent="editProduct(tempProduct.id)"  class="btn btn--success" href="#">修改產品</a>
-      <a v-else-if="modalTitle === '刪除產品'" @click.prevent="deleteProduct(tempProduct.id)"  class="btn btn--danger" href="#">刪除產品</a>
+      <a @click.prevent="$emit('closeBack')"  class="btn btn--danger" href="#">取消</a>
+      <a @click.prevent="$emit('updateProduct', tempProduct)"  class="btn btn--success" href="#">
+        <span v-if="isNew">新增</span>
+        <span v-else>修改</span>
+      </a>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  emits: ['close-modal', 'loading', 'getProducts'],
-  props: ['modaltype', 'product', 'category'],
+  emits: ['updateProduct', 'closeBack'],
+  props: ['isNew', 'product'],
   data () {
     return {
       modalTitle: '',
-      tempProduct: {
-        imageUrl: '',
-        imagesUrl: []
-      }
+      tempProduct: {},
+      isShow: false,
+      category: ['蔬菜', '海鮮', '肉品', '水果']
     }
   },
   methods: {
@@ -160,7 +160,6 @@ export default {
       const file = fileInput.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', file)
-      // this.$emit('loading')
       this.$http
         .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/upload`, formData)
         .then((res) => {
@@ -172,73 +171,22 @@ export default {
               this.tempProduct.imagesUrl === [] ? this.tempProduct.imagesUrl = [] : this.tempProduct = temp
               this.tempProduct.imagesUrl.push(res.data.imageUrl)
             }
-            // this.$emit('loading')
           }
         })
         .catch(err => {
           console.dir(err)
         })
     },
-    addProduct () {
-      this.$emit('close-modal')
-      // this.$emit('loading')
-      const data = { data: { ...this.tempProduct } }
-      this.$http
-        .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product`, data)
-        .then((res) => {
-          if (res.data.success) {
-            this.$emit('getProducts')
-          }
-        })
-        .catch((err) => {
-          console.log(err.response)
-        })
+    openModal () {
+      this.isShow = true
     },
-    deleteProduct (id) {
-      // this.$emit('loading')
-      this.$emit('close-modal')
-      this.$http
-        .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`)
-        .then((res) => {
-          if (res.data.success) {
-            this.$emit('getProducts')
-          }
-        })
-        .catch((err) => {
-          console.log(err.response)
-        })
-    },
-    editProduct (id) {
-      // this.$emit('loading')
-      const data = { data: { ...this.tempProduct } }
-      this.$emit('close-modal')
-      this.$http
-        .put(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`, data)
-        .then((res) => {
-          if (res.data.success) {
-            this.$emit('getProducts')
-          }
-        })
-        .catch(err => {
-          console.dir(err)
-        })
+    closeModal () {
+      this.isShow = false
     }
   },
-  created () {
-    if (this.modaltype.is_add) {
-      this.modalTitle = '新增產品'
-      this.tempProduct = {
-        imagesUrl: [],
-        is_enabled: 0,
-        eval: 1,
-        category: ''
-      }
-    } else if (this.modaltype.is_edit) {
-      this.modalTitle = '編輯產品'
-      this.tempProduct = JSON.parse(JSON.stringify(this.product))
-    } else if (this.modaltype.is_delete) {
-      this.modalTitle = '刪除產品'
-      this.tempProduct = JSON.parse(JSON.stringify(this.product))
+  watch: {
+    product () {
+      this.tempProduct = { ...this.product }
     }
   }
 }
