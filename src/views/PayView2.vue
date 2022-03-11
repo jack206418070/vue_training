@@ -172,7 +172,7 @@ export default {
         .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/pay/${orderId}`)
         .then((res) => {
           this.isLoading = false
-          this.$router.push('/cart/payment3')
+          this.$router.push({ name: '完成結帳頁面', params: { show_complete: true } })
           this.$emitter.emit('updateCart', false)
         })
         .catch((err) => {
