@@ -187,7 +187,6 @@ export default {
   beforeCreate () {
   },
   mounted () {
-    console.log(this.show)
     if (this.show) {
       this.is_show = true
       this.$emitter.emit('changeBar', 2)
