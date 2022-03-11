@@ -1,5 +1,6 @@
 <template>
   <LoadingView :active="isLoading"></LoadingView>
+  <AlertMessages></AlertMessages>
   <header class="admin-header d-flex jy-content-between align-items-center">
     <div class="logo">
       <h1>LOGO</h1>
@@ -131,6 +132,7 @@
 </template>
 
 <script>
+import AlertMessages from '@/components/AlertModal.vue'
 export default {
   name: 'DashBoard',
   data () {
@@ -138,6 +140,9 @@ export default {
       isCheck: false,
       isLoading: false
     }
+  },
+  components: {
+    AlertMessages
   },
   methods: {
     checkLogin () {

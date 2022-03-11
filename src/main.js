@@ -10,6 +10,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import mitt from 'mitt'
 import Loading from 'vue-loading-overlay'
+import $httpMessageState from '@/utils/alertMessage'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
@@ -26,6 +27,7 @@ setLocale('zh_TW')
 
 const app = createApp(App).use(router).use(VueAxios, axios)
 app.use(CKEditor)
+app.config.globalProperties.$httpMessageState = $httpMessageState
 app.config.globalProperties.$filters = {
   date,
   thColon

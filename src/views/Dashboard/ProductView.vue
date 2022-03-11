@@ -153,7 +153,7 @@ export default {
           this.isLoading = false
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, '取得產品列表')
         })
     },
     updateProduct (item) {
@@ -161,9 +161,11 @@ export default {
       this.tempProduct = item
       let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product`
       let httpMethods = 'post'
+      let status = '新增產品'
       if (!this.isNew) {
         url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
         httpMethods = 'put'
+        status = '更新產品'
       }
       this.$http[httpMethods](url, { data: this.tempProduct })
         .then((res) => {
@@ -171,12 +173,13 @@ export default {
             this.isLoading = false
             this.back_show = false
             this.$refs.productModal.closeModal()
+            this.$httpMessageState(res, status)
             this.getProducts(this.pagination.current_page)
           }
         })
         .catch(err => {
           this.isLoading = false
-          console.dir(err)
+          this.$httpMessageState(err.response, status)
         })
     },
     searchHandler () {
@@ -204,9 +207,10 @@ export default {
           this.getProducts(this.pagination.current_page)
           this.$refs.delModal.closeModal()
           this.back_show = false
+          this.$httpMessageState(res, '刪除產品')
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, '刪除產品')
         })
     },
     closeAllModal () {

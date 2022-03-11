@@ -100,20 +100,23 @@ export default {
       this.isLoading = true
       let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupon`
       let httpMethods = 'post'
+      let status = '增加優惠卷'
       this.tempCoupon = tempCoupon
 
       if (!this.isNew) {
         httpMethods = 'put'
         url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
+        status = '更新優惠卷'
       }
       this.$http[httpMethods](url, { data: this.tempCoupon })
-        .then(() => {
+        .then((res) => {
           this.$refs.couponModal.closeModal()
           this.getCoupon(this.pagination.current_page)
           this.back_show = false
+          this.$httpMessageState(res, status)
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, status)
         })
     },
     getCoupon (page = 1) {
@@ -126,7 +129,7 @@ export default {
           this.isLoading = false
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, '獲取優惠卷列表')
         })
     },
     delCoupon (id) {
@@ -137,9 +140,10 @@ export default {
           this.$refs.delModal.closeModal()
           this.getCoupon(this.pagination.current_page)
           this.back_show = false
+          this.$httpMessageState(res, '刪除優惠卷')
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, '刪除優惠卷')
         })
     },
     openDelModal (type, item) {

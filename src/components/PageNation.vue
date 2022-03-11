@@ -1,5 +1,5 @@
 <template>
-  <ul class="pagination d-flex align-items-center jy-content-center" :style="{backgroundColor: style.bg}">
+  <ul v-if="pagination.total_pages !== 0" class="pagination d-flex align-items-center jy-content-center" :style="{backgroundColor: style.bg}">
     <li v-show="pagination.has_pre" :style="styleObject" class="pagination__prev" @click="$emit('getProduct',pagination.current_page - 1)"><span><i class="fas fa-chevron-left"></i>Prev</span></li>
     <li class="pagination__item"
       v-for="page in pagination.total_pages"

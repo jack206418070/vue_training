@@ -97,29 +97,30 @@ export default {
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`)
         .then((res) => {
-          res.data.orders.forEach((order) => {
-            if (Object.prototype.hasOwnProperty.call(order, 'create_at')) {
-              this.orders.push(order)
-            }
-          })
+          this.orders = res.data.orders
           this.pagination = res.data.pagination
           this.isLoading = false
         })
         .catch((err) => {
-          console.log(err)
+          this.$httpMessageState(err.response, '獲取訂單列表')
         })
     },
     deleteOrder (id) {
       this.isLoading = true
+      let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/order/${id}`
+      if (id === 'all') {
+        url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/orders/all`
+      }
       this.$http
-        .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/order/${id}`)
-        .then(() => {
+        .delete(url)
+        .then((res) => {
           this.$refs.delModal.closeModal()
           this.back_show = false
           this.getOrders(this.pagination.current_page)
+          this.$httpMessageState(res, '刪除訂單')
         })
         .catch((err) => {
-          console.log(err)
+          this.$httpMessageState(err.response, '刪除訂單')
         })
     },
     openDelModal (type, item) {
@@ -141,13 +142,14 @@ export default {
       }
       this.$http
         .put(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`, data)
-        .then(() => {
+        .then((res) => {
           const component = this.$refs.orderModal
           component.closeModal()
           this.getOrders(this.pagination.current_page)
+          this.$httpMessageState(res, '更新付款資訊')
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, '更新付款資訊')
         })
     },
     closeAllModal () {

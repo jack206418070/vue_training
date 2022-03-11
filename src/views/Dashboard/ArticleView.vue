@@ -130,7 +130,7 @@ export default {
           this.isLoading = false
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, '刪除文章')
         })
     },
     updateArticle (item) {
@@ -138,18 +138,21 @@ export default {
       let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/article`
       let httpMethods = 'post'
       this.isLoading = true
+      let status = '新增文章'
       if (!this.isNew) {
         url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`
         httpMethods = 'put'
+        status = '更新文章'
       }
       this.$http[httpMethods](url, { data: this.tempArticle })
         .then((res) => {
           this.back_show = false
           this.getArticles(this.pagination.current_page)
           this.$refs.articleModal.closeModal()
+          this.$httpMessageState(res, status)
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, status)
         })
     },
     getArticle (id) {
@@ -161,7 +164,7 @@ export default {
           this.isLoading = false
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, '取得單篇文章')
         })
     },
     closeAllModal () {
@@ -178,9 +181,10 @@ export default {
           this.$refs.delModal.closeModal()
           this.isLoading = false
           this.getArticles(this.pagination.current_page)
+          this.$httpMessageState(res, '刪除文章')
         })
         .catch((err) => {
-          console.dir(err)
+          this.$httpMessageState(err.response, '刪除文章')
         })
     }
   },
