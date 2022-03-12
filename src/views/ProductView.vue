@@ -1,11 +1,11 @@
 <template>
   <BannerView></BannerView>
+  <MobileCategory></MobileCategory>
   <div class="container">
     <div class="user-product mt-10 mb-10">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 d-md-none">
           <DeskCategory></DeskCategory>
-          <MobileCategory></MobileCategory>
         </div>
         <div class="col-md-9">
           <div class="content pb-3">
