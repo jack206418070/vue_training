@@ -23,7 +23,7 @@ export default {
   .about-banner{
     background-size: cover;
     background-position: center center;
-    padding-top: 60px;
+    padding-top: 80px;
     height: 300px;
     h3{
       padding-left: 10%;

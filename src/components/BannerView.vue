@@ -13,13 +13,22 @@
     :pagination="{ clickable: true }"
   >
     <SwiperSlide>
-      <img src="@/assets/images/banner1.jpeg" alt="">
+      <div
+        class="bg-img mobile_1"
+        :style="{ backgroundImage: `url( ${require('@/assets/images/banner1.jpeg')})`}"
+      ></div>
     </SwiperSlide>
     <SwiperSlide>
-      <img src="@/assets/images/banner2.jpeg" alt="">
+      <div
+        class="bg-img mobile_2"
+        :style="{ backgroundImage: `url( ${require('@/assets/images/banner2.jpeg')})`}"
+      ></div>
     </SwiperSlide>
     <SwiperSlide>
-      <img src="@/assets/images/banner3.jpeg" alt="">
+      <div
+        class="bg-img mobile_3"
+        :style="{ backgroundImage: `url( ${require('@/assets/images/banner3.jpeg')})`}"
+      ></div>
     </SwiperSlide>
   </Swiper>
 </template>
@@ -49,7 +58,32 @@ export default {
     letter-spacing: 0.125rem;
     background-color: #9F9086;
     color: white;
-    margin-top: 59px;
+    margin-top: 80px;
+    @include pad{
+      margin-top: 75px;
+    }
+     @include mobile{
+      margin-top: 70px;
+    }
+  }
+  .swiper-slide{
+    .bg-img{
+      background-size: cover;
+      background-position: center center;
+      padding-bottom: 27%;
+      @include mobile{
+        padding-bottom: 60%;
+        &.mobile_1{
+          background-image: url('@/assets/images/mobile-banner-1.jpeg') !important;
+        }
+        &.mobile_2{
+          background-image: url('@/assets/images/mobile-banner-2.jpeg') !important;
+        }
+        &.mobile_3{
+          background-image: url('@/assets/images/mobile-banner-3.jpeg') !important;
+        }
+      }
+    }
   }
   .swiper-pagination-bullet{
     background-color: #333;

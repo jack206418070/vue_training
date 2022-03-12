@@ -11,10 +11,10 @@ a{
   max-width: 1200px;
   margin: 0 auto;
   @include pad{
-    max-width: 767px;
+    max-width: 996px;
   }
   @include pad{
-    max-width: 578px;
+    max-width: 768px;
   }
 }
 input, select, textarea{

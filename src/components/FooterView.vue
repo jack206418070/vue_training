@@ -1,7 +1,7 @@
 <template>
   <footer>
     <div class="container">
-      <main class="d-flex">
+      <main>
         <div class="info">
           <img class="mb-4" src="@/assets/images/logo-b.png" alt="">
           <p class="text-medium mb-4">
@@ -36,10 +36,19 @@
             </ul>
           </nav>
           <div class="community">
+            <div class="community-menu">
+              <h3 class="text-medium text-center mb-4">企業團購 / 聯絡方式</h3>
+              <div class="mb-1">
+                <a class="text-medium text-center d-block w-60 mx-auto" href="tel:+886-2-23086299">(02)2308-6299</a>
+              </div>
+              <div class="mb-4">
+                <a class="text-medium text-center d-block w-60 mx-auto" href="mailto:funthingtrue@gmail.com">funthingtrue@gmail.com</a>
+              </div>
+            </div>
             <ul class="d-flex jy-content-end">
-              <li class="ml-5"><a class="icon-fb" href="#"></a></li>
-              <li class="ml-5"><a class="icon-line" href="#"></a></li>
-              <li class="ml-5"><a class="icon-ig" href="#"></a></li>
+              <li class="mx-2"><a class="icon-fb icon" href="#"></a></li>
+              <li class="mx-2"><a class="icon-line icon" href="#"></a></li>
+              <li class="mx-2"><a class="icon-ig icon" href="#"></a></li>
             </ul>
           </div>
         </div>
@@ -63,6 +72,7 @@
     }
     main{
       padding: 50px 0;
+      display: flex;
     }
     .info{
       flex: 0 0 30%;
@@ -84,29 +94,58 @@
         font-size: 18px;
       }
     }
-  }
-  .icon-fb{
+    .icon-fb{
     background: url('https://www.funthingtrue.com.tw/img/fb.svg');
-  }
-  .icon-line{
-    background: url('https://www.funthingtrue.com.tw/img/line.svg');
-  }
-  .icon-ig{
-    background: url('https://www.funthingtrue.com.tw/img/ig.svg');
-  }
-  .copyright{
-    background-color: #5d5d5d;
-    font-size: 14px;
-  }
-  .community{
-    a{
-      display: block;
-      width: 33px;
-      height: 33px;
-      background-repeat: no-repeat;
-      transition: .7s;
-      &:hover{
-        opacity: 0.7;
+    }
+    .icon-line{
+      background: url('https://www.funthingtrue.com.tw/img/line.svg');
+    }
+    .icon-ig{
+      background: url('https://www.funthingtrue.com.tw/img/ig.svg');
+    }
+    .copyright{
+      background-color: #5d5d5d;
+      font-size: 14px;
+    }
+    .community{
+      .icon{
+        display: block;
+        width: 33px;
+        height: 33px;
+        background-repeat: no-repeat;
+        transition: .7s;
+        &:hover{
+          opacity: 0.7;
+        }
+      }
+      &-menu{
+        display: none;
+      }
+    }
+    @media screen and (max-width: 996px) {
+      .right{
+        flex: 0 0 100%;
+        nav{
+          display: none;
+        }
+        .community{
+          ul{
+            justify-content: center;
+          }
+          &-menu{
+            display: block;
+          }
+        }
+      }
+      .info{
+        display: none;
+      }
+      .copyright{
+        display: none;
+      }
+      main{
+        display: block;
+        padding-bottom: 100px;
       }
     }
   }

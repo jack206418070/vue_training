@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <div class="cart pt-15">
+  <div class="cart pt-20">
     <StepView></StepView>
     <router-view/>
   </div>

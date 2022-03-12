@@ -28,7 +28,7 @@
               <img src="@/assets/images/icon_service1.svg" alt="" style="width:100px">
               <div>
                 <h4 class="text-title text-c-white">雙北隔日快速到貨</h4>
-                <p class="text-title-sm text-c-white">CURRENT DISTRIBUTION</p>
+                <p class="text-title-sm text-c-white d-md-none">CURRENT DISTRIBUTION</p>
               </div>
             </div>
             <div class="title-right">
@@ -119,6 +119,11 @@ export default {
     background-color: #bd9154;
     height: 600px;
     position: relative;
+    @include pad{
+      h4{
+        font-size: 24px;
+      }
+    }
     .top{
       position: absolute;
       width: 55%;
@@ -126,6 +131,9 @@ export default {
       top:0;
       right: 0;
       background-color: #fff;
+      @include pad{
+        top: -1px;
+      }
       &::after{
         position: absolute;
         content: '';
@@ -136,12 +144,18 @@ export default {
         transform: scaleY(1.03);
         background-color: #bd9154;
         clip-path: polygon(0 0, 0 100%, 100% 100%);
+        @include pad{
+          top: 2px;
+        }
       }
     }
     .title-right{
       position: relative;
       z-index: 1;
       flex: 0 0 10%;
+      @include pad{
+        flex: 0 0 20%;
+      }
       a{
         color: #bd9154;
         line-height: 100px;
@@ -153,6 +167,9 @@ export default {
       p{
         font-weight: 500;
         letter-spacing: 1.3px;
+        @include pad{
+          font-size: 20px;
+        }
       }
     }
     .content{

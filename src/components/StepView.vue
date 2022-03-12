@@ -1,5 +1,5 @@
 <template>
-  <div class="row jy-content-between align-items-center py-18 mb-10">
+  <div class="row jy-content-between align-items-center py-18">
     <div class="col-lg-3">
       <h3 class="text-title">
         <span class="text-c-forthary">全台宅配</span>
