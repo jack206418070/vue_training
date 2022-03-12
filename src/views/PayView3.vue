@@ -41,7 +41,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.show_complete)
     if (this.show_complete) {
       this.is_show = true
       this.$emitter.emit('changeBar', 3)

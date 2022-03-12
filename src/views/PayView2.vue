@@ -168,9 +168,10 @@ export default {
     payOrder (orderId) {
       this.$http
         .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/pay/${orderId}`)
-        .then((res) => {
-          this.$router.push({ name: '完成結帳頁面', params: { show_complete: true } })
+        .then(() => {
+          this.$emitter.emit('isLoading', false)
           this.$emitter.emit('updateCart', false)
+          this.$router.push({ name: '完成結帳頁面', params: { show_complete: true } })
         })
         .catch((err) => {
           this.$emitter.emit('isLoading', false)
