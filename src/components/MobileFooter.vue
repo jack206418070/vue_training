@@ -9,7 +9,10 @@
       </li>
       <li>
         <router-link to="/cart">
+        <div class="p-relative">
+          <div class="cart-amount">{{ cartLen }}</div>
           <img src="https://www.funthingtrue.com.tw/img/icon/new/icon-bag.svg" alt="">
+        </div>
           <span>購物車</span>
         </router-link>
       </li>
@@ -37,6 +40,36 @@
 
 <script>
 export default {
+  data () {
+    return {
+      cart: []
+    }
+  },
+  methods: {
+    getCart () {
+      this.$http
+        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`)
+        .then((res) => {
+          this.cart = res.data.data.carts
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
+    }
+  },
+  computed: {
+    cartLen () {
+      const temp = 0
+      const len = this.cart.reduce((pre, current) => pre + current.qty, temp)
+      return len
+    }
+  },
+  mounted () {
+    this.getCart()
+    this.$emitter.on('updateCart', (data) => {
+      this.cart = data.carts
+    })
+  }
 }
 </script>
 
@@ -67,6 +100,22 @@ export default {
     }
     @include pad{
       display: block;
+    }
+    .cart-amount{
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    line-height: 24px;
+    text-align: center;
+    background-color: $secondary;
+    color: white;
+    top: 6px;
+    left: 65%;
+    transform: translate(-50%, -50%);
+      @include mobile{
+        left: 80%;
+      }
     }
   }
 </style>
