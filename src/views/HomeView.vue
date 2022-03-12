@@ -124,6 +124,18 @@ export default {
         font-size: 24px;
       }
     }
+    @include mobile{
+      height: 500px;
+      .title-left{
+        padding-top: 20px;
+        img{
+          width: 70px !important;
+        }
+        h4{
+          font-size: 16px;
+        }
+      }
+    }
     .top{
       position: absolute;
       width: 55%;
@@ -133,6 +145,10 @@ export default {
       background-color: #fff;
       @include pad{
         top: -1px;
+      }
+      @include mobile{
+        width: 40%;
+        height: 60px;
       }
       &::after{
         position: absolute;
@@ -156,9 +172,15 @@ export default {
       @include pad{
         flex: 0 0 20%;
       }
+      @include mobile{
+        flex: 0 0 40%;
+      }
       a{
         color: #bd9154;
         line-height: 100px;
+        @include mobile{
+          line-height: 60px;
+        }
         svg{
           width: 24px;
           height: 24px;
@@ -169,6 +191,10 @@ export default {
         letter-spacing: 1.3px;
         @include pad{
           font-size: 20px;
+        }
+        @include mobile{
+          font-size: 14px;
+          white-space: nowrap;
         }
       }
     }
@@ -185,7 +211,7 @@ export default {
       margin-right: 1%;
     }
     @include mobile {
-      flex: 0 0 32%;
+      flex: 0 0 40%;
       margin-right: 1.33%;
     }
   }

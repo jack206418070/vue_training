@@ -61,6 +61,7 @@ export default {
         span{
           display: block;
           padding-top: 4px;
+          white-space: nowrap;
         }
       }
     }
