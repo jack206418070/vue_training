@@ -8,8 +8,8 @@
         </div>
         <div class="category-bar">
           <ul class="d-flex">
-            <li class="text-medium">放心初精選</li>
-            <li class="text-medium">檔期精選</li>
+            <li class="text-medium" @click="getCategory('test')">放心初精選</li>
+            <li class="text-medium" @click="getCategory('test2')">檔期精選</li>
             <li class="text-medium">水果</li>
             <li class="text-medium">蔬菜</li>
             <li class="text-medium">大魚大肉</li>
@@ -18,14 +18,9 @@
             <li class="text-medium">傳統小吃</li>
           </ul>
         </div>
-        <div class="category">
+        <div v-if="category.length > 0" class="category">
           <ul class="d-flex">
-            <li class="text-medium text-c-white">新品上市</li>
-            <li class="text-medium text-c-white">每日精選</li>
-            <li class="text-medium text-c-white">檔期精選</li>
-            <li class="text-medium text-c-white">多加1元多1件</li>
-            <li class="text-medium text-c-white">檔期精選</li>
-            <li class="text-medium text-c-white">多加1元多1件</li>
+            <li v-for="item in category" :key="item" class="text-medium text-c-white">{{ item }}</li>
           </ul>
         </div>
       </div>
@@ -35,7 +30,38 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      category_bar: {
+        test: {
+          category: ['新品上市', '每週精選', '檔期精選', '加1元多1件'],
+          step: 0
+        },
+        test2: {
+          category: ['新品上市2', '每週精選2', '檔期精選2', '加1元多1件2'],
+          step: 0
+        }
+      },
+      category: [],
+      step: 0
+    }
+  },
+  methods: {
+    getCategory (category) {
+      for (const item in this.category_bar) {
+        if (item !== category) {
+          this.category_bar[item].step = 0
+        }
+      }
+      if (this.category_bar[category].step === 0) {
+        this.category_bar[category].step = 1
+        this.category = this.category_bar[category].category
+      } else {
+        this.category_bar[category].step = 0
+        this.category = []
+      }
+    }
+  }
 }
 </script>
 
@@ -48,6 +74,9 @@ export default {
     padding: 20px 0;
     padding-bottom: 0;
     background-color: #fff;
+    @include mobile{
+      top: 49px;
+    }
     .mobile-search-content{
       position: relative;
     }

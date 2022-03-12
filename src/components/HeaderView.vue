@@ -120,6 +120,9 @@ export default {
     width: 100%;
     z-index:1000;
     background-color: white;
+    @include mobile{
+      padding: 10px 0;
+    }
     .logo{
       position: relative;
       &-btn{
