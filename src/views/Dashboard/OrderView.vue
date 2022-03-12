@@ -1,7 +1,6 @@
 <template>
   <div v-if="back_show" class="back-lock" @click="closeAllModal()"></div>
   <div class="content">
-    <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container d-flex jy-content-center">
       <div class="total__product w-100 d-flex align-items-center jy-content-between">
         <p>目前有 {{ orders.length }} 筆訂單</p>
@@ -80,7 +79,6 @@ export default {
     return {
       orders: [],
       tempOrder: {},
-      isLoading: false,
       pagination: {},
       back_show: false
     }
@@ -92,21 +90,22 @@ export default {
   },
   methods: {
     getOrders (page = 1) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       this.orders = []
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`)
         .then((res) => {
           this.orders = res.data.orders
           this.pagination = res.data.pagination
-          this.isLoading = false
+          this.$emitter.emit('isAdminLoading', false)
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, '獲取訂單列表')
         })
     },
     deleteOrder (id) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/order/${id}`
       if (id === 'all') {
         url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/orders/all`
@@ -120,6 +119,7 @@ export default {
           this.$httpMessageState(res, '刪除訂單')
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, '刪除訂單')
         })
     },
@@ -133,7 +133,7 @@ export default {
       this.tempOrder = item
     },
     updatePaid (item) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       const data = {
         data: {
           ...item,
@@ -149,6 +149,7 @@ export default {
           this.$httpMessageState(res, '更新付款資訊')
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, '更新付款資訊')
         })
     },

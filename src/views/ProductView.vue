@@ -92,6 +92,7 @@ export default {
   },
   methods: {
     getCart () {
+      this.$emitter.emit('isLoading', true)
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {

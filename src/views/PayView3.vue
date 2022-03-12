@@ -1,5 +1,4 @@
 <template>
-  <LoadingView :active="isLoading"></LoadingView>
   <div v-show="is_show" class="complete mb-10">
     <div class="row jy-content-center">
       <div class="col-lg-5">
@@ -33,7 +32,6 @@ export default {
   props: ['show_complete'],
   data () {
     return {
-      isLoading: false,
       is_show: false
     }
   },
@@ -53,7 +51,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
-</style>

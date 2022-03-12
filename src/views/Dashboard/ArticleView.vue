@@ -1,7 +1,6 @@
 <template>
   <div v-if="back_show" class="back-lock" @click="closeAllModal()"></div>
   <div class="content">
-    <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container">
       <div class="total__product w-100 d-flex align-items-center jy-content-between">
         <p>目前有 1 篇文章</p>
@@ -88,7 +87,6 @@ export default {
     return {
       tempArticle: {},
       isNew: false,
-      isLoading: false,
       articles: [],
       pagination: {},
       back_show: false
@@ -121,23 +119,24 @@ export default {
       this.$refs.delModal.openModal(type)
     },
     getArticles (page = 1) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`)
         .then((res) => {
           this.articles = res.data.articles
           this.pagination = res.data.pagination
-          this.isLoading = false
+          this.$emitter.emit('isAdminLoading', false)
         })
         .catch((err) => {
-          this.$httpMessageState(err.response, '刪除文章')
+          this.$emitter.emit('isAdminLoading', false)
+          this.$httpMessageState(err.response, '取得文章')
         })
     },
     updateArticle (item) {
       this.tempArticle = item
       let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/article`
       let httpMethods = 'post'
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       let status = '新增文章'
       if (!this.isNew) {
         url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`
@@ -152,18 +151,20 @@ export default {
           this.$httpMessageState(res, status)
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, status)
         })
     },
     getArticle (id) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/article/${id}`)
         .then((res) => {
           this.openArtModal(false, res.data.article)
-          this.isLoading = false
+          this.$emitter.emit('isAdminLoading', false)
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, '取得單篇文章')
         })
     },
@@ -173,17 +174,17 @@ export default {
       this.back_show = false
     },
     delArticle (id) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       this.$http
         .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/article/${id}`)
         .then((res) => {
           this.back_show = false
           this.$refs.delModal.closeModal()
-          this.isLoading = false
           this.getArticles(this.pagination.current_page)
           this.$httpMessageState(res, '刪除文章')
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, '刪除文章')
         })
     }

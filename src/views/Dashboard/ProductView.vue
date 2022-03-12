@@ -1,7 +1,6 @@
 <template>
   <div v-if="back_show" class="back-lock" @click="closeAllModal()"></div>
   <div class="content">
-    <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container d-flex jy-content-center">
       <div class="search w-100">
         <div class="search__input w-30">
@@ -111,7 +110,6 @@ export default {
       pagination: {},
       searchText: '',
       tempProduct: {},
-      isLoading: false,
       ascending: false,
       sideToggle: true,
       isNew: false,
@@ -142,7 +140,7 @@ export default {
       this.$refs.productModal.openModal()
     },
     getProducts (page = 1) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       this.tempProducts = null
       this.searchText = ''
       this.$http
@@ -150,14 +148,15 @@ export default {
         .then((res) => {
           this.products = res.data.products
           this.pagination = res.data.pagination
-          this.isLoading = false
+          this.$emitter.emit('isAdminLoading', false)
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, '取得產品列表')
         })
     },
     updateProduct (item) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       this.tempProduct = item
       let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product`
       let httpMethods = 'post'
@@ -170,7 +169,6 @@ export default {
       this.$http[httpMethods](url, { data: this.tempProduct })
         .then((res) => {
           if (res.data.success) {
-            this.isLoading = false
             this.back_show = false
             this.$refs.productModal.closeModal()
             this.$httpMessageState(res, status)
@@ -178,7 +176,7 @@ export default {
           }
         })
         .catch(err => {
-          this.isLoading = false
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, status)
         })
     },
@@ -200,7 +198,7 @@ export default {
       this.$refs.delModal.openModal(type)
     },
     delProduct (id) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       this.$http
         .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/product/${id}`)
         .then((res) => {
@@ -210,6 +208,7 @@ export default {
           this.$httpMessageState(res, '刪除產品')
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, '刪除產品')
         })
     },

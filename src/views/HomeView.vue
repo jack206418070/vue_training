@@ -72,6 +72,7 @@ export default {
     ArrowCircleRightIcon
   },
   mounted () {
+    this.$emitter.emit('isLoading', true)
     this.$http
       .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products`)
       .then((res) => {
@@ -80,6 +81,7 @@ export default {
             this.products.push(product)
           }
         })
+        this.$emitter.emit('isLoading', false)
       })
       .catch((err) => {
         console.dir(err)

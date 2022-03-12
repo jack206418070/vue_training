@@ -1,7 +1,6 @@
 <template>
   <div v-if="back_show" class="back-lock" @click="closeAllModal()"></div>
   <div class="content">
-    <LoadingView :active="isLoading"></LoadingView>
     <div class="admin-container d-flex jy-content-center">
       <div class="total__product w-100 d-flex align-items-center jy-content-between">
         <p>目前有 {{ coupons.length }} 個優惠卷</p>
@@ -82,7 +81,6 @@ import PageView from '@/components/PageNation.vue'
 export default {
   data () {
     return {
-      isLoading: false,
       isNew: false,
       coupons: [],
       tempCoupon: {},
@@ -97,7 +95,7 @@ export default {
   },
   methods: {
     updateCoupon (tempCoupon, type = '') {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       let url = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupon`
       let httpMethods = 'post'
       let status = '增加優惠卷'
@@ -116,24 +114,26 @@ export default {
           this.$httpMessageState(res, status)
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, status)
         })
     },
     getCoupon (page = 1) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`)
         .then((res) => {
           this.coupons = res.data.coupons
           this.pagination = res.data.pagination
-          this.isLoading = false
+          this.$emitter.emit('isAdminLoading', false)
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, '獲取優惠卷列表')
         })
     },
     delCoupon (id) {
-      this.isLoading = true
+      this.$emitter.emit('isAdminLoading', true)
       this.$http
         .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/admin/coupon/${id}`)
         .then((res) => {
@@ -143,6 +143,7 @@ export default {
           this.$httpMessageState(res, '刪除優惠卷')
         })
         .catch((err) => {
+          this.$emitter.emit('isAdminLoading', false)
           this.$httpMessageState(err.response, '刪除優惠卷')
         })
     },

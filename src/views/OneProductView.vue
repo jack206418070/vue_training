@@ -1,5 +1,4 @@
 <template>
-  <LoadingView :active="isLoading"></LoadingView>
   <div class="oneProduct">
     <div class="row">
       <div class="col-lg-6">
@@ -82,7 +81,6 @@ export default {
       product: {},
       products: [],
       qty: 1,
-      isLoading: false,
       isBtnLoading: false
     }
   },
@@ -126,14 +124,15 @@ export default {
         })
     },
     getProduct () {
-      this.isLoading = true
+      this.$emitter.emit('isLoading', true)
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/product/${this.id}`)
         .then((res) => {
           this.product = res.data.product
-          this.isLoading = false
+          this.$emitter.emit('isLoading', false)
         })
         .catch((err) => {
+          this.$emitter.emit('isLoading', false)
           console.dir(err)
         })
     },

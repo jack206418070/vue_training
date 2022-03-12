@@ -1,5 +1,4 @@
 <template>
-  <LoadingView :active="isLoading"></LoadingView>
   <div v-show="is_show" class="userInfo mb-10">
     <h3 class="text-medium py-4 px-5 mb-10">訂購資料</h3>
     <FormView v-slot="{ errors }" @submit="onSubmit" class="px-5">
@@ -136,7 +135,6 @@ export default {
   data () {
     return {
       is_credit: false,
-      isLoading: false,
       is_show: false,
       form: {
         user: {}
@@ -149,7 +147,7 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.isLoading = true
+      this.$emitter.emit('isLoading', true)
       const order = this.form
       this.$http
         .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/order`, { data: order })
@@ -158,33 +156,31 @@ export default {
             this.payOrder(res.data.orderId)
             return
           }
-          this.isLoading = false
+          this.$emitter.emit('isLoading', false)
           this.$emitter.emit('updateCart', false)
           this.$router.push({ name: '完成結帳頁面', params: { show_complete: true } })
         })
         .catch((err) => {
-          console.dir(err)
-          alert('結帳失敗, 請確認資料正確性')
+          this.$emitter.emit('isLoading', false)
+          this.$httpMessageState(err.response, '結帳')
         })
     },
     payOrder (orderId) {
       this.$http
         .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/pay/${orderId}`)
         .then((res) => {
-          this.isLoading = false
           this.$router.push({ name: '完成結帳頁面', params: { show_complete: true } })
           this.$emitter.emit('updateCart', false)
         })
         .catch((err) => {
-          console.dir(err)
+          this.$emitter.emit('isLoading', false)
+          this.$httpMessageState(err.response, '信用卡付款')
         })
     },
     isPhone (value) {
       const phoneNumber = /^(09)[0-9]{8}$/
       return phoneNumber.test(value) ? true : '需要正確的電話號碼'
     }
-  },
-  beforeCreate () {
   },
   mounted () {
     if (this.show) {

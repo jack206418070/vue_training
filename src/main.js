@@ -25,7 +25,9 @@ configure({
 })
 setLocale('zh_TW')
 
-const app = createApp(App).use(router).use(VueAxios, axios)
+const app = createApp(App)
+app.use(router)
+app.use(VueAxios, axios)
 app.use(CKEditor)
 app.config.globalProperties.$httpMessageState = $httpMessageState
 app.config.globalProperties.$filters = {

@@ -1,6 +1,6 @@
 <template>
-  <LoadingView :active="isLoading"></LoadingView>
   <AlertMessages></AlertMessages>
+  <LoadingView :active="isLoading"></LoadingView>
   <header class="admin-header d-flex jy-content-between align-items-center">
     <div class="logo">
       <h1>LOGO</h1>
@@ -132,7 +132,6 @@
 </template>
 
 <script>
-import AlertMessages from '@/components/AlertModal.vue'
 export default {
   name: 'DashBoard',
   data () {
@@ -140,9 +139,6 @@ export default {
       isCheck: false,
       isLoading: false
     }
-  },
-  components: {
-    AlertMessages
   },
   methods: {
     checkLogin () {
@@ -154,7 +150,6 @@ export default {
           .then(() => {
             this.isCheck = true
             this.isLoading = false
-            // this.$router.go(0)
           })
           .catch((err) => {
             console.dir(err)
@@ -179,6 +174,9 @@ export default {
   },
   mounted () {
     this.checkLogin()
+    this.$emitter.on('isAdminLoading', (status) => {
+      this.isLoading = status
+    })
   }
 }
 </script>

@@ -1,5 +1,4 @@
 <template>
-  <LoadingView :active="isLoading"></LoadingView>
   <ul v-if="carts?.carts?.length" class="mb-10">
     <li class="row py-4 bg-secondary">
       <div class="col-lg-4">
@@ -134,54 +133,58 @@
 export default {
   data () {
     return {
-      isLoading: false,
       carts: [],
       coupon: ''
     }
   },
   methods: {
     getCarts () {
-      this.isLoading = true
+      this.$emitter.emit('isLoading', true)
       this.$http
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {
-          this.isLoading = false
+          this.$emitter.emit('isLoading', false)
           this.carts = res.data.data
           if (this.carts.carts.length === 0) {
             this.$emitter.emit('changeBar', 0)
             this.$emitter.emit('updateCart', res.data.data)
+            this.$emitter.emit('isLoading', false)
             return
           }
           this.$emitter.emit('updateCart', res.data.data)
           this.$emitter.emit('changeBar', 1)
+          this.$emitter.emit('isLoading', false)
         })
         .catch((err) => {
           console.log(err)
+          this.$emitter.emit('isLoading', false)
         })
     },
     updateCart (item, qty) {
-      this.isLoading = true
+      this.$emitter.emit('isLoading', true)
       const data = {
         product_id: item.product_id,
         qty: qty
       }
       this.$http
         .put(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart/${item.id}`, { data })
-        .then((res) => {
+        .then(() => {
           this.getCarts()
         })
         .catch((err) => {
+          this.$emitter.emit('isLoading', false)
           console.dir(err)
         })
     },
     deleteCart (id) {
-      this.isLoading = true
+      this.$emitter.emit('isLoading', true)
       this.$http
         .delete(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart/${id}`)
-        .then((res) => {
+        .then(() => {
           this.getCarts()
         })
         .catch((err) => {
+          this.$emitter.emit('isLoading', false)
           console.dir(err)
         })
     },
@@ -190,7 +193,7 @@ export default {
         alert('欄位不可為空')
         return
       }
-      this.isLoading = true
+      this.$emitter.emit('isLoading', true)
       const data = {
         code: this.coupon
       }
@@ -200,7 +203,8 @@ export default {
           this.getCarts()
         })
         .catch((err) => {
-          console.dir(err)
+          this.$emitter.emit('isLoading', false)
+          this.$httpMessageState(err.response, '優惠卷使用')
         })
     },
     routerTo () {

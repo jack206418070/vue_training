@@ -37,7 +37,7 @@ export default {
     toastShow () {
       setTimeout(() => {
         this.messages.shift()
-      }, 6000)
+      }, 4000)
     },
     clearToast (index) {
       this.messages.splice(index, 1)

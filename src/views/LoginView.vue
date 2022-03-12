@@ -56,7 +56,6 @@
 </template>
 
 <script>
-
 export default {
   data () {
     return {
@@ -68,6 +67,7 @@ export default {
   },
   methods: {
     login () {
+      this.$emitter.emit('isLoading', true)
       const user = {
         username: this.user.email,
         password: this.user.password
@@ -75,12 +75,24 @@ export default {
       this.$http.post(`${process.env.VUE_APP_APIURL}/admin/signin`, user)
         .then((res) => {
           const { token, expired } = res.data
+          this.$emitter.emit('isLoading', false)
           document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
           this.$router.push({ path: '/admin' })
         })
         .catch((err) => {
-          console.log(err)
-          alert('帳號或密碼輸入錯誤')
+          this.$emitter.emit('isLoading', false)
+          const res = {
+            data: {
+              success: false,
+              message: '使用者不存在'
+            }
+          }
+          if (err.response.data.error.code === 'auth/user-not-found') {
+            this.$httpMessageState(res, '登入')
+          } else {
+            res.data.message = '密碼錯誤'
+            this.$httpMessageState(res, '登入')
+          }
         })
     }
   }

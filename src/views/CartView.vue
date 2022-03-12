@@ -10,10 +10,6 @@
 <script>
 import StepView from '@/components/StepView.vue'
 export default {
-  data () {
-    return {
-    }
-  },
   components: {
     StepView
   }
