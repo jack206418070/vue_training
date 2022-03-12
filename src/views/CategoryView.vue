@@ -1,7 +1,7 @@
 <template>
   <h2 class="text-title text-center mb-10">放心初-每日精選</h2>
   <div class="row product-content">
-    <div class="col-lg-3 mb-4 p-relative hover-big" v-for="item in products" :key="item.id">
+    <div class="col-xs-6 col-sm-4 col-md-3 mb-4 p-relative hover-big" v-for="item in products" :key="item.id">
       <div class="addToCart">
         <button
           @click="addCart(1, item.id)"
@@ -127,6 +127,9 @@ export default {
     transition: .5s;
     &:hover{
       transform: scale(1.05);
+      @include mobile{
+        transform: scale(1)
+      }
       .addToCart{
         opacity: 1;
         z-index: 100;
