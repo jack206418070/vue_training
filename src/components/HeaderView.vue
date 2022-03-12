@@ -213,7 +213,7 @@ export default {
     width: 30%;
     top: 70px;
     background-color: #fff;
-    height: calc(100vh - 70px - 60px);
+    height: calc(100vh - 70px);
     z-index: 900;
     right: -100%;
     transition: .5s;
