@@ -74,6 +74,9 @@ export default {
     padding: 20px 0;
     padding-bottom: 0;
     background-color: #fff;
+    @include pad{
+      margin-bottom: 60px;
+    }
     @include mobile{
       top: 49px;
       margin-bottom: 60px;
