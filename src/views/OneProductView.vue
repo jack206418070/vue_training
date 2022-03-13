@@ -32,12 +32,12 @@
             <div @click="decQty" class="dec">-</div>
           </div>
           <button
-            @click="addCart"
+            @click="addCart(qty, product.id)"
             class="user-btn user-btn-primary text-center py-2"
             type="button"
-            :disabled="isBtnLoading"
+            :disabled="isBtnLoading === product.id"
             >
-            <span v-if="isBtnLoading">
+            <span v-if="isBtnLoading === product.id">
               <i class="fas fa-pulse fa-spinner"></i>
             </span>
             <span v-else>加入購物車</span>
@@ -53,19 +53,19 @@
           <hr>
         </div>
       </div>
-      <div class="col-lg-12 mb-5">
-        <div class="oneProduct-desc">
-          <h4 class="text-title mb-2">別人也逛過</h4>
-          <div class="row">
-            <template v-for="item in products" :key="item.id">
-              <div class="col-lg-3 transition-s hover-scale pointer" @click="routerTo('/product/' + item.id)">
-                  <CardView
-                  :title-color="'white'"
-                  :product="item"
-                  ></CardView>
-              </div>
-            </template>
-          </div>
+      <div class="col-lg-12 mb-5 refrence">
+        <h4 class="text-title mb-2">別人也逛過</h4>
+        <div class="row">
+          <template v-for="item in products" :key="item.id">
+            <div class="col-xs-6 col-sm-4 col-md-3 transition-s pointer">
+              <CardView
+                @add-cart="addCart"
+                :title-color="'white'"
+                :product="item"
+                :is-loading="isBtnLoading"
+              ></CardView>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -80,8 +80,8 @@ export default {
     return {
       product: {},
       products: [],
-      qty: 1,
-      isBtnLoading: false
+      isBtnLoading: '',
+      qty: 1
     }
   },
   components: {
@@ -104,20 +104,20 @@ export default {
           console.dir(err)
         })
     },
-    addCart () {
-      this.isBtnLoading = true
+    addCart (qty = 1, id) {
+      this.isBtnLoading = id
       const data = {
         data: {
-          product_id: this.product.id,
-          qty: this.qty
+          product_id: id,
+          qty: qty
         }
       }
       this.$http
         .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`, data)
         .then(() => {
           this.getCart()
+          this.isBtnLoading = ''
           this.qty = 1
-          this.isBtnLoading = false
         })
         .catch((err) => {
           console.dir(err)
@@ -217,6 +217,15 @@ export default {
       }
       p{
         line-height: 2;
+      }
+    }
+    .refrence{
+      .row{
+        flex-wrap: nowrap;
+        overflow: auto;
+        &::-webkit-scrollbar{
+          display: none;
+        }
       }
     }
   }

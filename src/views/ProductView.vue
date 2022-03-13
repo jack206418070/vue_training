@@ -43,10 +43,12 @@ export default {
         .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {
           this.cart = res.data.data
+          this.$emitter.emit('isLoading', false)
           this.$emitter.emit('updateCart', res.data.data)
         })
         .catch((err) => {
           console.dir(err)
+          this.$emitter.emit('isLoading', false)
         })
     }
   },
