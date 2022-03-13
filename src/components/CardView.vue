@@ -92,6 +92,9 @@ export default {
           width: 100%;
           button{
             width: 100%;
+            @include mobile{
+              font-size: 16px;
+            }
           }
           &:hover{
             button{
