@@ -1,9 +1,22 @@
 <template>
-    <div class="card">
+    <div class="card" @click="routerTo(product.id)">
         <div class="card-title bg-primary">
             <h3 class="text-medium text-c-white">{{ title }}</h3>
         </div>
         <div class="card-body" :style="{backgroundImage: `url(${product.imageUrl})`}">
+          <div class="addToCart d-none d-sm-block">
+            <button
+              @click.stop="$emit('addCart',1,product.id)"
+              type="button"
+              class="user-btn user-btn-thirdary py-3"
+              :disabled="isBtnLoading === product.id"
+            >
+              <span v-if="isBtnLoading === product.id">
+                <i class="fas fa-pulse fa-spinner"></i>
+              </span>
+              <span v-else>加入購物車</span>
+            </button>
+          </div>
         </div>
         <div class="card-footer">
             <h4 class="text-medium text-left" :style="{'color': originColor}">{{ product.title }}</h4>
@@ -18,12 +31,24 @@
 
 <script>
 export default {
-  props: ['titleColor', 'originColor', 'product'],
+  props: ['titleColor', 'originColor', 'product', 'isLoading'],
+  emits: ['addCart'],
   data () {
     return {
       title: '雙北隔日配',
       content: '這是內容',
-      footer: '這是結尾'
+      footer: '這是結尾',
+      isBtnLoading: ''
+    }
+  },
+  methods: {
+    routerTo (id) {
+      this.$router.push(`/product/${id}`)
+    }
+  },
+  watch: {
+    isLoading () {
+      this.isBtnLoading = this.isLoading
     }
   }
 }
@@ -34,6 +59,7 @@ export default {
         text-align: center;
         overflow: hidden;
         border-radius: 10px;
+        cursor: pointer;
         &-title {
             padding: 10px 0;
         }
@@ -41,6 +67,7 @@ export default {
             padding-bottom: 100%;
             background-position: center center;
             background-size: contain;
+            position: relative;
         }
         &-footer {
           padding: 10px 0;
@@ -53,6 +80,21 @@ export default {
               font-weight: bold;
               font-size: 18px;
               color: $primary;
+            }
+          }
+        }
+        .addToCart{
+          position: absolute;
+          bottom: 0;
+          z-index: 100;
+          transition: .5s;
+          width: 100%;
+          button{
+            width: 100%;
+          }
+          &:hover{
+            button{
+              background-color: $primary;
             }
           }
         }

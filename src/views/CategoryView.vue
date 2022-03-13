@@ -2,7 +2,7 @@
   <h2 class="text-title text-center mb-10">放心初-每日精選</h2>
   <div class="row product-content">
     <div class="col-xs-6 col-sm-4 col-md-3 mb-4 p-relative hover-big" v-for="item in products" :key="item.id">
-      <div class="addToCart">
+      <div class="addToCart d-sm-none">
         <button
           @click="addCart(1, item.id)"
           type="button"
@@ -15,12 +15,12 @@
           <span v-else>加入購物車</span>
         </button>
       </div>
-      <router-link :to="'/product/'+ item.id ">
-        <CardView
+      <CardView
+        @add-cart="addCart"
         :title-color="'white'"
         :product="item"
-        ></CardView>
-      </router-link>
+        :is-loading="isBtnLoading"
+      ></CardView>
     </div>
   </div>
   <PageView

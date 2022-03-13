@@ -76,7 +76,6 @@ export default {
     background-color: #fff;
     @include mobile{
       top: 49px;
-      padding-bottom: 10px;
       margin-bottom: 60px;
     }
     .mobile-search-content{
@@ -117,7 +116,7 @@ export default {
     }
     .category{
       position: absolute;
-      top: 92px;
+      top: 80px;
       background-color: #fff;
       z-index: 800;
       padding: 16px 0;
@@ -125,9 +124,6 @@ export default {
       overflow: scroll;
       &::-webkit-scrollbar {
         display: none;
-      }
-      @include mobile{
-        padding: 10px 0;
       }
       li{
         padding: 8px 20px;
