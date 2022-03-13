@@ -4,7 +4,10 @@
             <h3 class="text-medium text-c-white">{{ title }}</h3>
         </div>
         <div class="card-body" :style="{backgroundImage: `url(${product.imageUrl})`}">
-          <div class="addToCart d-none d-sm-block">
+          <div
+            class="addToCart d-none d-sm-block"
+            :class="{'z-index-bottom': titleColor === 'white'}"
+          >
             <button
               @click.stop="$emit('addCart',1,product.id)"
               type="button"
@@ -101,6 +104,9 @@ export default {
               background-color: $primary;
             }
           }
+        }
+        .z-index-bottom{
+          z-index: -10000;
         }
     }
 </style>

@@ -125,7 +125,7 @@ export default {
       }
     }
     @include mobile{
-      height: 500px;
+      height: 550px;
       .title-left{
         padding-top: 20px;
         img{
