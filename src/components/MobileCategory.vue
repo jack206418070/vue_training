@@ -70,18 +70,23 @@ export default {
     position: sticky;
     top: 70px;
     margin-bottom: 100px;
-    z-index: 1000;
+    z-index: 800;
     padding: 20px 0;
     padding-bottom: 0;
     background-color: #fff;
     @include mobile{
       top: 49px;
+      padding-bottom: 10px;
+      margin-bottom: 60px;
     }
     .mobile-search-content{
       position: relative;
     }
     .search{
       margin-bottom: 15px;
+      @include mobile{
+        margin-bottom: 12px;
+      }
       input, button{
         border-radius: 4px;
         padding: 8px 0;
@@ -114,12 +119,15 @@ export default {
       position: absolute;
       top: 92px;
       background-color: #fff;
-      z-index: 1000;
+      z-index: 800;
       padding: 16px 0;
       width: 100%;
       overflow: scroll;
       &::-webkit-scrollbar {
         display: none;
+      }
+      @include mobile{
+        padding: 10px 0;
       }
       li{
         padding: 8px 20px;
@@ -129,6 +137,9 @@ export default {
         margin-right: 5%;
         white-space: nowrap;
         flex: 0 0 27%;
+        @include mobile{
+          padding: 6px;
+        }
       }
     }
   }

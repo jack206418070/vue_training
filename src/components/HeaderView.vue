@@ -219,7 +219,7 @@ export default {
     height: calc(100vh - 70px);
     z-index: 900;
     right: -100%;
-    transition: .5s;
+    transition: .3s;
     display: none;
     li{
       border-bottom: 1px solid #e7e7e7;
@@ -231,6 +231,7 @@ export default {
       display: block;
     }
     @include mobile{
+      top: 50px;
       width: 50%;
     }
   }
@@ -242,9 +243,8 @@ export default {
     height: 100%;
     width: 100%;
     z-index: -100;
-    transition: .5s;
     &.show{
-      z-index: 800;
+      z-index: 850;
       opacity: .7;
     }
   }

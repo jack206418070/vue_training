@@ -63,7 +63,7 @@ export default {
       margin-top: 75px;
     }
      @include mobile{
-      margin-top: 70px;
+      margin-top: 50px;
     }
   }
   .swiper-slide{
