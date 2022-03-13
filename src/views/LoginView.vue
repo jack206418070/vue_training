@@ -111,11 +111,23 @@ export default {
       width: 1px;
       background-color: #eee;
       @include absCenter();
+      @include pad{
+        display: none;
+      }
     }
     &-left{
       flex: 0 0 50%;
       .user-btn{
         flex: 0 0 33.3333%;
+      }
+      @include pad{
+        flex: 0 0 100%;
+      }
+      @include mobile{
+        padding: 24px;
+        .user-btn{
+          font-size: 16px;
+        }
       }
     }
     &-right{
@@ -123,6 +135,9 @@ export default {
       .user-btn{
         width: 60%;
         margin: 0 auto;
+      }
+      @include pad{
+        display: none;
       }
     }
     .text-title-sm{
