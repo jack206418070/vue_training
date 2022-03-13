@@ -68,6 +68,7 @@ export default {
             background-position: center center;
             background-size: contain;
             position: relative;
+            vertical-align:top;
         }
         &-footer {
           padding: 10px 0;
@@ -85,7 +86,7 @@ export default {
         }
         .addToCart{
           position: absolute;
-          bottom: 0;
+          bottom: -2px;
           z-index: 100;
           transition: .5s;
           width: 100%;
