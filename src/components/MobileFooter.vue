@@ -81,6 +81,7 @@ export default {
     background: #f5f5f5;
     display: none;
     z-index: 1000;
+    height: 80px;
     &-menu{
       display: flex;
       li{
@@ -99,7 +100,9 @@ export default {
       }
     }
     @include pad{
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .cart-amount{
     position: absolute;

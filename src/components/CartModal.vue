@@ -86,7 +86,14 @@ export default {
     width: 30%;
     bottom: 100px;
     right: 70px;
-    z-index: 30;
+    z-index: 110;
+    @include pad{
+      bottom: 140px;
+      left: 0;
+    }
+    @include mobile{
+      width: 80%;
+    }
     .title{
       margin-bottom: 5px;
     }
@@ -99,6 +106,9 @@ export default {
       .close{
         width: 24px;
         height: 24px;
+      }
+      @include mobile{
+        height: 300px;
       }
       .user-content{
         &-title{
@@ -142,6 +152,15 @@ export default {
       cursor: pointer;
       &:hover{
         background-color: $primary;
+      }
+      @include pad{
+        left: 0;
+        bottom: -58px;
+        border-radius: 4px;
+      }
+      @include mobile{
+        font-size: 16px;
+        white-space: nowrap;
       }
     }
   }

@@ -6,7 +6,7 @@
         <div class="card-body" :style="{backgroundImage: `url(${product.imageUrl})`}">
           <div
             class="addToCart d-none d-sm-block"
-            :class="{'z-index-bottom': titleColor === 'white'}"
+            :class="{'z-index-bottom': originColor === 'white'}"
           >
             <button
               @click.stop="$emit('addCart',1,product.id)"
