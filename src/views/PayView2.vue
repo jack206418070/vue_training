@@ -262,7 +262,7 @@ export default {
     @include mobile{
       position: fixed;
       margin-left: -15px;
-      padding-bottom: 20px;
+      margin-bottom: -2px;
       width: 100%;
       bottom: 0;
       display: block;

@@ -24,7 +24,7 @@
             </div>
             <div class="btn-group">
               <button class="user-btn user-btn-gray py-3" type="button">加入會員</button>
-              <button class="user-btn user-btn-danger py-3" type="button">快速註冊</button>
+              <button class="user-btn user-btn-danger fix-safari py-3" type="button">快速註冊</button>
               <button class="user-btn user-btn-thirdary py-3" type="submit">登入</button>
             </div>
           </FormView>
@@ -154,10 +154,17 @@ export default {
         outline: none;
       }
     }
+    .btn-group{
+      font-size:0;
+    }
     .user-btn{
       font-size: 18px;
       transition: .7s;
       white-space: nowrap;
+      &.fix-safari{
+        margin-right: -2px;
+        margin-left: -2px;
+      }
       &:hover{
         transform: scale(1.05);
       }

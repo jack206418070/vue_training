@@ -268,7 +268,7 @@ export default {
       display: block;
       position: fixed;
       margin-left: -15px;
-      padding-bottom: 20px;
+      margin-bottom: -2px;
       width: 100%;
       bottom: 0;
     }
