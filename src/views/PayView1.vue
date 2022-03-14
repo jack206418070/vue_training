@@ -35,7 +35,7 @@
           </p>
         </div>
       </div>
-      <div class="col-6 col-sm-2">
+      <div class="col-xs-6 col-sm-2">
         <select
           class="py-2"
           name="qty"
@@ -53,7 +53,7 @@
           NT ${{ item.product.price }}
         </p>
       </div>
-      <div class="col-4">
+      <div class="col-xs-4 col-sm-2">
         <p class="text-medium text-center text-c-primary">
           NT ${{ item.total }}
         </p>
@@ -260,13 +260,16 @@ export default {
         text-align: right;
       }
     }
-    .cart-check-btn{
-      @include mobile{
-        position: fixed;
-        margin-left: -15px;
-        width: 100%;
-        bottom: 0;
-      }
+  }
+  .cart-check-btn{
+    display: none;
+    @include mobile{
+      display: block;
+      position: fixed;
+      margin-left: -15px;
+      padding-bottom: 20px;
+      width: 100%;
+      bottom: 0;
     }
   }
 </style>

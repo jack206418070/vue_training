@@ -72,10 +72,13 @@ export default {
     right: 0;
     transform: translateX(100%);
     border-style: solid;
-    border-width: 20px 0 20px 14px;
+    border-width: 30px 0 30px 14px;
     border-color: transparent transparent transparent #c1c1c1;
     &.active {
       border-color: transparent transparent transparent $secondary;
+    }
+    @include mobile{
+      border-width: 20px 0 20px 14px;
     }
   }
   h3 {

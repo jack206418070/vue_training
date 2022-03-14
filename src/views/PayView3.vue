@@ -1,7 +1,7 @@
 <template>
-  <div v-show="is_show" class="complete mb-10">
+  <div v-show="is_show" class="complete mb-10 mt-sm-10">
     <div class="row jy-content-center">
-      <div class="col-lg-5">
+      <div class="col-12 col-xs-8 col-sm-10 col-lg-5">
         <p class="text-c-primary f-size-xl text-center">
           <i class="far fa-check-circle"></i>
         </p>

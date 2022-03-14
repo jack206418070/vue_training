@@ -67,7 +67,7 @@ export default {
   },
   watch: {
     $route (to, from) {
-      if (to.fullPath.indexOf('/cart') !== -1) {
+      if (to.fullPath.indexOf('/cart') !== -1 && to.fullPath.indexOf('/cart/payment3') === -1) {
         this.isFooter_show = true
       } else {
         this.isFooter_show = false
@@ -79,7 +79,7 @@ export default {
     this.$emitter.on('updateCart', (data) => {
       this.cart = data.carts
     })
-    if (this.$route.fullPath.indexOf('/cart') !== -1) {
+    if (this.$route.fullPath.indexOf('/cart') !== -1 && this.$route.fullPath.indexOf('/cart/payment3') === -1) {
       this.isFooter_show = true
     } else {
       this.isFooter_show = false

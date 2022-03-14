@@ -1,7 +1,7 @@
 <template>
-  <div v-show="is_show" class="userInfo mb-10">
-    <h3 class="text-medium py-4 px-5 mb-10">訂購資料</h3>
-    <FormView v-slot="{ errors }" @submit="onSubmit" class="px-5">
+  <div v-show="is_show" class="userInfo mb-10 mb-sm-5">
+    <h3 class="text-medium py-4 px-5 mb-10 mb-sm-5 mt-sm-5">訂購資料</h3>
+    <FormView v-slot="{ errors }" @submit="onSubmit" class="px-5 px-md-0">
       <div class="row">
         <div class="col-lg-6">
           <div class="form-control mb-2">
@@ -87,9 +87,9 @@
             ></FieldView>
           </div>
         </div>
-        <div class="col-lg-6 mt-7">
+        <div class="col-lg-6 mt-7 mb-sm-7">
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-sm-6">
               <div
                 class="pay_credit"
                 :class="{ active: is_credit == true }"
@@ -101,7 +101,7 @@
                 </span>
               </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-sm-6">
               <div
                 class="pay_cash"
                 :class="{ active: is_credit == false }"
@@ -113,7 +113,7 @@
                 </span>
               </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-12 d-sm-none">
               <button
                 class="user-btn user-btn-primary w-100 py-4 mb-0 mt-auto f-size-xs"
                 type="submit"
@@ -124,6 +124,10 @@
           </div>
         </div>
       </div>
+      <button
+        class="cart-check-btn user-btn user-btn-primary w-100 py-3 f-size-xs"
+        type="submit"
+      >下一步：完成付款</button>
     </FormView>
   </div>
 </template>
@@ -194,7 +198,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .userInfo {
   h3 {
     background-color: #f5f5f5;
@@ -252,6 +256,17 @@ export default {
     display: block;
     width: 40px;
     height: 40px;
+  }
+  .cart-check-btn{
+    display: none;
+    @include mobile{
+      position: fixed;
+      margin-left: -15px;
+      padding-bottom: 20px;
+      width: 100%;
+      bottom: 0;
+      display: block;
+    }
   }
 }
 </style>

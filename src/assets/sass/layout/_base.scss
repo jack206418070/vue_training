@@ -20,6 +20,7 @@ a{
 input, select, textarea{
   border: 1px solid #ccc;
   border-radius: none;
+  font-size: initial;
   &:focus{
     outline: none;
   }
