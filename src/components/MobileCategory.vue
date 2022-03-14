@@ -66,10 +66,21 @@ export default {
       }
     }
   },
+  watch: {
+    $route (to, from) {
+      if (to.fullPath.indexOf('/product/') !== -1) {
+        this.status = true
+      } else {
+        this.status = false
+      }
+    }
+  },
   mounted () {
-    this.$emitter.on('changeTop', (status) => {
-      this.status = status
-    })
+    if (this.$route.fullPath.indexOf('/product/') !== -1) {
+      this.status = true
+    } else {
+      this.status = false
+    }
   }
 }
 </script>
@@ -84,7 +95,9 @@ export default {
     padding-bottom: 0;
     background-color: #fff;
     &.status{
-      top: 0 !important;
+      @include mobile{
+        top: 0;
+      }
     }
     @include pad{
       margin-bottom: 60px;

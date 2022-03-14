@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile-footer">
+  <div class="mobile-footer" :class="{'d-md-none': isFooter_show}">
     <ul class="mobile-footer-menu">
       <li>
         <router-link to="/product">
@@ -42,7 +42,8 @@
 export default {
   data () {
     return {
-      cart: []
+      cart: [],
+      isFooter_show: false
     }
   },
   methods: {
@@ -64,11 +65,25 @@ export default {
       return len
     }
   },
+  watch: {
+    $route (to, from) {
+      if (to.fullPath.indexOf('/cart') !== -1) {
+        this.isFooter_show = true
+      } else {
+        this.isFooter_show = false
+      }
+    }
+  },
   mounted () {
     this.getCart()
     this.$emitter.on('updateCart', (data) => {
       this.cart = data.carts
     })
+    if (this.$route.fullPath.indexOf('/cart') !== -1) {
+      this.isFooter_show = true
+    } else {
+      this.isFooter_show = false
+    }
   }
 }
 </script>

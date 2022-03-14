@@ -1,5 +1,5 @@
 <template>
-   <div class="header">
+   <div class="header" :class="{'d-sm-none': isHeader_show}">
     <div class="container d-flex jy-content-between align-items-center">
       <div class="logo">
         <router-link to="/" class="logo-btn">Home</router-link>
@@ -72,7 +72,8 @@ export default {
   data () {
     return {
       cart: [],
-      is_show: false
+      is_show: false,
+      isHeader_show: false
     }
   },
   components: {
@@ -98,6 +99,15 @@ export default {
       return len
     }
   },
+  watch: {
+    $route (to, from) {
+      if (to.fullPath.indexOf('/product/') !== -1) {
+        this.isHeader_show = true
+      } else {
+        this.isHeader_show = false
+      }
+    }
+  },
   mounted () {
     this.getCart()
     this.$emitter.on('updateCart', (data) => {
@@ -107,6 +117,11 @@ export default {
         this.cart = data.carts
       }
     })
+    if (this.$route.fullPath.indexOf('/product/') !== -1) {
+      this.isHeader_show = true
+    } else {
+      this.isHeader_show = false
+    }
   }
 }
 </script>

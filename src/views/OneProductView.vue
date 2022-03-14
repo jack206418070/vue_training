@@ -165,14 +165,6 @@ export default {
       .catch((err) => {
         console.dir(err)
       })
-    if (screen.width <= 768) {
-      this.$emitter.emit('hideHeader', false)
-      this.$emitter.emit('changeTop', true)
-    }
-  },
-  unmounted () {
-    this.$emitter.emit('hideHeader', true)
-    this.$emitter.emit('changeTop', false)
   }
 }
 </script>

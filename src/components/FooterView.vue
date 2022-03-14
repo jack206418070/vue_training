@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer :class="{'d-sm-none': isFooter_show}">
     <div class="container">
       <main>
         <div class="info">
@@ -61,6 +61,32 @@
     </div>
   </footer>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      isFooter_show: false
+    }
+  },
+  watch: {
+    $route (to, from) {
+      if (to.fullPath.indexOf('/cart') !== -1) {
+        this.isFooter_show = true
+      } else {
+        this.isFooter_show = false
+      }
+    }
+  },
+  mounted () {
+    if (this.$route.fullPath.indexOf('/cart') !== -1) {
+      this.isFooter_show = true
+    } else {
+      this.isFooter_show = false
+    }
+  }
+}
+</script>
 
 <style lang="scss">
   footer{
