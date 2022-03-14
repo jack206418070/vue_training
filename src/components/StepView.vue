@@ -1,15 +1,15 @@
 <template>
-  <div class="row jy-content-between align-items-center py-18">
-    <div class="col-lg-3">
-      <h3 class="text-title">
+  <div class="row jy-content-between align-items-center py-18 pt-sm-0 pb-sm-0">
+    <div class="col-sm-6">
+      <h3 class="text-title mb-sm-4">
         <span class="text-c-forthary">全台宅配</span>
         <span class="mx-2">|</span>
         <span>購物車</span>
       </h3>
     </div>
-    <div class="col-lg-6">
+    <div class="col-sm-6">
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-4">
           <div class="step-item" :class="{'active': step > 0}">
             <h3 class="text-medium">
               <span :class="{'active': step > 0}">1</span>
@@ -18,7 +18,7 @@
             <div class="hide-bar" :class="{'active': step > 0}"></div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-4">
           <div class="step-item" :class="{'active': step > 1}">
             <h3 class="text-medium">
               <span :class="{'active': step > 1}">2</span>
@@ -27,7 +27,7 @@
             <div class="hide-bar" :class="{'active': step > 1}"></div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-4">
           <div class="step-item" :class="{'active': step > 2}">
             <h3 class="text-medium">
               <span :class="{'active': step > 2}">3</span>
@@ -61,6 +61,9 @@ export default {
   min-height: 60px;
   background-color: #c1c1c1;
   position: relative;
+  @include mobile{
+    min-height: 40px;
+  }
   .hide-bar {
     width: 0;
     position: absolute;
@@ -69,7 +72,7 @@ export default {
     right: 0;
     transform: translateX(100%);
     border-style: solid;
-    border-width: 30px 0 30px 14px;
+    border-width: 20px 0 20px 14px;
     border-color: transparent transparent transparent #c1c1c1;
     &.active {
       border-color: transparent transparent transparent $secondary;
@@ -82,6 +85,10 @@ export default {
     justify-content: center;
     align-items: center;
     line-height: 60px;
+    white-space: nowrap;
+    @include mobile{
+      line-height: 40px;
+    }
     span {
       width: 20px;
       height: 20px;

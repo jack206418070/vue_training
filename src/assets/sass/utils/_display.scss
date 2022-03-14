@@ -50,6 +50,28 @@
     .align-self-#{$key}{
         align-self: $value;
     }
+    @include pad{
+      .jy-content-md-#{$key}{
+          justify-content: $value;
+      }
+      .align-items-md-#{$key}{
+          align-items: $value;
+      }
+      .align-self-md-#{$key}{
+          align-self: $value;
+      }
+    }
+    @include mobile{
+      .jy-content-sm-#{$key}{
+          justify-content: $value;
+      }
+      .align-items-sm-#{$key}{
+          align-items: $value;
+      }
+      .align-self-sm-#{$key}{
+          align-self: $value;
+      }
+    }
 }
 
 .flex-wrap{
