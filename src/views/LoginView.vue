@@ -125,9 +125,6 @@ export default {
       }
       @include mobile{
         padding: 24px;
-        .user-btn{
-          font-size: 16px;
-        }
       }
     }
     &-right{
@@ -161,6 +158,9 @@ export default {
       font-size: 18px;
       transition: .7s;
       white-space: nowrap;
+      @include mobile{
+        font-size: 14px;
+      }
       &.fix-safari{
         margin-right: -2px;
         margin-left: -2px;
