@@ -144,7 +144,7 @@ export default {
     }
     .category{
       position: absolute;
-      top: 80px;
+      top: 85px;
       background-color: #fff;
       z-index: 800;
       padding: 16px 0;
