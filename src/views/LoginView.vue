@@ -2,7 +2,7 @@
   <section class="py-20">
     <div class="container">
       <div class="login d-flex align-items-center">
-        <div class="login-left p-12">
+        <div class="login-left p-12 p-sm-8">
           <h3 class="text-title-sm f-w-bold text-center mb-5">會員登入 | SIGN IN</h3>
           <p class="text-center text-medium f-w-normal mb-5">嗨Hi！歡迎回來請直接輸入您的放心初帳號、密碼。</p>
           <FormView v-slot="{ errors }" @submit="login" class="form-block">
@@ -157,8 +157,14 @@ export default {
     .user-btn{
       font-size: 18px;
       transition: .7s;
+      white-space: nowrap;
       &:hover{
         transform: scale(1.05);
+      }
+      @include mobile{
+        &:hover{
+          transform: scale(1);
+        }
       }
     }
     .icon-item{
