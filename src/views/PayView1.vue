@@ -122,10 +122,11 @@
     </li>
   </ul>
   <button
+    v-if="carts?.carts?.length"
     class="cart-check-btn user-btn user-btn-primary w-100 py-3 f-size-xs" type="button"
     @click="routerTo"
   >下一步：填寫資料</button>
-  <div v-show="carts?.carts?.length === 0" class="empty-cart mb-20">
+  <div v-show="carts?.carts?.length === 0" class="empty-cart mb-20 mt-sm-20">
     <h3 class="text-title text-c-forthary text-center mb-4">購物車是空的</h3>
     <router-link to="/product">
       <button class="user-btn user-btn-primary mx-auto py-4 px-10 f-size-s">前往選購商品</button>
