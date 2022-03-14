@@ -244,7 +244,7 @@ export default {
     width: 100%;
     z-index: -100;
     &.show{
-      z-index: 850;
+      z-index: 851;
       opacity: .7;
     }
   }

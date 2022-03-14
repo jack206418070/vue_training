@@ -151,7 +151,6 @@ export default {
             this.$emitter.emit('isLoading', false)
             return
           }
-          this.$emitter.emit('updateCart', res.data.data)
           this.$emitter.emit('changeBar', 1)
           this.$emitter.emit('isLoading', false)
         })

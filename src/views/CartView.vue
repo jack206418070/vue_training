@@ -12,6 +12,12 @@ import StepView from '@/components/StepView.vue'
 export default {
   components: {
     StepView
+  },
+  mounted () {
+    this.$emitter.emit('hideFooter', false)
+  },
+  unmounted () {
+    this.$emitter.emit('hideFooter', true)
   }
 }
 </script>

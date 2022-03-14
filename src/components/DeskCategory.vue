@@ -1,5 +1,5 @@
 <template>
-  <div class="user-side-menu">
+  <div class="user-side-menu mt-10">
     <div class="search">
       <h3 class="text-title mb-2">輸入關鍵字</h3>
       <input type="text my-2" placeholder="請輸入商品名稱" name="name" />
@@ -62,6 +62,14 @@
     </ul>
   </div>
 </template>
+
+<script>
+export default {
+  mounted () {
+    this.$emitter.emit('hideHeader', true)
+  }
+}
+</script>
 
 <style lang="scss">
 .user-side-menu {

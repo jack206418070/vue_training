@@ -1,5 +1,8 @@
 <template>
-  <div class="mobile-search d-none d-md-block">
+  <div
+    class="mobile-search d-none d-md-block"
+    :class="{'status': status}"
+  >
     <div class="container">
       <div class="mobile-search-content">
         <div class="search d-flex jy-content-between">
@@ -43,7 +46,8 @@ export default {
         }
       },
       category: [],
-      step: 0
+      step: 0,
+      status: false
     }
   },
   methods: {
@@ -61,6 +65,11 @@ export default {
         this.category = []
       }
     }
+  },
+  mounted () {
+    this.$emitter.on('changeTop', (status) => {
+      this.status = status
+    })
   }
 }
 </script>
@@ -74,11 +83,14 @@ export default {
     padding: 20px 0;
     padding-bottom: 0;
     background-color: #fff;
+    &.status{
+      top: 0 !important;
+    }
     @include pad{
       margin-bottom: 60px;
     }
     @include mobile{
-      top: 49px;
+      top: 50px;
       margin-bottom: 60px;
     }
     .mobile-search-content{

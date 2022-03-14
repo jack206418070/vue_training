@@ -86,7 +86,7 @@ export default {
     width: 30%;
     bottom: 100px;
     right: 70px;
-    z-index: 110;
+    z-index: 850;
     @include pad{
       bottom: 140px;
       left: 0;

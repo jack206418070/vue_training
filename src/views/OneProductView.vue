@@ -151,8 +151,13 @@ export default {
       this.getProduct()
     }
   },
+  created () {
+    this.$emitter.emit('hideHeader', false)
+  },
   mounted () {
     this.getProduct()
+    console.log(1)
+    this.$emitter.emit('changeTop', true)
     this.$http
       .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products`)
       .then((res) => {
@@ -165,6 +170,10 @@ export default {
       .catch((err) => {
         console.dir(err)
       })
+  },
+  unmounted () {
+    this.$emitter.emit('hideHeader', true)
+    this.$emitter.emit('changeTop', false)
   }
 }
 </script>

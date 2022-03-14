@@ -85,6 +85,7 @@ export default {
       })
       .catch((err) => {
         console.dir(err)
+        this.$emitter.emit('isLoading', false)
       })
   }
 }
