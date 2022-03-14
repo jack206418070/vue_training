@@ -150,9 +150,6 @@ export default {
       bottom: -55px;
       right: 0;
       cursor: pointer;
-      &:hover{
-        background-color: $primary;
-      }
       @include pad{
         left: 0;
         bottom: -58px;
