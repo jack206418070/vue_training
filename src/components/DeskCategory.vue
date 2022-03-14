@@ -63,14 +63,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  mounted () {
-    this.$emitter.emit('hideHeader', true)
-  }
-}
-</script>
-
 <style lang="scss">
 .user-side-menu {
   padding-bottom: 12px;
