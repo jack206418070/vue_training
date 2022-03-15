@@ -55,26 +55,27 @@ export default {
       // step: 0,
     }
   },
-  methods: {
-    getCategory (category) {
-      for (const item in this.category_bar) {
-        if (item !== category) {
-          this.category_bar[item].step = 0
-        }
-      }
-      if (this.category_bar[category].step === 0) {
-        this.category_bar[category].step = 1
-        this.category = this.category_bar[category].category
-      } else {
-        this.category_bar[category].step = 0
-        this.category = []
-      }
-    }
-  },
+  // methods: {
+  //   getCategory (category) {
+  //     for (const item in this.category_bar) {
+  //       if (item !== category) {
+  //         this.category_bar[item].step = 0
+  //       }
+  //     }
+  //     if (this.category_bar[category].step === 0) {
+  //       this.category_bar[category].step = 1
+  //       this.category = this.category_bar[category].category
+  //     } else {
+  //       this.category_bar[category].step = 0
+  //       this.category = []
+  //     }
+  //   }
+  // },
   watch: {
     $route (to, from) {
       if (to.fullPath.indexOf('/product/') !== -1) {
         this.status = true
+        this.is_active = ''
       } else {
         this.status = false
       }
