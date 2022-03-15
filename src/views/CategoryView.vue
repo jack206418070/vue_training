@@ -57,7 +57,7 @@ export default {
     getProducts (page = 1) {
       let apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
       if (this.category && (this.category !== '' && this.category !== '全部商品')) {
-        apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?category=${this.category}`
+        apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?category=${this.category}&&page=${page}`
       }
       this.$emitter.emit('isLoading', true)
       this.$http
