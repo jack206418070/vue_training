@@ -45,7 +45,8 @@ export default {
         bg: '#C59854',
         hoverBg: '#A01800'
       },
-      isBtnLoading: ''
+      isBtnLoading: '',
+      category: ''
     }
   },
   components: {
@@ -54,9 +55,13 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
+      let apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
+      if (this.category && (this.category !== '' && this.category !== '全部商品')) {
+        apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?category=${this.category}`
+      }
       this.$emitter.emit('isLoading', true)
       this.$http
-        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`)
+        .get(apiUrl)
         .then((res) => {
           this.products = res.data.products
           this.pagination = res.data.pagination
@@ -96,8 +101,17 @@ export default {
         })
     }
   },
+  watch: {
+    category () {
+      this.getProducts()
+    },
+    $route (to, from) {
+      this.category = to.query.category
+    }
+  },
   mounted () {
     this.getProducts()
+    this.category = this.$route.query.category
   }
 }
 </script>

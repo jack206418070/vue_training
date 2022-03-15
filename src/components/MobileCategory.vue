@@ -11,21 +11,25 @@
         </div>
         <div class="category-bar">
           <ul class="d-flex">
-            <li class="text-medium" @click="getCategory('test')">放心初精選</li>
-            <li class="text-medium" @click="getCategory('test2')">檔期精選</li>
-            <li class="text-medium">水果</li>
-            <li class="text-medium">蔬菜</li>
-            <li class="text-medium">大魚大肉</li>
-            <li class="text-medium">火鍋專區</li>
-            <li class="text-medium">快速上桌</li>
-            <li class="text-medium">傳統小吃</li>
+            <li @click="is_active = '全部商品'" :class="{'active': is_active === '全部商品'}">
+              <router-link :to="{name: '全部商品', query: {category: '全部商品'}}">
+                全部商品
+              </router-link>
+            </li>
+            <template v-for="item in category" :key="item">
+              <li @click="is_active = item" :class="{'active': is_active === item}">
+                <router-link :to="{name: '全部商品', query: {category: item}}">
+                  {{ item }}
+                </router-link>
+              </li>
+            </template>
           </ul>
         </div>
-        <div v-if="category.length > 0" class="category">
+        <!-- <div v-if="category.length > 0" class="category">
           <ul class="d-flex">
             <li v-for="item in category" :key="item" class="text-medium text-c-white">{{ item }}</li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -35,19 +39,20 @@
 export default {
   data () {
     return {
-      category_bar: {
-        test: {
-          category: ['新品上市', '每週精選', '檔期精選', '加1元多1件'],
-          step: 0
-        },
-        test2: {
-          category: ['新品上市2', '每週精選2', '檔期精選2', '加1元多1件2'],
-          step: 0
-        }
-      },
       category: [],
-      step: 0,
-      status: false
+      status: false,
+      is_active: ''
+      // category_bar: {
+      //   test: {
+      //     category: ['新品上市', '每週精選', '檔期精選', '加1元多1件'],
+      //     step: 0
+      //   },
+      //   test2: {
+      //     category: ['新品上市2', '每週精選2', '檔期精選2', '加1元多1件2'],
+      //     step: 0
+      //   }
+      // },
+      // step: 0,
     }
   },
   methods: {
@@ -81,6 +86,18 @@ export default {
     } else {
       this.status = false
     }
+    this.$http
+      .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products/all`)
+      .then((res) => {
+        const tempCategory = []
+        res.data.products.forEach((product) => {
+          tempCategory.push(product.category)
+        })
+        this.category = [...new Set(tempCategory)]
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 }
 </script>
@@ -129,16 +146,27 @@ export default {
     .category-bar{
       overflow-y: scroll;
       border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
       &::-webkit-scrollbar {
         display: none;
       }
       li{
         white-space: nowrap;
         margin-right: 8%;
-        padding: 8px 0;
+        background-color: $primary;
+        opacity: .6;
+        flex: 0 0 25%;
+        border-radius: 10px;
         cursor: pointer;
         &.active{
-          color: $primary;
+          opacity: 1;
+          font-weight: bold;
+        }
+        a{
+          color:#fff;
+          padding: 8px 0;
+          display: block;
+          text-align: center;
         }
       }
     }

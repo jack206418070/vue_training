@@ -177,6 +177,7 @@ export default {
     .icon-item{
       flex: 0 0 33.333%;
       padding: 10px;
+      animation: test 1s;
       img{
         margin: 0 auto;
         display: block;
