@@ -69,10 +69,10 @@
       </div>
     </li>
     <li class="row py-4 bg-white align-items-center border-b-1 jy-content-end">
-      <div class="col-5 col-sm-2">
+      <div class="col-xs-5 col-sm-2">
         <p class="text-medium text-center text-c-primary text-sm-right">總計</p>
       </div>
-      <div class="col-5 col-sm-2">
+      <div class="col-xs-5 col-sm-2">
         <p class="text-medium text-center text-c-primary f-size-s text-sm-right">
           NT ${{ carts.total }}
         </p>

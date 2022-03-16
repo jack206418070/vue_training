@@ -128,8 +128,8 @@ export default {
             return product.title.indexOf(this.searchText) !== -1
           })
           this.$router.push({ name: '全部商品', params: { products: JSON.stringify(tempProduct) } })
-          this.searchText = ''
           this.$emitter.emit('isLoading', false)
+          this.searchText = ''
         })
         .catch((err) => {
           console.dir(err)

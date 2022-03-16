@@ -17,6 +17,8 @@
       </div>
       <CardView
         @add-cart="addCart"
+        @favor-handler="favorHandler"
+        :favor="favor"
         :title-color="'white'"
         :product="item"
         :is-loading="isBtnLoading"
@@ -46,7 +48,8 @@ export default {
         hoverBg: '#A01800'
       },
       isBtnLoading: '',
-      category: ''
+      category: '',
+      favor: []
     }
   },
   components: {
@@ -106,6 +109,15 @@ export default {
         .catch((err) => {
           console.dir(err)
         })
+    },
+    favorHandler (type, id) {
+      if (type === 'add') {
+        this.favor.push(id)
+        localStorage.setItem('favor', JSON.stringify(this.favor))
+      } else {
+        this.favor.splice(this.favor.indexOf(id), 1)
+        localStorage.setItem('favor', JSON.stringify(this.favor))
+      }
     }
   },
   watch: {
@@ -122,6 +134,8 @@ export default {
   },
   mounted () {
     this.getProducts()
+    this.favor = JSON.parse(localStorage.getItem('favor')) || []
+    console.log(this.favor)
   }
 }
 </script>

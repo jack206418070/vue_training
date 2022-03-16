@@ -1,7 +1,17 @@
 <template>
     <div class="card" @click="routerTo(product.id)">
+        <div class="favor">
+          <span
+            v-if="isFavor.includes(product.id)"
+            @click.stop="$emit('favorHandler', 'remove', product.id)"
+          >🧡</span>
+          <span
+            v-else
+            @click.stop="$emit('favorHandler', 'add', product.id)"
+          >🤍</span>
+        </div>
         <div class="card-title bg-primary">
-            <h3 class="text-medium text-c-white">{{ title }}</h3>
+          <h3 class="text-medium text-c-white">{{ title }}</h3>
         </div>
         <div class="card-body" :style="{backgroundImage: `url(${product.imageUrl})`}">
           <div
@@ -34,14 +44,15 @@
 
 <script>
 export default {
-  props: ['titleColor', 'originColor', 'product', 'isLoading'],
-  emits: ['addCart'],
+  props: ['titleColor', 'originColor', 'product', 'isLoading', 'favor'],
+  emits: ['addCart', 'favorHandler'],
   data () {
     return {
       title: '雙北隔日配',
       content: '這是內容',
       footer: '這是結尾',
-      isBtnLoading: ''
+      isBtnLoading: '',
+      isFavor: []
     }
   },
   methods: {
@@ -52,7 +63,13 @@ export default {
   watch: {
     isLoading () {
       this.isBtnLoading = this.isLoading
+    },
+    favor () {
+      this.isFavor = this.favor
     }
+  },
+  mounted () {
+    this.isFavor = this.favor
   }
 }
 </script>
@@ -63,8 +80,16 @@ export default {
         overflow: hidden;
         border-radius: 10px;
         cursor: pointer;
+        .favor{
+          position: absolute;
+          top: 2%;
+          right: 10%;
+          font-size: 20px;
+          z-index: 100;
+        }
         &-title {
             padding: 10px 0;
+            position: relative;
         }
         &-body {
             padding-bottom: 100%;
