@@ -21,7 +21,9 @@
       </ul>
       <ul class="menu menu-user d-flex hash jy-content-end align-items-center">
         <li class="menu-icon mr-4">
-          <HeartIcon style="width:24px;"></HeartIcon>
+          <router-link :to="{ path:'/product', query: { category: '我的最愛' } }">
+            <HeartIcon style="width:24px;"></HeartIcon>
+          </router-link>
         </li>
         <li class="menu-icon p-relative">
           <router-link to="/cart">

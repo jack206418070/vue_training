@@ -153,7 +153,7 @@ export default {
         this.status = true
       } else {
         this.status = false
-        this.is_active = '全部商品'
+        this.is_active = this.$route.query.category || '全部商品'
       }
     }
   },

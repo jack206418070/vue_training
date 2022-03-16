@@ -17,7 +17,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/">
+        <router-link :to="{ path:'/product', query: { category: '我的最愛' } }">
           <img src="https://www.funthingtrue.com.tw/img/icon/icon-wish.png" alt="">
           <span>我的最愛</span>
         </router-link>
