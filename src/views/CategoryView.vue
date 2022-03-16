@@ -55,11 +55,18 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
+      this.category = this.$route.query.category
+      if (this.$route.params.products !== undefined) {
+        this.products = [...JSON.parse(this.$route.params.products)]
+        this.pagination = {}
+        return
+      }
+
+      this.$emitter.emit('isLoading', true)
       let apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
       if (this.category && (this.category !== '' && this.category !== '全部商品')) {
         apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?category=${this.category}&&page=${page}`
       }
-      this.$emitter.emit('isLoading', true)
       this.$http
         .get(apiUrl)
         .then((res) => {
@@ -102,16 +109,19 @@ export default {
     }
   },
   watch: {
-    category () {
-      this.getProducts()
-    },
     $route (to, from) {
       this.category = to.query.category
+      if (to.params.products !== undefined) {
+        this.products = [...JSON.parse(to.params.products)]
+        this.pagination = {}
+      }
+    },
+    category () {
+      this.getProducts()
     }
   },
   mounted () {
     this.getProducts()
-    this.category = this.$route.query.category
   }
 }
 </script>
