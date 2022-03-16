@@ -73,7 +73,7 @@ export default {
       this.$emitter.emit('isLoading', true)
 
       let apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
-      if (this.category === '' || this.category === '全部商品') {
+      if (this.category === '' || this.category === '全部商品' || this.category === undefined) {
         apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
       } else if (this.category === '我的最愛') {
         this.getFavorProduct()
