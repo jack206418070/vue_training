@@ -1,5 +1,9 @@
 <template>
-  <h2 class="text-title text-center mb-10">放心初-每日精選</h2>
+  <h2
+    v-if="category !== '全部商品' && category !== '我的最愛'"
+    class="text-title text-center mb-10"
+  >放心初-精選{{ category }}</h2>
+  <h2 v-else class="text-title text-center mb-10">{{ category }}</h2>
   <div class="row product-content">
     <div class="col-xs-6 col-sm-4 col-md-3 mb-4 p-relative hover-big" v-for="item in products" :key="item.id">
       <div class="addToCart d-sm-none">
@@ -49,7 +53,8 @@ export default {
       },
       isBtnLoading: '',
       category: '',
-      favor: []
+      favor: [],
+      favorProduct: []
     }
   },
   components: {
@@ -66,8 +71,15 @@ export default {
       }
 
       this.$emitter.emit('isLoading', true)
+
       let apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
-      if (this.category && (this.category !== '' && this.category !== '全部商品')) {
+      if (this.category === '' || this.category === '全部商品') {
+        apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
+      } else if (this.category === '我的最愛') {
+        this.getFavorProduct()
+        this.pagination = {}
+        return
+      } else {
         apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?category=${this.category}&&page=${page}`
       }
       this.$http
@@ -117,11 +129,28 @@ export default {
       } else {
         this.favor.splice(this.favor.indexOf(id), 1)
         localStorage.setItem('favor', JSON.stringify(this.favor))
+        if (this.$route.query.category === '我的最愛') {
+          this.getProducts()
+        }
       }
+    },
+    getFavorProduct () {
+      this.$http
+        .get(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products/all`)
+        .then((res) => {
+          this.$emitter.emit('isLoading', false)
+          const tempProducts = res.data.products
+          this.products = tempProducts.filter(product => {
+            return this.favor.indexOf(product.id) !== -1
+          })
+        })
+        .catch((err) => {
+          console.dir(err)
+        })
     }
   },
   watch: {
-    $route (to, from) {
+    $route (to) {
       this.category = to.query.category
       if (to.params.products !== undefined) {
         this.products = [...JSON.parse(to.params.products)]

@@ -16,6 +16,11 @@
                 全部商品
               </router-link>
             </li>
+            <li @click="is_active = '我的最愛'" :class="{'active': is_active === '我的最愛'}">
+              <router-link :to="{name: '全部商品', query: {category: '我的最愛'}}">
+                我的最愛
+              </router-link>
+            </li>
             <template v-for="item in category" :key="item">
               <li @click="is_active = item" :class="{'active': is_active === item}">
                 <router-link :to="{name: '全部商品', query: {category: item}}">
@@ -47,6 +52,11 @@
                   <li class="text-medium f-w-bold mb-3" @click="is_active = '全部商品'" :class="{'active': is_active === '全部商品'}">
                     <router-link :to="{name: '全部商品', query: {category: '全部商品'}}">
                       全部商品
+                    </router-link>
+                  </li>
+                  <li class="text-medium f-w-bold mb-3" @click="is_active = '我的最愛'" :class="{'active': is_active === '我的最愛'}">
+                    <router-link :to="{name: '全部商品', query: {category: '我的最愛'}}">
+                      我的最愛
                     </router-link>
                   </li>
                   <template v-for="item in category" :key="item">
