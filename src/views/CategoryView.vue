@@ -1,9 +1,9 @@
 <template>
   <h2
-    v-if="category !== '全部商品' && category !== '我的最愛'"
+    v-if="category !== '全部商品' && category !== '我的最愛' && category !== undefined"
     class="text-title text-center mb-10"
   >放心初-精選{{ category }}</h2>
-  <h2 v-else class="text-title text-center mb-10">{{ category }}</h2>
+  <h2 v-else class="text-title text-center mb-10">{{ category || '全部商品' }}</h2>
   <div class="row product-content">
     <div class="col-xs-6 col-sm-4 col-md-3 mb-4 p-relative hover-big" v-for="item in products" :key="item.id">
       <div class="addToCart d-sm-none">
@@ -63,6 +63,7 @@ export default {
   },
   methods: {
     getProducts (page = 1) {
+      // 先判斷是不是有搜尋的結果 來源 productView.vue  (searchProduct)
       this.category = this.$route.query.category
       if (this.$route.params.products !== undefined) {
         this.products = [...JSON.parse(this.$route.params.products)]
@@ -73,6 +74,8 @@ export default {
       this.$emitter.emit('isLoading', true)
 
       let apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
+
+      // 接著判斷是否有 category 的塞選 或者 我的最愛的塞選 去改變 apiUrl
       if (this.category === '' || this.category === '全部商品' || this.category === undefined) {
         apiUrl = `${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/products?page=${page}`
       } else if (this.category === '我的最愛') {
