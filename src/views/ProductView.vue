@@ -143,6 +143,7 @@ export default {
         this.status = true
       } else {
         this.status = false
+        this.is_active = '全部商品'
       }
     }
   },
@@ -154,8 +155,9 @@ export default {
     })
     if (this.$route.fullPath.indexOf('/product/') !== -1) {
       this.status = true
-    } else {
+    } else if (this.$route.fullPath.indexOf('/product') !== -1) {
       this.status = false
+      this.is_active = this.$route.query.category || '全部商品'
     }
   }
 }
