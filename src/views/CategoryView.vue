@@ -135,7 +135,6 @@ export default {
   mounted () {
     this.getProducts()
     this.favor = JSON.parse(localStorage.getItem('favor')) || []
-    console.log(this.favor)
   }
 }
 </script>

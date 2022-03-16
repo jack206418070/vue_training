@@ -1,6 +1,6 @@
 <template>
     <div class="card" @click="routerTo(product.id)">
-        <div class="favor">
+        <div class="favor" :class="{'hide': isFavorHide}">
           <span
             v-if="isFavor.includes(product.id)"
             @click.stop="$emit('favorHandler', 'remove', product.id)"
@@ -52,7 +52,8 @@ export default {
       content: '這是內容',
       footer: '這是結尾',
       isBtnLoading: '',
-      isFavor: []
+      isFavor: [],
+      isFavorHide: true
     }
   },
   methods: {
@@ -69,7 +70,8 @@ export default {
     }
   },
   mounted () {
-    this.isFavor = this.favor
+    this.isFavor = this.favor || []
+    this.$route.fullPath.indexOf('/product') !== -1 ? this.isFavorHide = false : this.isFavorHide = true
   }
 }
 </script>
@@ -86,6 +88,9 @@ export default {
           right: 10%;
           font-size: 20px;
           z-index: 100;
+          &.hide{
+            display: none;
+          }
         }
         &-title {
             padding: 10px 0;
