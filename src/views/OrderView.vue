@@ -96,7 +96,7 @@ export default {
       this.searchOrder = this.orders.filter(order => order.id === this.order_id)
       if (this.searchOrder.length === 0) {
         setTimeout(() => {
-          this.$swal('找不到此訂單!', 'error')
+          this.$swal({ icon: 'error', title: '失敗', text: '找不到此訂單' })
           this.$emitter.emit('isLoading', false)
         }, 1500)
       } else {

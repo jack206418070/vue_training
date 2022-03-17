@@ -130,6 +130,7 @@ export default {
       if (type === 'add') {
         this.favor.push(id)
         localStorage.setItem('favor', JSON.stringify(this.favor))
+        this.$swal('成功!', '加入最愛', 'success')
       } else {
         this.favor.splice(this.favor.indexOf(id), 1)
         localStorage.setItem('favor', JSON.stringify(this.favor))
