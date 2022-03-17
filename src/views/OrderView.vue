@@ -84,7 +84,6 @@ export default {
             this.current_page += 1
           } else {
             this.$emitter.emit('isLoading', false)
-            console.log(this.orders)
           }
         })
         .catch((err) => {
@@ -94,12 +93,19 @@ export default {
     },
     searchHandler () {
       this.$emitter.emit('isLoading', true)
-      setTimeout(() => {
-        this.searchOrder = this.orders.filter(order => order.id === this.order_id)
-        this.searchOrder = { ...this.searchOrder[0] }
-        this.order_id = ''
-        this.$emitter.emit('isLoading', false)
-      }, 1500)
+      this.searchOrder = this.orders.filter(order => order.id === this.order_id)
+      if (this.searchOrder.length === 0) {
+        setTimeout(() => {
+          this.$swal('找不到此訂單!', 'error')
+          this.$emitter.emit('isLoading', false)
+        }, 1500)
+      } else {
+        setTimeout(() => {
+          this.searchOrder = { ...this.searchOrder[0] }
+          this.order_id = ''
+          this.$emitter.emit('isLoading', false)
+        }, 1500)
+      }
     }
   },
   mounted () {
