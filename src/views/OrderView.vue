@@ -24,26 +24,26 @@
         <div class="col-md-10 col-lg-6">
           <div class="order-info">
             <h5 class="text-medium mb-2">
-              <span class="title">訂單編號：</span>
+              <span class="title">訂單編號</span>:
               <span class="content">{{ searchOrder.id }}</span>
             </h5>
             <p class="text-medium mb-2">
-              <span class="title">訂購人：</span>
+              <span class="title">訂購人</span>:
               <span class="content">{{ searchOrder.user.name }}</span>
             </p>
             <p class="text-medium mb-2">
-              <span class="title">訂單日期：</span>
+              <span class="title">訂單日期</span>:
               <span class="content">{{ $filters.date(searchOrder.create_at) }}</span>
             </p>
             <p class="text-medium mb-2">
-              <span class="title">付款狀態：</span>
+              <span class="title">付款狀態</span>:
               <span
                 class="content is_paid"
                 :class="{'is_paid_none': searchOrder.is_paid === false}"
               >{{ searchOrder.is_paid ? '已付款' : '未付款' }}</span>
             </p>
             <p class="text-medium mb-2">
-              <span class="title">訂購品項：</span>
+              <span class="title">訂購品項</span>:
               <ul class="content">
                   <li v-for="item in searchOrder.products" :key="item.id">
                     {{ item.product.title }} {{ item.product.unit }} X {{ item.qty }}
@@ -51,7 +51,7 @@
               </ul>
             </p>
             <p class="text-medium mb-2">
-              <span class="title">總金額：</span>
+              <span class="title">總金額</span>:
               <span class="content">${{ $filters.thColon(searchOrder.total) }}</span>
             </p>
           </div>
@@ -139,7 +139,10 @@ export default {
       }
       .content{
         flex: 0 0 80%;
-        padding-left: 10px;
+        padding-left: 16px;
+        @include pad{
+          flex: 0 0 90%;
+        }
         &.is_paid{
           color: #198754 !important;
         }
