@@ -47,7 +47,8 @@ const routes = [
             component: () => import('../views/PayView3.vue'),
             props: (route) => {
               return {
-                show_complete: route.params.show_complete
+                show_complete: route.params.show_complete,
+                id: route.params.id
               }
             }
           }

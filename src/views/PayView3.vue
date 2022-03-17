@@ -10,6 +10,10 @@
           感謝您，您已完成付款程序。<br>
           我們將在隔日為您出貨，請您注意取貨時間，以及電話通知。
         </p>
+        <p class="text-medium text-center lh-2 mb-5">
+          <span>您的訂單編號為：</span><br>
+          <span class="text-c-primary f-size-s f-w-bold">{{ id }}</span>
+        </p>
         <div class="btn-group d-flex jy-content-between">
           <button
             class="user-btn user-btn-primary py-3 px-5 hover-scale f-size-xs"
@@ -29,7 +33,7 @@
 
 <script>
 export default {
-  props: ['show_complete'],
+  props: ['show_complete', 'id'],
   data () {
     return {
       is_show: false

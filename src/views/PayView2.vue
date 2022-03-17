@@ -162,7 +162,7 @@ export default {
           }
           this.$emitter.emit('isLoading', false)
           this.$emitter.emit('updateCart', { carts: [] })
-          this.$router.push({ name: '完成結帳頁面', params: { show_complete: true } })
+          this.$router.push({ name: '完成結帳頁面', params: { show_complete: true, id: res.data.orderId } })
         })
         .catch((err) => {
           this.$emitter.emit('isLoading', false)
@@ -175,7 +175,7 @@ export default {
         .then(() => {
           this.$emitter.emit('isLoading', false)
           this.$emitter.emit('updateCart', { carts: [] })
-          this.$router.push({ name: '完成結帳頁面', params: { show_complete: true } })
+          this.$router.push({ name: '完成結帳頁面', params: { show_complete: true, id: orderId } })
         })
         .catch((err) => {
           this.$emitter.emit('isLoading', false)
