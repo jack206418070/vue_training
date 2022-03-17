@@ -120,10 +120,11 @@ export default {
       }
       this.$http
         .post(`${process.env.VUE_APP_APIURL}/api/${process.env.VUE_APP_PATH}/cart`, data)
-        .then(() => {
+        .then((res) => {
           this.getCart()
           this.isBtnLoading = ''
           this.qty = 1
+          this.$swal('成功!', `${res.data.data.product.title}-加入購物車`, 'success')
         })
         .catch((err) => {
           console.dir(err)

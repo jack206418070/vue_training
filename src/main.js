@@ -15,6 +15,8 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 import { date, thColon } from './utils/filters'
+import VueSweetalert2 from 'vue-sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 defineRule('required', required)
 defineRule('email', email)
@@ -29,6 +31,7 @@ const app = createApp(App)
 app.use(router)
 app.use(VueAxios, axios)
 app.use(CKEditor)
+app.use(VueSweetalert2)
 app.config.globalProperties.$httpMessageState = $httpMessageState
 app.config.globalProperties.$filters = {
   date,
