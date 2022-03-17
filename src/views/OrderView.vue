@@ -143,6 +143,9 @@ export default {
         @include pad{
           flex: 0 0 90%;
         }
+        @include mobile {
+          flex: 0 0 80%;
+        }
         &.is_paid{
           color: #198754 !important;
         }
