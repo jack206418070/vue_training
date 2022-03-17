@@ -16,6 +16,12 @@
           <router-link to="/product">雙北隔日配</router-link>
         </li>
         <li class="menu-item pr-8">
+          <router-link to="/order">訂單查詢</router-link>
+        </li>
+        <li class="menu-item pr-8">
+          <router-link to="/blog">部落格</router-link>
+        </li>
+        <li class="menu-item pr-8">
           <router-link to="/about">關於我們</router-link>
         </li>
       </ul>
@@ -49,6 +55,11 @@
       <li @click="is_show = false">
         <router-link to="/product">
           <p class="px-2 py-3 text-medium text-c-forthary">全台宅配</p>
+        </router-link>
+      </li>
+      <li @click="is_show = false">
+        <router-link to="/order">
+          <p class="px-2 py-3 text-medium">訂單查詢</p>
         </router-link>
       </li>
       <li @click="is_show = false">

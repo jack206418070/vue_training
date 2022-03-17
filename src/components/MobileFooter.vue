@@ -23,7 +23,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/">
+        <router-link to="/order">
           <img src="https://www.funthingtrue.com.tw/img/icon/new/icon-twolist.svg" alt="">
           <span>訂單查詢</span>
         </router-link>
