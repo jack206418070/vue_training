@@ -136,7 +136,9 @@ export default {
         localStorage.setItem('favor', JSON.stringify(this.favor))
         if (this.$route.query.category === '我的最愛') {
           this.getProducts()
+          return
         }
+        this.$swal('成功!', '移除最愛', 'success')
       }
     },
     getFavorProduct () {
