@@ -78,7 +78,7 @@ export default {
 
 <style lang="scss">
   .blog{
-    padding-top: 150px;
+    padding-top: 120px;
     h1{
       padding: 10px 0;
       letter-spacing: 0.25rem;

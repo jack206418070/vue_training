@@ -174,7 +174,7 @@ const router = createRouter({
   routes,
   linkActiveClass: 'active',
   scrollBehavior (to, from, savePosition) {
-    if (to.fullPath.match('cart') || to.fullPath.match('about') || to.fullPath.match('product')) {
+    if (to.fullPath.indexOf('/') !== -1) {
       return {
         top: 0
       }
