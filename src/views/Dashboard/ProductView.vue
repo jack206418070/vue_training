@@ -51,10 +51,18 @@
                 <li class="w-20">
                   <ul class="d-flex jy-content-center eval">
                     <li class="me" v-for="(key, index) in 5" :key="key + index">
-                      <span class="icon-star" v-if="item.eval >= key">
+                      <span
+                        class="icon-star"
+                        v-if="item.eval >= key"
+                        @click="item.eval = key; isNew = false; updateProduct(item)"
+                      >
                         <i class="fa-solid fa-star"></i>
                       </span>
-                      <span class="icon-star" v-else>
+                      <span
+                        class="icon-star"
+                        v-else
+                        @click="item.eval = key; isNew = false; updateProduct(item)"
+                      >
                         <i class="far fa-star"></i>
                       </span>
                     </li>

@@ -16,7 +16,7 @@
       <div class="form-control mb-4">
         <label class="text-medium" for="percent">優惠折數(%)*</label>
         <FieldView class="my-2 p-2" id="percent" name="percent" type="number"
-          :class="{'is_invalid': errors['percent'] }"
+          :class="{'is_invalid': errors['percent'] }" min="1"
           placeholder="輸入打折數(%)" rules="required" v-model.number="tempCoupon.percent"
         >
         </FieldView>

@@ -169,6 +169,9 @@ export default {
       this.status = false
       this.is_active = this.$route.query.category || '全部商品'
     }
+  },
+  unmounted () {
+    this.$emitter.off('updateCart')
   }
 }
 </script>

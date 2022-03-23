@@ -52,6 +52,9 @@ export default {
     this.$emitter.on('changeBar', (data) => {
       this.step = data
     })
+  },
+  unmounted () {
+    this.$emitter.off('changeBar')
   }
 }
 </script>

@@ -176,6 +176,9 @@ export default {
     this.$emitter.on('isAdminLoading', (status) => {
       this.isLoading = status
     })
+  },
+  unmounted () {
+    this.$emitter.off('isAdminLoading')
   }
 }
 </script>

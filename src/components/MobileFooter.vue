@@ -84,6 +84,9 @@ export default {
     } else {
       this.isFooter_show = false
     }
+  },
+  unmounted () {
+    this.$emitter.off('updateCart')
   }
 }
 </script>

@@ -135,6 +135,9 @@ export default {
     } else {
       this.isHeader_show = false
     }
+  },
+  unmounted () {
+    this.$emitter.off('updateCart')
   }
 }
 </script>
