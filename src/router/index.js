@@ -10,29 +10,40 @@ const routes = [
         path: '',
         name: 'home',
         component: () => import('../views/HomeView.vue'),
-        beforeEnter: (to, from, next) => {
-          document.title = '放心初蔬果網-首頁'
-          next()
+        meta: {
+          title: '放心初蔬果網-首頁'
         }
       },
       {
         path: '/about',
         name: 'about',
-        component: () => import('../views/AboutView.vue')
+        component: () => import('../views/AboutView.vue'),
+        meta: {
+          title: '放心初蔬果網-關於'
+        }
       },
       {
         path: '/order',
         name: 'order',
-        component: () => import('../views/OrderView.vue')
+        component: () => import('../views/OrderView.vue'),
+        meta: {
+          title: '放心初蔬果網-訂單查詢'
+        }
       },
       {
         path: '/blog',
         name: 'blog',
-        component: () => import('../views/BlogView.vue')
+        component: () => import('../views/BlogView.vue'),
+        meta: {
+          title: '放心初蔬果網-部落格'
+        }
       },
       {
         path: '/blog/:id',
         component: () => import('../views/OneBlogView.vue'),
+        meta: {
+          title: '放心初蔬果網-部落格'
+        },
         props: (route) => {
           return {
             id: route.params.id
@@ -47,12 +58,18 @@ const routes = [
           {
             path: '',
             name: '品項確認頁面',
-            component: () => import('../views/PayView1.vue')
+            component: () => import('../views/PayView1.vue'),
+            meta: {
+              title: '放心初結帳-確認商品'
+            }
           },
           {
             path: 'payment2',
             name: '資料輸入頁面',
             component: () => import('../views/PayView2.vue'),
+            meta: {
+              title: '放心初結帳-資料填寫'
+            },
             props: (route) => {
               return {
                 show: route.params.show
@@ -63,6 +80,9 @@ const routes = [
             path: 'payment3',
             name: '完成結帳頁面',
             component: () => import('../views/PayView3.vue'),
+            meta: {
+              title: '放心初結帳-結帳完成'
+            },
             props: (route) => {
               return {
                 show_complete: route.params.show_complete,
@@ -80,11 +100,17 @@ const routes = [
           {
             path: '',
             name: '全部商品',
-            component: () => import('../views/CategoryView.vue')
+            component: () => import('../views/CategoryView.vue'),
+            meta: {
+              title: '放心初蔬果網-雙北隔日送'
+            }
           },
           {
             path: ':id',
             component: () => import('../views/OneProductView.vue'),
+            meta: {
+              title: '放心初蔬果網-雙北隔日送'
+            },
             props: (route) => {
               return {
                 id: route.params.id
@@ -96,7 +122,10 @@ const routes = [
       {
         path: '/login',
         name: '登入頁面',
-        component: () => import('../views/LoginView.vue')
+        component: () => import('../views/LoginView.vue'),
+        meta: {
+          title: '放心初蔬果網-登入'
+        }
       },
       {
         path: '/:pathMatch(.*)*',

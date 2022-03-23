@@ -1,4 +1,5 @@
 <template>
+  <NewsModal></NewsModal>
   <AlertMessages></AlertMessages>
   <LoadingView :active="isLoading">
     <div class="loadingio-spinner-pulse-glqepjl9sp">
@@ -14,6 +15,7 @@
 
 <script>
 import AlertMessages from '@/components/AlertModal.vue'
+import NewsModal from '@/components/NewsModal.vue'
 export default {
   data () {
     return {
@@ -21,7 +23,8 @@ export default {
     }
   },
   components: {
-    AlertMessages
+    AlertMessages,
+    NewsModal
   },
   mounted () {
     this.$emitter.on('isLoading', (status) => {

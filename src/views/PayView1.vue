@@ -206,9 +206,9 @@ export default {
         .then((res) => {
           this.getCarts()
         })
-        .catch((err) => {
+        .catch(() => {
           this.$emitter.emit('isLoading', false)
-          this.$httpMessageState(err.response, '優惠卷使用')
+          this.$swal({ icon: 'error', title: '失敗', text: '查無此優惠卷' })
         })
     },
     routerTo () {
@@ -217,6 +217,7 @@ export default {
   },
   mounted () {
     this.getCarts()
+    this.coupon = localStorage.getItem('couponText')
   }
 }
 </script>

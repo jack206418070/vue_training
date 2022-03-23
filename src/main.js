@@ -42,3 +42,10 @@ app.component('FormView', Form)
 app.component('FieldView', Field)
 app.component('ErrorMessage', ErrorMessage)
 app.mount('#app')
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
