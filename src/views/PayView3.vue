@@ -12,7 +12,7 @@
         </p>
         <p class="text-medium text-center lh-2 mb-5">
           <span>您的訂單編號為：</span><br>
-          <span class="text-c-primary f-size-s f-w-bold">{{ id }}</span>
+          <span class="text-c-primary f-size-xs f-w-bold">{{ id }}</span>
         </p>
         <div class="btn-group d-flex jy-content-between">
           <button
