@@ -26,7 +26,6 @@ configure({
   validateOnInput: true
 })
 setLocale('zh_TW')
-
 const app = createApp(App)
 app.use(router)
 app.use(VueAxios, axios)

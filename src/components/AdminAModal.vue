@@ -112,6 +112,13 @@
 
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import MyUploadAdapter from '@/utils/myUploadAdapter'
+
+function MyCustomUploadAdapterPlugin (editor) {
+  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    return new MyUploadAdapter(loader)
+  }
+}
 
 export default {
   props: ['isNew', 'article'],
@@ -125,7 +132,8 @@ export default {
       },
       editor: ClassicEditor,
       editorConfig: {
-        toolbar: ['heading', 'bold', 'italic', '|', 'link']
+        toolbar: ['heading', 'bold', 'italic', '|', 'link', 'undo', 'redo', 'numberedList', 'bulletedList'],
+        extraPlugins: [MyCustomUploadAdapterPlugin]
       },
       create_at: ''
     }
@@ -155,8 +163,16 @@ export default {
   },
   watch: {
     article () {
-      this.tempArticle = {
-        ...this.article
+      console.log(this.isNew)
+      if (!this.isNew) {
+        this.tempArticle = {
+          ...this.article
+        }
+      } else {
+        this.tempArticle = {
+          ...this.article,
+          tag: []
+        }
       }
       this.create_at = new Date(this.tempArticle.create_at * 1000).toISOString().split('T')[0]
     },
@@ -174,6 +190,7 @@ export default {
     border: 1px solid #000;
     width: 80%;
     z-index: 100;
+    top: 100%;
     .btn{
       border-radius: 0;
       padding: 4px 8px;

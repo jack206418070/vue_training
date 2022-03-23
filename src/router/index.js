@@ -22,6 +22,20 @@ const routes = [
         component: () => import('../views/OrderView.vue')
       },
       {
+        path: '/blog',
+        name: 'blog',
+        component: () => import('../views/BlogView.vue')
+      },
+      {
+        path: '/blog/:id',
+        component: () => import('../views/OneBlogView.vue'),
+        props: (route) => {
+          return {
+            id: route.params.id
+          }
+        }
+      },
+      {
         path: '/cart',
         name: 'cart',
         component: () => import('../views/CartView.vue'),

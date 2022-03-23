@@ -43,7 +43,7 @@
           v-model="item.qty"
           @change="updateCart(item, item.qty)"
         >
-          <option v-for="(qty, key) in 20" :key="qty + key" :value="qty">
+          <option v-for="(qty, key) in item.qty + 10" :key="qty + key" :value="qty">
             {{ qty }}
           </option>
         </select>

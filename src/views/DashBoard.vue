@@ -1,5 +1,4 @@
 <template>
-  <AlertMessages></AlertMessages>
   <LoadingView :active="isLoading"></LoadingView>
   <header class="admin-header d-flex jy-content-between align-items-center">
     <div class="logo">
