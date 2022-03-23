@@ -9,7 +9,11 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () => import('../views/HomeView.vue')
+        component: () => import('../views/HomeView.vue'),
+        beforeEnter: (to, from, next) => {
+          document.title = '放心初蔬果網-首頁'
+          next()
+        }
       },
       {
         path: '/about',
