@@ -71,7 +71,7 @@ export default {
   },
   mounted () {
     this.isFavor = this.favor || []
-    this.$route.fullPath.indexOf('/product') !== -1 ? this.isFavorHide = false : this.isFavorHide = true
+    this.$route.fullPath.indexOf('/product') !== -1 && this.$route.fullPath.indexOf('/product/') === -1 ? this.isFavorHide = false : this.isFavorHide = true
   }
 }
 </script>
