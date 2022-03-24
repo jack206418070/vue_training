@@ -63,7 +63,7 @@
         </router-link>
       </li>
       <li @click="is_show = false">
-        <router-link to="/">
+        <router-link to="/blog">
           <p class="px-2 py-3 text-medium">部落格</p>
         </router-link>
       </li>
